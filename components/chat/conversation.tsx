@@ -11,12 +11,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
-import {
-  LayoutChangeEvent,
-  Pressable,
-  Text,
-  View,
-} from "react-native";
+import { LayoutChangeEvent, Pressable, Text, View } from "react-native";
 import {
   KeyboardGestureArea,
   useKeyboardHandler,
@@ -34,8 +29,6 @@ import { useChatContext } from "./chat-context";
 import type { ChatMessage } from "./types";
 
 const AnimatedLegendList = Animated.createAnimatedComponent(LegendList);
-
-
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Reanimated animated styles are opaque worklet objects
 type AnimatedStyle = any;
@@ -55,11 +48,11 @@ const ConversationCtx = createContext<ConversationContextValue | null>(null);
 export function useConversationContext() {
   const ctx = use(ConversationCtx);
   if (!ctx)
-    throw new Error("useConversationContext must be used within <Conversation>");
+    throw new Error(
+      "useConversationContext must be used within <Conversation>",
+    );
   return ctx;
 }
-
-
 
 export function Conversation({
   renderMessage,
@@ -144,25 +137,22 @@ export function Conversation({
     [],
   );
 
-  const onContentSizeChange = useCallback(
-    (_width: number, height: number) => {
-      const wasAtBottom = isAtBottom.value;
-      const heightIncreased = height > lastContentHeight.value;
+  const onContentSizeChange = useCallback((_width: number, height: number) => {
+    const wasAtBottom = isAtBottom.value;
+    const heightIncreased = height > lastContentHeight.value;
 
-      totalContentHeight.value = height;
-      lastContentHeight.value = height;
+    totalContentHeight.value = height;
+    lastContentHeight.value = height;
 
-      if (wasAtBottom && heightIncreased && listRef.current) {
-        requestAnimationFrame(() => {
-          listRef.current?.scrollToEnd({
-            animated: true,
-            viewOffset: -bottomInset.value,
-          });
+    if (wasAtBottom && heightIncreased && listRef.current) {
+      requestAnimationFrame(() => {
+        listRef.current?.scrollToEnd({
+          animated: true,
+          viewOffset: -bottomInset.value,
         });
-      }
-    },
-    [],
-  );
+      });
+    }
+  }, []);
 
   const scrollToBottom = useCallback(() => {
     listRef.current?.scrollToEnd({
@@ -177,11 +167,9 @@ export function Conversation({
     const scrollHeight = scrollViewHeight.value;
     if (scrollHeight <= 0) return { height: 0 };
 
-    const messageContent =
-      totalContentHeight.value - currentFooterHeight.value;
+    const messageContent = totalContentHeight.value - currentFooterHeight.value;
     const keyboard = Math.abs(keyboardHeight.value);
-    const bottom =
-      composerHeight.value + Math.max(insets.bottom, keyboard);
+    const bottom = composerHeight.value + Math.max(insets.bottom, keyboard);
     const blankSpace = scrollHeight - messageContent - bottom;
     const footerHeight = Math.max(0, blankSpace);
 
@@ -212,22 +200,18 @@ export function Conversation({
 
   const listAnimatedProps = useAnimatedProps(() => {
     const keyboard = Math.abs(keyboardHeight.value);
-    const bottom =
-      composerHeight.value + Math.max(insets.bottom, keyboard);
+    const bottom = composerHeight.value + Math.max(insets.bottom, keyboard);
     return {
       contentInset: { top: 0, left: 0, right: 0, bottom },
       scrollIndicatorInsets: { top: 0, left: 0, right: 0, bottom },
     };
   });
 
-  const onPromptInputLayout = useCallback(
-    (e: LayoutChangeEvent) => {
-      const h = e.nativeEvent.layout.height;
-      composerHeight.value = h;
-      setComposerOffsetHeight(h);
-    },
-    [],
-  );
+  const onPromptInputLayout = useCallback((e: LayoutChangeEvent) => {
+    const h = e.nativeEvent.layout.height;
+    composerHeight.value = h;
+    setComposerOffsetHeight(h);
+  }, []);
 
   // -- Context value -------------------------------------------------------
 
@@ -269,7 +253,15 @@ export function Conversation({
             onScroll={onScroll}
             scrollEventThrottle={16}
             onContentSizeChange={onContentSizeChange}
-            ListEmptyComponent={emptyState}
+            ListEmptyComponent={
+              emptyState
+              // ? () => (
+              //     <Animated.View style={footerSpacerStyle}>
+              //       {emptyState}
+              //     </Animated.View>
+              //   )
+              // : undefined
+            }
             ListFooterComponent={<Animated.View style={footerSpacerStyle} />}
           />
         </KeyboardGestureArea>
@@ -279,8 +271,6 @@ export function Conversation({
     </ConversationCtx>
   );
 }
-
-
 
 export function ConversationScrollButton() {
   const { scrollToBottom, scrollButtonStyle } = useConversationContext();
@@ -317,8 +307,6 @@ export function ConversationScrollButton() {
     </Animated.View>
   );
 }
-
-
 
 export function ConversationEmptyState({
   title = "Ready",
