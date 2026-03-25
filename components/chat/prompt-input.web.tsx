@@ -1,4 +1,3 @@
-import { platformColor } from "@/components/platform-color";
 import type { ReactNode } from "react";
 import {
   ActivityIndicator,
@@ -7,37 +6,34 @@ import {
   TextInput,
   View,
 } from "react-native";
-import Animated from "react-native-reanimated";
 
 import { useChatContext } from "./chat-context";
 import { useConversationContext } from "./conversation";
 
+/**
+ * Root container for the message composer. Card-style design matching Vercel
+ * chatbot aesthetics — centered max-w-4xl with rounded border and shadow.
+ */
 export function PromptInput({ children }: { children: ReactNode }) {
-  const { promptInputStyle, onPromptInputLayout } = useConversationContext();
+  const { onPromptInputLayout } = useConversationContext();
 
   return (
-    <Animated.View
+    <View
       onLayout={onPromptInputLayout}
-      style={[{ position: "absolute", left: 0, right: 0 }, promptInputStyle]}
+      className="absolute bottom-0 left-0 right-0 z-10"
     >
-      <View
-        style={{
-          flex: 1,
-          flexDirection: "row",
-          padding: 12,
-          gap: 10,
-          alignItems: "flex-end",
-          backgroundColor: platformColor("systemBackground"),
-          borderTopWidth: 1,
-          borderTopColor: platformColor("separator"),
-        }}
-      >
-        {children}
+      <View className="mx-auto w-full max-w-4xl px-4 pb-4">
+        <View className="rounded-2xl border border-border/30 bg-card shadow-composer transition-shadow focus-within:shadow-composer-focus">
+          {children}
+        </View>
       </View>
-    </Animated.View>
+    </View>
   );
 }
 
+/**
+ * A button for actions (e.g. attachments) placed in the composer footer.
+ */
 export function PromptInputAction({
   children,
   onPress,
@@ -47,38 +43,25 @@ export function PromptInputAction({
 }) {
   return (
     <Pressable
-      style={{
-        width: 44,
-        height: 44,
-        borderRadius: 22,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: platformColor("tertiarySystemFill"),
-      }}
-      hitSlop={4}
       onPress={onPress}
+      className="flex h-7 w-7 items-center justify-center rounded-lg border border-border/40 hover:bg-accent"
     >
       {children}
     </Pressable>
   );
 }
 
+/**
+ * Container for the textarea and submit button. On web, this is the main
+ * content area of the card with a footer row below.
+ */
 export function PromptInputBody({ children }: { children: ReactNode }) {
-  return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: "row",
-        alignItems: "flex-end",
-        borderRadius: 22,
-        backgroundColor: platformColor("tertiarySystemFill"),
-      }}
-    >
-      {children}
-    </View>
-  );
+  return <View className="flex flex-col">{children}</View>;
 }
 
+/**
+ * Auto-growing text input for composing messages.
+ */
 export function PromptInputTextarea({
   placeholder = "Message...",
   maxLength = 1000,
@@ -86,64 +69,65 @@ export function PromptInputTextarea({
   placeholder?: string;
   maxLength?: number;
 }) {
-  const { input, setInput } = useChatContext();
+  const { input, setInput, onSend } = useChatContext();
 
   return (
     <TextInput
       nativeID="composer"
-      style={{
-        flex: 1,
-        paddingLeft: 16,
-        paddingRight: 8,
-        paddingVertical: 10,
-        fontSize: 16,
-        maxHeight: 100,
-        color: platformColor("label"),
-      }}
+      className="w-full bg-transparent px-4 pt-3.5 pb-2 text-[13px] leading-relaxed text-foreground placeholder:text-muted-foreground/50 outline-none"
+      style={{ maxHeight: 200 }}
       value={input}
       onChangeText={setInput}
       placeholder={placeholder}
-      placeholderTextColor={platformColor("placeholderText")}
+      placeholderTextColor="oklch(0.55 0 0 / 0.5)"
       multiline
       maxLength={maxLength}
+      onKeyPress={(e) => {
+        if (
+          (e as any).nativeEvent.key === "Enter" &&
+          !(e as any).nativeEvent.shiftKey
+        ) {
+          e.preventDefault();
+          onSend();
+        }
+      }}
     />
   );
 }
 
+/**
+ * Submit button — dark rounded button when active, muted when disabled.
+ */
 export function PromptInputSubmit() {
   const { input, isGenerating, onSend } = useChatContext();
   const disabled = !input.trim() || isGenerating;
 
   return (
-    <Pressable
-      style={({ pressed }) => ({
-        backgroundColor: disabled
-          ? platformColor("tertiarySystemFill")
-          : platformColor("systemBlue"),
-        width: 34,
-        height: 34,
-        borderRadius: 17,
-        justifyContent: "center",
-        alignItems: "center",
-        opacity: pressed ? 0.7 : 1,
-        margin: 5,
-      })}
-      onPress={onSend}
-      disabled={disabled}
-    >
-      {isGenerating ? (
-        <ActivityIndicator size="small" color="#fff" />
-      ) : (
-        <Text
-          style={{
-            color: "#fff",
-            fontSize: 16,
-            fontWeight: "bold",
-          }}
-        >
-          ↑
-        </Text>
-      )}
-    </Pressable>
+    <View className="flex flex-row items-center justify-end px-3 py-2">
+      <Pressable
+        onPress={onSend}
+        disabled={disabled}
+        className={`flex h-7 w-7 items-center justify-center rounded-xl transition-colors ${
+          disabled
+            ? "bg-muted cursor-not-allowed"
+            : "bg-foreground hover:bg-foreground/90"
+        }`}
+      >
+        {isGenerating ? (
+          <ActivityIndicator
+            size="small"
+            color={disabled ? "oklch(0.55 0 0)" : "oklch(0.985 0 0)"}
+          />
+        ) : (
+          <Text
+            className={`text-xs font-bold ${
+              disabled ? "text-muted-foreground/40" : "text-background"
+            }`}
+          >
+            ↑
+          </Text>
+        )}
+      </Pressable>
+    </View>
   );
 }

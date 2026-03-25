@@ -6,6 +6,10 @@ import * as WebBrowser from 'expo-web-browser';
 
 export const ChatMarkdown = memo(
   function ChatMarkdown({ children }: { children: string }) {
+    const isWeb = process.env.EXPO_OS === 'web';
+    const baseFontSize = isWeb ? 13 : 16;
+    const baseLineHeight = isWeb ? 21.5 : 22;
+
     const markdownStyles = {
       root: {},
       heading1: {
@@ -40,7 +44,7 @@ export const ChatMarkdown = memo(
         color: platformColor('label'),
       },
       paragraph: {
-        fontSize: 16,
+        fontSize: baseFontSize,
         marginVertical: 4,
         flexWrap: 'wrap' as const,
         flexDirection: 'row' as const,
@@ -56,8 +60,8 @@ export const ChatMarkdown = memo(
       },
       text: {
         color: platformColor('label'),
-        fontSize: 16,
-        lineHeight: 22,
+        fontSize: baseFontSize,
+        lineHeight: baseLineHeight,
       },
       thematicBreak: {
         flex: 1,
@@ -79,21 +83,21 @@ export const ChatMarkdown = memo(
         marginVertical: 4,
       },
       codeText: {
-        fontSize: 14,
+        fontSize: isWeb ? 12 : 14,
         color: platformColor('label'),
         fontFamily: Platform.select({ ios: 'Menlo', default: 'monospace' }),
       },
       inlineCode: {
         fontFamily: Platform.select({ ios: 'Menlo', default: 'monospace' }),
         paddingHorizontal: 4,
-        fontSize: 15,
+        fontSize: isWeb ? 12 : 15,
         color: platformColor('label'),
         overflow: 'hidden' as const,
         borderRadius: 4,
         backgroundColor: platformColor('tertiarySystemFill'),
       },
       link: {
-        fontSize: 16,
+        fontSize: baseFontSize,
         color: platformColor('link'),
       },
       image: {
