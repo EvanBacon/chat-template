@@ -163,7 +163,10 @@ export default function ChatScreen() {
         <ConversationScrollButton />
         <PromptInput>
           <PromptInputAction>
-            <Text style={{ fontSize: 20, color: platformColor("label") }}>
+            <Text
+              className="text-2xl"
+              style={{ color: platformColor("label") }}
+            >
               +
             </Text>
           </PromptInputAction>
