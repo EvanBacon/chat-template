@@ -14,9 +14,9 @@ import {
   createStreamingStore,
   type ChatMessage,
 } from "@/components/chat";
+import * as Haptics from "expo-haptics";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Text } from "react-native";
-
 // Throttle interval for streaming UI updates (~30fps)
 const STREAMING_THROTTLE_MS = 32;
 
@@ -52,10 +52,7 @@ export default function ChatScreen() {
   const handleSend = async () => {
     if (!input.trim() || isGenerating) return;
 
-    if (process.env.EXPO_OS === "ios") {
-      const Haptics = await import("expo-haptics");
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    }
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
@@ -112,10 +109,8 @@ export default function ChatScreen() {
       streamingRef.current = "";
       streamingStore.set("");
       setIsGenerating(false);
-      if (process.env.EXPO_OS === "ios") {
-        const Haptics = await import("expo-haptics");
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      }
+
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     }
   };
 
