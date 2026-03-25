@@ -14,7 +14,6 @@ import {
   createStreamingStore,
   type ChatMessage,
 } from "@/components/chat";
-import { platformColor } from "@/components/platform-color";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Text } from "react-native";
 
@@ -163,12 +162,7 @@ export default function ChatScreen() {
         <ConversationScrollButton />
         <PromptInput>
           <PromptInputAction>
-            <Text
-              className="text-2xl"
-              style={{ color: platformColor("label") }}
-            >
-              +
-            </Text>
+            <Text className="text-2xl text-foreground">+</Text>
           </PromptInputAction>
           <PromptInputBody>
             <PromptInputTextarea />

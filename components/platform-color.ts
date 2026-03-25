@@ -1,23 +1,28 @@
 import { PlatformColor as RNPlatformColor } from "react-native";
 
+/**
+ * On web, maps iOS semantic color names to CSS custom properties that
+ * automatically respond to light/dark mode via `prefers-color-scheme`.
+ * On native, delegates to React Native's PlatformColor.
+ */
 const WEB_COLORS: Record<string, string> = {
-  label: "oklch(0.12 0 0)",
-  secondaryLabel: "oklch(0.55 0 0)",
-  tertiaryLabel: "oklch(0.7 0 0)",
-  placeholderText: "oklch(0.7 0 0 / 0.5)",
-  separator: "oklch(0.88 0 0)",
+  label: "var(--app-foreground)",
+  secondaryLabel: "var(--app-muted-foreground)",
+  tertiaryLabel: "var(--app-muted-foreground)",
+  placeholderText: "var(--app-muted-foreground)",
+  separator: "var(--app-border)",
   link: "#007aff",
   systemBlue: "#007aff",
   systemRed: "#ff3b30",
-  systemBackground: "oklch(0.985 0 0)",
-  secondarySystemBackground: "oklch(0.955 0 0)",
-  tertiarySystemBackground: "oklch(1 0 0)",
-  tertiarySystemFill: "oklch(0.88 0 0 / 0.2)",
+  systemBackground: "var(--app-background)",
+  secondarySystemBackground: "var(--app-muted)",
+  tertiarySystemBackground: "var(--app-card)",
+  tertiarySystemFill: "var(--app-accent)",
 };
 
 export function platformColor(name: string) {
   if (process.env.EXPO_OS === "web") {
-    return WEB_COLORS[name] ?? "#000";
+    return WEB_COLORS[name] ?? "var(--app-foreground)";
   }
   return RNPlatformColor(name);
 }
