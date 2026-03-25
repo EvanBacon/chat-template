@@ -1,3 +1,4 @@
+import { platformColor } from "@/components/platform-color";
 import { LegendList, LegendListRef } from "@legendapp/list";
 import { SymbolView } from "expo-symbols";
 import {
@@ -16,7 +17,6 @@ import {
   Text,
   View,
 } from "react-native";
-import { platformColor } from "@/components/platform-color";
 import {
   KeyboardGestureArea,
   useKeyboardHandler,
@@ -35,9 +35,7 @@ import type { ChatMessage } from "./types";
 
 const AnimatedLegendList = Animated.createAnimatedComponent(LegendList);
 
-// ---------------------------------------------------------------------------
-// Internal context – shared between Conversation compound components
-// ---------------------------------------------------------------------------
+
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Reanimated animated styles are opaque worklet objects
 type AnimatedStyle = any;
@@ -61,9 +59,7 @@ export function useConversationContext() {
   return ctx;
 }
 
-// ---------------------------------------------------------------------------
-// <Conversation />
-// ---------------------------------------------------------------------------
+
 
 export function Conversation({
   renderMessage,
@@ -284,9 +280,7 @@ export function Conversation({
   );
 }
 
-// ---------------------------------------------------------------------------
-// <ConversationScrollButton />
-// ---------------------------------------------------------------------------
+
 
 export function ConversationScrollButton() {
   const { scrollToBottom, scrollButtonStyle } = useConversationContext();
@@ -324,9 +318,7 @@ export function ConversationScrollButton() {
   );
 }
 
-// ---------------------------------------------------------------------------
-// <ConversationEmptyState />
-// ---------------------------------------------------------------------------
+
 
 export function ConversationEmptyState({
   title = "Ready",

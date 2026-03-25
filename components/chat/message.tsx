@@ -1,12 +1,10 @@
 import { ChatMarkdown } from "@/components/markdown";
-import type { ReactNode } from "react";
 import { platformColor } from "@/components/platform-color";
+import type { ReactNode } from "react";
 import { Text } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
-// ---------------------------------------------------------------------------
-// <Message />
-// ---------------------------------------------------------------------------
+
 
 /**
  * Wrapper for a single chat message. Styles automatically based on the sender
@@ -60,9 +58,7 @@ export function Message({
   );
 }
 
-// ---------------------------------------------------------------------------
-// <MessageResponse />
-// ---------------------------------------------------------------------------
+
 
 /**
  * Renders markdown content for an assistant message. Wraps `<ChatMarkdown />`

@@ -1,29 +1,27 @@
+import { platformColor } from "@/components/platform-color";
 import { LegendList, LegendListRef } from "@legendapp/list";
 import {
-  createContext,
-  use,
-  useCallback,
-  useRef,
-  useState,
-  type ReactElement,
-  type ReactNode,
+    createContext,
+    use,
+    useCallback,
+    useRef,
+    useState,
+    type ReactElement,
+    type ReactNode,
 } from "react";
-import { platformColor } from "@/components/platform-color";
 import { LayoutChangeEvent, Pressable, Text, View } from "react-native";
 import Animated, {
-  useAnimatedStyle,
-  useDerivedValue,
-  useSharedValue,
-  withTiming,
+    useAnimatedStyle,
+    useDerivedValue,
+    useSharedValue,
+    withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useChatContext } from "./chat-context";
 import type { ChatMessage } from "./types";
 
-// ---------------------------------------------------------------------------
-// Internal context
-// ---------------------------------------------------------------------------
+
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnimatedStyle = any;
@@ -44,9 +42,7 @@ export function useConversationContext() {
   return ctx;
 }
 
-// ---------------------------------------------------------------------------
-// <Conversation />
-// ---------------------------------------------------------------------------
+
 
 export function Conversation({
   renderMessage,
@@ -209,9 +205,7 @@ export function Conversation({
   );
 }
 
-// ---------------------------------------------------------------------------
-// <ConversationScrollButton />
-// ---------------------------------------------------------------------------
+
 
 export function ConversationScrollButton() {
   const { scrollToBottom, scrollButtonStyle } = useConversationContext();
@@ -252,9 +246,7 @@ export function ConversationScrollButton() {
   );
 }
 
-// ---------------------------------------------------------------------------
-// <ConversationEmptyState />
-// ---------------------------------------------------------------------------
+
 
 export function ConversationEmptyState({
   title = "Ready",

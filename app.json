@@ -28,12 +28,6 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      [
-        "llama.rn",
-        {
-          "enableEntitlements": true
-        }
-      ],
       "expo-router",
       [
         "expo-splash-screen",

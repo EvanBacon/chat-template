@@ -12,20 +12,13 @@ import Animated from "react-native-reanimated";
 import { useChatContext } from "./chat-context";
 import { useConversationContext } from "./conversation";
 
-// ---------------------------------------------------------------------------
-// <PromptInput />
-// ---------------------------------------------------------------------------
-
 export function PromptInput({ children }: { children: ReactNode }) {
   const { promptInputStyle, onPromptInputLayout } = useConversationContext();
 
   return (
     <Animated.View
       onLayout={onPromptInputLayout}
-      style={[
-        { position: "absolute", left: 0, right: 0 },
-        promptInputStyle,
-      ]}
+      style={[{ position: "absolute", left: 0, right: 0 }, promptInputStyle]}
     >
       <View
         style={{
@@ -44,10 +37,6 @@ export function PromptInput({ children }: { children: ReactNode }) {
     </Animated.View>
   );
 }
-
-// ---------------------------------------------------------------------------
-// <PromptInputAction />
-// ---------------------------------------------------------------------------
 
 export function PromptInputAction({
   children,
@@ -74,10 +63,6 @@ export function PromptInputAction({
   );
 }
 
-// ---------------------------------------------------------------------------
-// <PromptInputBody />
-// ---------------------------------------------------------------------------
-
 export function PromptInputBody({ children }: { children: ReactNode }) {
   return (
     <View
@@ -93,10 +78,6 @@ export function PromptInputBody({ children }: { children: ReactNode }) {
     </View>
   );
 }
-
-// ---------------------------------------------------------------------------
-// <PromptInputTextarea />
-// ---------------------------------------------------------------------------
 
 export function PromptInputTextarea({
   placeholder = "Message...",
@@ -128,10 +109,6 @@ export function PromptInputTextarea({
     />
   );
 }
-
-// ---------------------------------------------------------------------------
-// <PromptInputSubmit />
-// ---------------------------------------------------------------------------
 
 export function PromptInputSubmit() {
   const { input, isGenerating, onSend } = useChatContext();

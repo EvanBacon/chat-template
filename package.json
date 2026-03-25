@@ -29,7 +29,6 @@
     "expo-symbols": "~55.0.5",
     "expo-system-ui": "~55.0.10",
     "expo-web-browser": "~55.0.10",
-    "llama.rn": "^0.11.2",
     "mdast-util-from-markdown": "^2.0.3",
     "mdast-util-gfm-table": "^2.0.0",
     "micromark-extension-gfm-table": "^2.1.1",

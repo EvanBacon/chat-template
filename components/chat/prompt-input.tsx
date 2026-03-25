@@ -1,3 +1,4 @@
+import { platformColor } from "@/components/platform-color";
 import { TouchableGlass } from "@/components/touchable-glass";
 import { GlassContainer, GlassView } from "expo-glass-effect";
 import { SymbolView } from "expo-symbols";
@@ -7,7 +8,6 @@ import {
   Pressable,
   TextInput,
 } from "react-native";
-import { platformColor } from "@/components/platform-color";
 import Animated from "react-native-reanimated";
 
 import { useChatContext } from "./chat-context";
@@ -15,9 +15,7 @@ import { useConversationContext } from "./conversation";
 
 const AnimatedGlassContainer = Animated.createAnimatedComponent(GlassContainer);
 
-// ---------------------------------------------------------------------------
-// <PromptInput />
-// ---------------------------------------------------------------------------
+
 
 /**
  * Root container for the message composer. Positions itself at the bottom of
@@ -51,9 +49,7 @@ export function PromptInput({ children }: { children: ReactNode }) {
   );
 }
 
-// ---------------------------------------------------------------------------
-// <PromptInputAction />
-// ---------------------------------------------------------------------------
+
 
 /**
  * A circular glass button for actions (e.g. attachments, camera).
@@ -83,9 +79,7 @@ export function PromptInputAction({
   );
 }
 
-// ---------------------------------------------------------------------------
-// <PromptInputBody />
-// ---------------------------------------------------------------------------
+
 
 /**
  * Glass-wrapped container for the textarea and submit button.
@@ -108,9 +102,7 @@ export function PromptInputBody({ children }: { children: ReactNode }) {
   );
 }
 
-// ---------------------------------------------------------------------------
-// <PromptInputTextarea />
-// ---------------------------------------------------------------------------
+
 
 /**
  * Auto-growing text input for composing messages. Reads/writes the current
@@ -147,9 +139,7 @@ export function PromptInputTextarea({
   );
 }
 
-// ---------------------------------------------------------------------------
-// <PromptInputSubmit />
-// ---------------------------------------------------------------------------
+
 
 /**
  * Submit button that sends the current input. Shows a spinner while the model
