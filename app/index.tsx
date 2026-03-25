@@ -3,7 +3,6 @@ import {
   Conversation,
   ConversationEmptyState,
   ConversationScrollButton,
-  LoadingScreen,
   Message,
   MessageResponse,
   PromptInput,
@@ -16,13 +15,11 @@ import {
   type ChatMessage,
 } from "@/components/chat";
 import { platformColor } from "@/components/platform-color";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Text } from "react-native";
 
 // Throttle interval for streaming UI updates (~30fps)
 const STREAMING_THROTTLE_MS = 32;
-
-const IS_WEB = process.env.EXPO_OS === "web";
 
 const MOCK_RESPONSES = [
   "That's a great question! Here's what I think:\n\nThe key insight is that **simplicity** often beats complexity. When you break down the problem into smaller pieces, the solution becomes much clearer.\n\n```javascript\nconst answer = problems\n  .map(simplify)\n  .reduce(combine, []);\n```\n\nHope that helps!",
@@ -47,80 +44,14 @@ async function mockStreamResponse(
 export default function ChatScreen() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [context, setContext] = useState<unknown>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
   const streamingStore = useMemo(() => createStreamingStore(), []);
   const streamingRef = useRef("");
   const throttleRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [status, setStatus] = useState("Initializing...");
-  const [error, setError] = useState<string | null>(null);
   const mockIndexRef = useRef(0);
 
-  // --- Model loading (AI concern) ---
-
-  const loadModel = useCallback(async () => {
-    if (IS_WEB) {
-      // Skip model download on web — use mock responses
-      setContext({});
-      setIsLoading(false);
-      setStatus("Ready (mock)");
-      return;
-    }
-
-    try {
-      const { Directory, File, Paths } = await import("expo-file-system");
-      const { initLlama } = await import("llama.rn");
-
-      const MODEL_URL =
-        "https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/resolve/main/Qwen3.5-0.8B-Q4_K_M.gguf";
-      const MODEL_FILENAME = "Qwen3.5-0.8B-Q4_K_M.gguf";
-
-      const modelsDir = new Directory(Paths.document, "models");
-      const modelFile = new File(modelsDir, MODEL_FILENAME);
-
-      if (!modelsDir.exists) {
-        modelsDir.create();
-      }
-
-      if (!modelFile.exists) {
-        setStatus("Downloading Qwen 3.5 (533MB)...");
-        await File.downloadFileAsync(MODEL_URL, modelFile);
-      }
-
-      setStatus("Loading model...");
-
-      const ctx = await initLlama({
-        model: modelFile.uri,
-        n_ctx: 4096,
-        n_batch: 512,
-        n_threads: 4,
-        n_gpu_layers: process.env.EXPO_OS === "ios" ? 99 : 0,
-      });
-
-      setContext(ctx);
-      setIsLoading(false);
-      setStatus("Ready");
-    } catch (err) {
-      console.error("Failed to load model:", err);
-      setError(err instanceof Error ? err.message : "Failed to load model");
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    loadModel();
-    return () => {
-      if (!IS_WEB && context && typeof context === "object" && "release" in context) {
-        (context as { release: () => void }).release();
-      }
-    };
-  }, []);
-
-  // --- Message generation (AI concern) ---
-
   const handleSend = async () => {
-    if (!input.trim() || !context || isGenerating) return;
+    if (!input.trim() || isGenerating) return;
 
     if (process.env.EXPO_OS === "ios") {
       const Haptics = await import("expo-haptics");
@@ -148,60 +79,19 @@ export default function ChatScreen() {
     streamingStore.set("");
 
     try {
-      if (IS_WEB) {
-        const mockText =
-          MOCK_RESPONSES[mockIndexRef.current % MOCK_RESPONSES.length];
-        mockIndexRef.current++;
+      const mockText =
+        MOCK_RESPONSES[mockIndexRef.current % MOCK_RESPONSES.length];
+      mockIndexRef.current++;
 
-        await mockStreamResponse(mockText, (token) => {
-          streamingRef.current += token;
-          if (!throttleRef.current) {
-            throttleRef.current = setTimeout(() => {
-              streamingStore.set(streamingRef.current);
-              throttleRef.current = null;
-            }, STREAMING_THROTTLE_MS);
-          }
-        });
-      } else {
-        const llamaContext = context as {
-          completion: (
-            params: Record<string, unknown>,
-            cb: (data: { token?: string }) => void,
-          ) => Promise<void>;
-        };
-
-        const chatMessages = [
-          {
-            role: "system" as const,
-            content: "You are a helpful assistant. Be concise.",
-          },
-          ...newMessages.slice(0, -1).map((m) => ({
-            role: m.role as "user" | "assistant",
-            content: m.content,
-          })),
-        ];
-
-        await llamaContext.completion(
-          {
-            messages: chatMessages,
-            n_predict: 512,
-            temperature: 0.7,
-            top_p: 0.9,
-            stop: ["<|im_end|>", "<|endoftext|>"],
-          },
-          (data) => {
-            if (data.token) {
-              streamingRef.current += data.token;
-              if (!throttleRef.current) {
-                throttleRef.current = setTimeout(() => {
-                  streamingStore.set(streamingRef.current);
-                  throttleRef.current = null;
-                }, STREAMING_THROTTLE_MS);
-              }
-            }
-          },
-        );
-      }
+      await mockStreamResponse(mockText, (token) => {
+        streamingRef.current += token;
+        if (!throttleRef.current) {
+          throttleRef.current = setTimeout(() => {
+            streamingStore.set(streamingRef.current);
+            throttleRef.current = null;
+          }, STREAMING_THROTTLE_MS);
+        }
+      });
     } catch (err) {
       console.error("Generation error:", err);
       streamingRef.current = "Error generating response";
@@ -230,8 +120,6 @@ export default function ChatScreen() {
     }
   };
 
-  // --- Render ---
-
   const renderMessage = useCallback(
     ({ item }: { item: ChatMessage }) => {
       if (item.role === "user") {
@@ -252,10 +140,6 @@ export default function ChatScreen() {
     [isGenerating, streamingStore],
   );
 
-  if (isLoading) {
-    return <LoadingScreen status={status} error={error} />;
-  }
-
   return (
     <ChatProvider
       value={{
@@ -271,12 +155,8 @@ export default function ChatScreen() {
         renderMessage={renderMessage}
         emptyState={
           <ConversationEmptyState
-            title={IS_WEB ? "Chat Demo" : "Qwen 3.5 Ready"}
-            description={
-              IS_WEB
-                ? "Mock responses for web preview"
-                : "Running locally via llama.cpp"
-            }
+            title="Chat"
+            description="Send a message to get started"
           />
         }
       >

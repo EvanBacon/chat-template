@@ -17,13 +17,10 @@ export default function SettingsScreen() {
         }}
       >
         <Text style={{ fontSize: 17, fontWeight: '600', color: platformColor('label'), marginBottom: 8 }}>
-          Model Info
+          Chat
         </Text>
         <Text style={{ fontSize: 15, color: platformColor('secondaryLabel'), lineHeight: 22 }}>
-          Qwen 3.5 0.8B (Q4_K_M quantization)
-        </Text>
-        <Text style={{ fontSize: 13, color: platformColor('tertiaryLabel'), marginTop: 4 }}>
-          Running locally via llama.cpp
+          Mock responses for demo purposes
         </Text>
       </View>
 
@@ -39,7 +36,7 @@ export default function SettingsScreen() {
           About
         </Text>
         <Text style={{ fontSize: 15, color: platformColor('secondaryLabel'), lineHeight: 22 }}>
-          This app runs a local LLM entirely on-device. No data is sent to external servers.
+          A generic chat template built with Expo. Replace the mock responses with your own AI backend.
         </Text>
       </View>
     </ScrollView>

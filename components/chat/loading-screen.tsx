@@ -28,14 +28,7 @@ export function LoadingScreen({
       >
         {status}
       </Text>
-      {status.includes("Downloading") && (
-        <Text
-          style={{ fontSize: 14, color: platformColor("secondaryLabel") }}
-        >
-          Please wait...
-        </Text>
-      )}
-      {error && (
+{error && (
         <Text
           selectable
           style={{

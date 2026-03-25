@@ -17,7 +17,6 @@
     "expo": "~55.0.5",
     "expo-asset": "~55.0.10",
     "expo-constants": "~55.0.9",
-    "expo-file-system": "~55.0.11",
     "expo-font": "~55.0.4",
     "expo-glass-effect": "~55.0.8",
     "expo-haptics": "~55.0.9",
