@@ -6,7 +6,6 @@
       "name": "mar2-execu",
       "dependencies": {
         "@legendapp/list": "^2.0.19",
-        "@react-navigation/drawer": "^7.9.5",
         "css-to-react-native": "^3.2.0",
         "expo": "~55.0.5",
         "expo-asset": "~55.0.10",
@@ -37,7 +36,7 @@
         "react-native-worklets": "0.7.2",
         "react-syntax-highlighter": "^16.1.1",
         "tailwindcss": "^4",
-        "uniwind": "^1.6.0",
+        "uniwind": "^1.6.1",
       },
       "devDependencies": {
         "@types/react": "~19.2.10",
@@ -1743,7 +1742,7 @@
 
     "unist-util-visit-parents": ["unist-util-visit-parents@6.0.2", "", { "dependencies": { "@types/unist": "^3.0.0", "unist-util-is": "^6.0.0" } }, "sha512-goh1s1TBrqSqukSc8wrjwWhL0hiJxgA8m4kFxGlQ+8FYQ3C/m11FcTs4YYem7V664AhHVvgoQLk890Ssdsr2IQ=="],
 
-    "uniwind": ["uniwind@1.6.0", "", { "dependencies": { "@tailwindcss/node": "4.2.1", "@tailwindcss/oxide": "4.2.1", "culori": "4.0.2", "lightningcss": "1.30.1" }, "peerDependencies": { "react": ">=19.0.0", "react-native": ">=0.81.0", "tailwindcss": ">=4" } }, "sha512-D4jX0594cDnjeFCd0qDXJNQ5xT09W+zWkzq9yjUngNQQ4lCc7sN7Ht5a3+S752iT2D1r/Sul1eYPvjrTwmgSfg=="],
+    "uniwind": ["uniwind@1.6.1", "", { "dependencies": { "@tailwindcss/node": "4.2.1", "@tailwindcss/oxide": "4.2.1", "culori": "4.0.2", "lightningcss": "1.30.1" }, "peerDependencies": { "react": ">=19.0.0", "react-native": ">=0.81.0", "tailwindcss": ">=4" } }, "sha512-aR7vEGccEHDCvjyNM5BE5ZVdbdVTVL6yIffYe65mgjedzOj82TcdWrvae+A3PSHwQTuC1E3/3HbOX/Y5GqMvRQ=="],
 
     "unpipe": ["unpipe@1.0.0", "", {}, "sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ=="],
 
