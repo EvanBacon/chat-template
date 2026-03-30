@@ -85,15 +85,12 @@ export function DrawerLayout({
   const interactionHandleRef = React.useRef<number | null>(null);
 
   const startInteraction = React.useCallback(() => {
-    interactionHandleRef.current =
-      InteractionManager.createInteractionHandle();
+    interactionHandleRef.current = InteractionManager.createInteractionHandle();
   }, []);
 
   const endInteraction = React.useCallback(() => {
     if (interactionHandleRef.current != null) {
-      InteractionManager.clearInteractionHandle(
-        interactionHandleRef.current
-      );
+      InteractionManager.clearInteractionHandle(interactionHandleRef.current);
       interactionHandleRef.current = null;
     }
   }, []);
@@ -129,7 +126,7 @@ export function DrawerLayout({
         runOnJS(callOnClose)();
       }
     },
-    [drawerWidth, callOnOpen, callOnClose, touchStartX, touchX, translationX]
+    [drawerWidth, callOnOpen, callOnClose, touchStartX, touchX, translationX],
   );
 
   // Animate to match `open` prop
@@ -166,7 +163,7 @@ export function DrawerLayout({
         translationX.value = minmax(
           startX.value + event.translationX,
           -drawerWidth,
-          0
+          0,
         );
         gestureState.value = event.state;
       })
@@ -179,9 +176,7 @@ export function DrawerLayout({
             Math.abs(event.velocityX) > SWIPE_MIN_VELOCITY) ||
           Math.abs(event.translationX) > SWIPE_MIN_DISTANCE
             ? // If swiped right, open; if swiped left, close
-              (event.velocityX === 0
-                ? event.translationX
-                : event.velocityX) > 0
+              (event.velocityX === 0 ? event.translationX : event.velocityX) > 0
             : openValue.value;
 
         toggleDrawer(nextOpen, event.velocityX);
@@ -218,6 +213,7 @@ export function DrawerLayout({
     return minmax(translationX.value, -drawerWidth, 0);
   });
 
+  const CORNERS = 48;
   const contentAnimatedStyle = useAnimatedStyle(() => {
     return {
       zIndex: translateX.value === -drawerWidth ? 0 : 2,
@@ -226,6 +222,11 @@ export function DrawerLayout({
           translateX: translateX.value + drawerWidth,
         },
       ],
+
+      borderCurve: "continuous" as const,
+      borderRadius: CORNERS,
+      // borderTopLeftRadius: interpolate(p, [0, 0.2], [24, CORNERS], "clamp"),
+      // borderBottomLeftRadius: interpolate(p, [0, 0.2], [24, CORNERS], "clamp"),
     };
   }, [drawerWidth, translateX]);
 
@@ -246,21 +247,16 @@ export function DrawerLayout({
     <GestureHandlerRootView style={styles.container}>
       <GestureDetector gesture={pan}>
         <Animated.View style={styles.main}>
-          <Animated.View style={[styles.content, contentAnimatedStyle]}>
-            <View aria-hidden={open} style={styles.content}>
+          <Animated.View
+            style={[styles.content, styles.contentCard, contentAnimatedStyle]}
+          >
+            <View aria-hidden={open} style={styles.contentInner}>
               {children}
             </View>
-            <Overlay
-              progress={progress}
-              onPress={() => toggleDrawer(false)}
-            />
+            <Overlay progress={progress} onPress={() => toggleDrawer(false)} />
           </Animated.View>
           <Animated.View
-            style={[
-              styles.drawer,
-              { width: drawerWidth },
-              drawerAnimatedStyle,
-            ]}
+            style={[styles.drawer, { width: drawerWidth }, drawerAnimatedStyle]}
           >
             {drawerContent}
           </Animated.View>
@@ -316,17 +312,25 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     maxWidth: "100%",
-    backgroundColor: "white",
   },
   content: {
     flex: 1,
+  },
+  contentCard: {
+    boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.15)",
+    borderColor: "rgba(0, 0, 0, 0.15)",
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  contentInner: {
+    flex: 1,
+    overflow: "hidden",
   },
   main: {
     flex: 1,
     overflow: "hidden",
   },
   overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
   },
   pressable: {
     flex: 1,
