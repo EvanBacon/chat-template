@@ -231,9 +231,14 @@ export function DrawerLayout({
   }, [drawerWidth, translateX]);
 
   const drawerAnimatedStyle = useAnimatedStyle(() => {
+    const p =
+      drawerWidth === 0
+        ? 0
+        : (translateX.value + drawerWidth) / drawerWidth;
     return {
       // Force commit to shadow tree for pressables
       zIndex: translateX.value === -drawerWidth ? -1 : 0,
+      transform: [{ scale: interpolate(p, [0, 1], [0.95, 1]) }],
     };
   }, [drawerWidth, translateX]);
 
@@ -256,9 +261,14 @@ export function DrawerLayout({
             <Overlay progress={progress} onPress={() => toggleDrawer(false)} />
           </Animated.View>
           <Animated.View
-            style={[styles.drawer, { width: drawerWidth }, drawerAnimatedStyle]}
+            style={[
+              styles.drawer,
+              { width: drawerWidth, transformOrigin: "left top" },
+              drawerAnimatedStyle,
+            ]}
           >
             {drawerContent}
+            <DrawerDim progress={progress} />
           </Animated.View>
         </Animated.View>
       </GestureDetector>
@@ -303,6 +313,34 @@ function Overlay({
   );
 }
 
+function DrawerDim({
+  progress,
+}: {
+  progress: ReturnType<typeof useDerivedValue<number>>;
+}) {
+  const animatedStyle = useAnimatedStyle(() => {
+    // Counter-scale to fill the full area when parent is scaled down
+    const parentScale = interpolate(progress.value, [0, 1], [0.95, 1]);
+    const counterScale = 1 / parentScale;
+    return {
+      opacity: interpolate(progress.value, [0, 1], [0.5, 0]),
+      transform: [{ scale: counterScale }],
+    };
+  }, [progress]);
+
+  return (
+    <Animated.View
+      style={[
+        StyleSheet.absoluteFill,
+        styles.drawerDim,
+        { transformOrigin: "left top" },
+        animatedStyle,
+      ]}
+      pointerEvents="none"
+    />
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -335,5 +373,8 @@ const styles = StyleSheet.create({
   pressable: {
     flex: 1,
     pointerEvents: "auto",
+  },
+  drawerDim: {
+    backgroundColor: "black",
   },
 });
