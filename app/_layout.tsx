@@ -1,9 +1,5 @@
 import { DrawerLayout } from "@/components/drawer-layout";
-import {
-  Slot,
-  usePathname,
-  useRouter,
-} from "expo-router";
+import { Slot, usePathname, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -88,7 +84,7 @@ export default function RootLayout() {
             <DrawerContent
               onNavigate={(path) => {
                 setDrawerOpen(false);
-                router.push(path as any);
+                router.replace(path as any);
               }}
             />
           }
