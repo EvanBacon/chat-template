@@ -6,9 +6,26 @@ import { KeyboardProvider } from "react-native-keyboard-controller";
 import "../global.css";
 import "../utils/css-variables";
 
+import {
+  Button,
+  Host,
+  HStack,
+  Menu,
+  Section,
+  Image as SUIImage,
+  Text as SUIText,
+  Toggle,
+  VStack,
+} from "@expo/ui/swift-ui";
+
 import { TouchableGlass } from "@/components/touchable-glass";
 import { Image } from "@/components/tw";
 import { cn } from "@/utils/tailwind";
+import {
+  controlSize,
+  font,
+  foregroundStyle,
+} from "@expo/ui/swift-ui/modifiers";
 import {
   DarkTheme,
   DefaultTheme,
@@ -236,25 +253,6 @@ const MORE_MODELS = [
   { id: "sonnet-4.5", label: "Sonnet 4.5" },
 ] as const;
 
-import {
-  Button,
-  Divider,
-  HStack,
-  Host,
-  Image as SUIImage,
-  Menu,
-  Section,
-  Text as SUIText,
-  Toggle,
-  VStack,
-} from "@expo/ui/swift-ui";
-
-import {
-  controlSize,
-  font,
-  foregroundStyle,
-} from "@expo/ui/swift-ui/modifiers";
-
 function StackLayout() {
   const router = useRouter();
   const [selectedModel, setSelectedModel] = useState("sonnet-4.6");
@@ -272,85 +270,87 @@ function StackLayout() {
           title: "Chat",
           animation: "none",
           gestureEnabled: false,
-          headerTitle() {
-            const selected = [...MODELS, ...MORE_MODELS].find(
-              (m) => m.id === selectedModel,
-            );
-            const subtitle = extendedThinking ? "Extended" : undefined;
-            return (
-              <Host
-                style={{
-                  minWidth: 120,
-                  minHeight: 40,
-                }}
-              >
-                <Menu
-                  label={
-                    <VStack spacing={0}>
-                      <HStack spacing={4} alignment="center">
-                        <SUIText
-                          modifiers={[
-                            foregroundStyle("#000000"),
-                            font({ weight: "semibold", size: 17 }),
-                          ]}
+          headerTitle:
+            process.env.EXPO_OS !== "ios"
+              ? undefined
+              : () => {
+                  const selected = [...MODELS, ...MORE_MODELS].find(
+                    (m) => m.id === selectedModel,
+                  );
+                  const subtitle = extendedThinking ? "Extended" : undefined;
+                  return (
+                    <Host
+                      style={{
+                        minWidth: 120,
+                        minHeight: 40,
+                      }}
+                    >
+                      <Menu
+                        label={
+                          <VStack spacing={0}>
+                            <HStack spacing={4} alignment="center">
+                              <SUIText
+                                modifiers={[
+                                  foregroundStyle("#000000"),
+                                  font({ weight: "semibold", size: 17 }),
+                                ]}
+                              >
+                                {selected?.label ?? "Model"}
+                              </SUIText>
+                              <SUIImage
+                                systemName="chevron.down"
+                                size={10}
+                                color="#000000"
+                              />
+                            </HStack>
+                            {subtitle && (
+                              <SUIText
+                                modifiers={[
+                                  foregroundStyle("#00000070"),
+                                  font({ size: 12 }),
+                                ]}
+                              >
+                                {subtitle}
+                              </SUIText>
+                            )}
+                          </VStack>
+                        }
+                        modifiers={[controlSize("regular")]}
+                      >
+                        <Section title="Existing tools for iOS app tech stack detection">
+                          <Button
+                            systemImage="archivebox"
+                            label="Add to project"
+                            onPress={() => {}}
+                          />
+                          <Button
+                            systemImage="star"
+                            label="Star"
+                            onPress={() => {}}
+                          />
+                          <Button
+                            systemImage="pencil"
+                            label="Rename"
+                            onPress={() => {}}
+                          />
+                          <Button
+                            systemImage="trash"
+                            label="Delete"
+                            role="destructive"
+                            onPress={() => {}}
+                          />
+                        </Section>
+                        <Toggle
+                          isOn={extendedThinking}
+                          onIsOnChange={setExtendedThinking}
                         >
-                          {selected?.label ?? "Model"}
-                        </SUIText>
-                        <SUIImage
-                          systemName="chevron.down"
-                          size={10}
-                          color="#000000"
-                        />
-                      </HStack>
-                      {subtitle && (
-                        <SUIText
-                          modifiers={[
-                            foregroundStyle("#000000"),
-                            font({ size: 12 }),
-                          ]}
-                        >
-                          {subtitle}
-                        </SUIText>
-                      )}
-                    </VStack>
-                  }
-                  modifiers={[controlSize("regular")]}
-                >
-                  <Section title="Existing tools for iOS app tech stack detection">
-                    <Button
-                      systemImage="archivebox"
-                      label="Add to project"
-                      onPress={() => {}}
-                    />
-                    <Button
-                      systemImage="star"
-                      label="Star"
-                      onPress={() => {}}
-                    />
-                    <Button
-                      systemImage="pencil"
-                      label="Rename"
-                      onPress={() => {}}
-                    />
-                    <Button
-                      systemImage="trash"
-                      label="Delete"
-                      role="destructive"
-                      onPress={() => {}}
-                    />
-                  </Section>
-                  <Toggle
-                    label="Extended thinking"
-                    isOn={extendedThinking}
-                    onIsOnChange={setExtendedThinking}
-                  >
-                    <SUIText>Extended thinking</SUIText>
-                    <SUIText>Think longer for complex tasks</SUIText>
-                  </Toggle>
-                </Menu>
-              </Host>
-            );
-          },
+                          <SUIText>Extended thinking</SUIText>
+                          <SUIText>Think longer for complex tasks</SUIText>
+                        </Toggle>
+                      </Menu>
+                    </Host>
+                  );
+                },
         }}
       >
         <Stack.Header transparent></Stack.Header>
