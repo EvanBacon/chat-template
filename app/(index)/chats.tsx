@@ -1,4 +1,4 @@
-import { Image } from "expo-image";
+import { Image } from "@/components/tw";
 import { Link, Stack, useRouter } from "expo-router";
 import { useCallback, useMemo, useState } from "react";
 import { Alert, FlatList, Pressable, Text, View } from "react-native";
@@ -106,35 +106,25 @@ function ChatRow({
     <Link href="/" asChild>
       <Link.Trigger>
         <Pressable className="flex-row items-center px-5 py-4 active:bg-card">
-          <View
-            style={{
-              flex: 1,
-
-              gap: 3,
-              marginRight: 12,
-            }}
-          >
+          <View className="flex-1 gap-0.5 mr-3">
             <Text
               numberOfLines={1}
-              style={{ fontSize: 17, color: "white" }}
+              className="text-[17px] text-foreground"
               selectable
             >
               {item.title}
             </Text>
-            <Text style={{ fontSize: 13, color: "rgba(255,255,255,0.45)" }}>
+            <Text className="text-[13px] text-muted-foreground">
               {formatTimeAgo(item.daysAgo)}
             </Text>
           </View>
           <Image
             source="sf:chevron.right"
-            style={{
-              width: 10,
-              height: 16,
-              tintColor: "rgba(255,255,255,0.25)",
-            }}
+            className="w-2.5 h-4 font-medium text-muted-foreground"
           />
         </Pressable>
       </Link.Trigger>
+
       <Link.Menu>
         <Link.MenuAction
           title={item.starred ? "Unstar" : "Star"}
@@ -155,28 +145,14 @@ function ChatRow({
 
 function EmptySearch({ query }: { query: string }) {
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        paddingTop: 120,
-        gap: 8,
-      }}
-    >
+    <View className="flex-1 items-center justify-center pt-32 gap-2">
       <Image
         source="sf:magnifyingglass"
-        style={{ width: 40, height: 40, tintColor: "rgba(255,255,255,0.3)" }}
+        className="w-10 h-10"
+        tintColor="rgba(255,255,255,0.3)"
       />
-      <Text
-        style={{
-          fontSize: 17,
-          color: "rgba(255,255,255,0.4)",
-          textAlign: "center",
-          paddingHorizontal: 40,
-        }}
-      >
-        No results found for "{query}"
+      <Text className="text-[17px] text-muted-foreground text-center px-10">
+        No results found for &ldquo;{query}&rdquo;
       </Text>
     </View>
   );
@@ -249,22 +225,13 @@ export default function ChatsScreen() {
         data={filtered}
         keyExtractor={(item) => item.id}
         contentInsetAdjustmentBehavior="automatic"
-        style={{ backgroundColor: "transparent" }}
+        className="bg-transparent"
         renderItem={({ item }) => (
           <ChatRow
             item={item}
             onRename={() => handleRename(item)}
             onDelete={() => handleDelete(item)}
             onStar={() => handleStar(item)}
-          />
-        )}
-        ItemSeparatorComponent={() => (
-          <View
-            style={{
-              height: 0.33,
-              backgroundColor: "rgba(255,255,255,0.15)",
-              marginLeft: 20,
-            }}
           />
         )}
         ListEmptyComponent={search ? <EmptySearch query={search} /> : null}
