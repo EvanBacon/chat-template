@@ -157,7 +157,7 @@ export default function ChatScreen() {
         <ConversationScrollButton />
         <PromptInput>
           <PromptInputAction>
-            <Text className="text-2xl text-sf-text">+</Text>
+            <Text className="text-2xl text-foreground">+</Text>
           </PromptInputAction>
           <PromptInputBody>
             <PromptInputTextarea />

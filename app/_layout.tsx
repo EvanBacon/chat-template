@@ -88,7 +88,11 @@ function DrawerChatItem({
 
 function DrawerContent({ onNavigate }: { onNavigate: (path: string) => void }) {
   return (
-    <SafeAreaView style={{ flex: 1 }} className="bg-sf-bg" edges={["top", "bottom", "left"]}>
+    <SafeAreaView
+      style={{ flex: 1 }}
+      className="bg-background"
+      edges={["top", "bottom", "left"]}
+    >
       {/* Header */}
       <View style={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 12 }}>
         <Text className="text-[28px] font-bold text-foreground">Chat</Text>
@@ -126,7 +130,9 @@ function DrawerContent({ onNavigate }: { onNavigate: (path: string) => void }) {
       >
         <Pressable className="flex-row items-center gap-2.5 flex-1 py-1 active:opacity-60">
           <View className="w-8 h-8 rounded-full bg-muted items-center justify-center">
-            <Text className="text-[13px] font-semibold text-foreground">EB</Text>
+            <Text className="text-[13px] font-semibold text-foreground">
+              EB
+            </Text>
           </View>
           <Text className="text-[15px] text-foreground">Evan Bacon</Text>
         </Pressable>
@@ -134,7 +140,10 @@ function DrawerContent({ onNavigate }: { onNavigate: (path: string) => void }) {
           onPress={() => onNavigate("/")}
           className="w-10 h-10 rounded-full bg-accent active:bg-muted items-center justify-center"
         >
-          <Text className="text-[22px] font-light text-foreground" style={{ marginTop: -1 }}>
+          <Text
+            className="text-[22px] font-light text-foreground"
+            style={{ marginTop: -1 }}
+          >
             +
           </Text>
         </Pressable>

@@ -1,11 +1,16 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { Image, type ImageStyle } from "expo-image";
+import ExpoIonicons from "@expo/vector-icons/Ionicons";
+import { Image as ExpoImage, type ImageStyle } from "expo-image";
 import { Platform } from "react-native";
+
+import { withUniwind } from "uniwind";
+
+const Image = withUniwind(ExpoImage);
+const Ionicons = withUniwind(ExpoIonicons);
 
 /**
  * Map of SF Symbol names to Ionicons names for Android/web fallback.
  */
-const IONICON_FALLBACKS: Record<string, keyof typeof Ionicons.glyphMap> = {
+const IONICON_FALLBACKS: Record<string, keyof typeof ExpoIonicons.glyphMap> = {
   "arrow.up": "arrow-up",
   "chevron.down": "chevron-down",
   "bubble.left.and.bubble.right": "chatbubbles-outline",
@@ -41,11 +46,6 @@ export function SymbolImage({
 
   const iconName = IONICON_FALLBACKS[name] ?? "help-outline";
   return (
-    <Ionicons
-      name={iconName}
-      size={size}
-      color={tintColor}
-      style={style}
-    />
+    <Ionicons name={iconName} size={size} color={tintColor} style={style} />
   );
 }

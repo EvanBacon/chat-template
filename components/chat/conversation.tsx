@@ -1,5 +1,5 @@
-import { LegendList, LegendListRef } from "@legendapp/list";
 import { SymbolImage } from "@/components/symbol-image";
+import { LegendList, LegendListRef } from "@legendapp/list";
 import {
   createContext,
   use,
@@ -224,7 +224,7 @@ export function Conversation({
 
   return (
     <ConversationCtx value={contextValue}>
-      <View className="flex-1 bg-sf-bg">
+      <View className="flex-1 bg-background">
         <KeyboardGestureArea
           interpolator="ios"
           showOnSwipeUp
@@ -268,7 +268,7 @@ export function ConversationScrollButton() {
       <Pressable
         onPress={scrollToBottom}
         hitSlop={8}
-        className="w-10 h-10 rounded-full bg-sf-bg-2 justify-center items-center"
+        className="w-10 h-10 rounded-full bg-card justify-center items-center"
         style={({ pressed }) => ({
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 2 },
@@ -277,11 +277,7 @@ export function ConversationScrollButton() {
           opacity: pressed ? 0.7 : 1,
         })}
       >
-        <SymbolImage
-          name="chevron.down"
-          size={16}
-          className="tint-sf-text"
-        />
+        <SymbolImage name="chevron.down" size={16} className="tint-sf-text" />
       </Pressable>
     </Animated.View>
   );
@@ -301,15 +297,13 @@ export function ConversationEmptyState({
       <SymbolImage
         name={icon}
         size={48}
-        className="tint-sf-text-3 mb-4"
+        className="text-muted-foreground mb-4"
       />
-      <Text className="text-xl font-semibold text-sf-text mb-2">
+      <Text className="text-xl font-semibold text-foreground mb-2">
         {title}
       </Text>
       {description && (
-        <Text className="text-sm text-sf-text-2">
-          {description}
-        </Text>
+        <Text className="text-sm text-muted-foreground">{description}</Text>
       )}
     </View>
   );
