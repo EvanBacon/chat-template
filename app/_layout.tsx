@@ -250,14 +250,15 @@ function StackLayout() {
 
         <Stack.Toolbar placement="left">
           <Stack.Toolbar.Button
-            icon={"line.horizontal.3"}
+            icon={"list.bullet"}
             onPress={() => {
               router.setParams({ drawer: "open" });
             }}
           />
         </Stack.Toolbar>
         <Stack.Toolbar placement="right">
-          <Stack.Toolbar.Menu icon="brain">
+          <Stack.Toolbar.Menu>
+            <Stack.Toolbar.Label>{selectedLabel}</Stack.Toolbar.Label>
             <Stack.Toolbar.Menu inline>
               {MODELS.map((model) => (
                 <Stack.Toolbar.MenuAction
