@@ -6,6 +6,8 @@ import { KeyboardProvider } from "react-native-keyboard-controller";
 import "../global.css";
 import "../utils/css-variables";
 
+import { TouchableGlass } from "@/components/touchable-glass";
+import { Image } from "@/components/tw";
 import { cn } from "@/utils/tailwind";
 import {
   DarkTheme,
@@ -130,22 +132,22 @@ function DrawerContent({ onNavigate }: { onNavigate: (path: string) => void }) {
         className="flex-row items-center px-4 py-3 border-t border-border"
         style={{ borderTopWidth: StyleSheet.hairlineWidth }}
       >
-        <Pressable className="flex-row items-center gap-2.5 flex-1 py-1 active:opacity-60">
+        <TouchableGlass className="rounded-full p-2 flex-row items-center gap-2.5 active:opacity-60">
           <View className="w-8 h-8 rounded-full bg-muted items-center justify-center">
             <Text className="text-[13px] font-semibold text-foreground">
               EB
             </Text>
           </View>
-          <Text className="text-[15px] text-foreground">Evan Bacon</Text>
-        </Pressable>
-        <Pressable
+          <Text className="text-sm text-foreground">Evan Bacon</Text>
+        </TouchableGlass>
+        <View className="flex-1" />
+        <TouchableGlass
+          tintColor="#FFF"
           onPress={() => onNavigate("/")}
           className="w-10 h-10 rounded-full bg-accent active:bg-muted items-center justify-center"
         >
-          <Text className="text-[22px] font-light text-foreground -mt-px">
-            +
-          </Text>
-        </Pressable>
+          <Image source="sf:plus.message" className="text-2xl text-black" />
+        </TouchableGlass>
       </View>
     </SafeAreaView>
   );
