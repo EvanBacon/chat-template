@@ -3,6 +3,7 @@
  * Only supports "back" type (drawer behind content), left-side, LTR.
  */
 
+import * as Haptics from "expo-haptics";
 import * as React from "react";
 import {
   InteractionManager,
@@ -133,6 +134,9 @@ export function DrawerLayout({
   React.useEffect(() => {
     openValue.value = open;
     toggleDrawer(open);
+    if (open) {
+      Keyboard.dismiss();
+    }
   }, [open, toggleDrawer, openValue]);
 
   const onGestureBegin = React.useCallback(() => {
@@ -140,9 +144,16 @@ export function DrawerLayout({
     Keyboard.dismiss();
   }, [startInteraction]);
 
-  const onGestureFinish = React.useCallback(() => {
-    endInteraction();
-  }, [endInteraction]);
+  const onGestureFinish = React.useCallback(
+    (nextOpen: boolean) => {
+      endInteraction();
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      if (nextOpen) {
+        Keyboard.dismiss();
+      }
+    },
+    [endInteraction],
+  );
 
   const pan = React.useMemo(() => {
     const gesture = Gesture.Pan()
@@ -180,7 +191,7 @@ export function DrawerLayout({
             : openValue.value;
 
         toggleDrawer(nextOpen, event.velocityX);
-        runOnJS(onGestureFinish)();
+        runOnJS(onGestureFinish)(nextOpen);
       })
       .activeOffsetX([-SWIPE_MIN_OFFSET, SWIPE_MIN_OFFSET])
       .failOffsetY([-SWIPE_MIN_OFFSET, SWIPE_MIN_OFFSET])
