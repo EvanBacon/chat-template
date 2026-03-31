@@ -1,6 +1,7 @@
+import { useCSSVariable } from "uniwind";
 import { TouchableGlass } from "@/components/touchable-glass";
 import { GlassContainer, GlassView } from "expo-glass-effect";
-import { SymbolView } from "expo-symbols";
+import { SymbolImage } from "@/components/symbol-image";
 import type { ReactNode } from "react";
 import {
   ActivityIndicator,
@@ -115,12 +116,13 @@ export function PromptInputTextarea({
   maxLength?: number;
 }) {
   const { input, setInput } = useChatContext();
+  const placeholderColor = useCSSVariable("--sf-text-placeholder") as string;
 
   return (
     <TextInput
       nativeID="composer"
       className="flex-1 pl-4 pr-2 py-2.5 text-base text-sf-text max-h-[100px]"
-      placeholderTextColor="var(--sf-text-placeholder)"
+      placeholderTextColor={placeholderColor}
       value={input}
       onChangeText={setInput}
       placeholder={placeholder}
@@ -159,11 +161,10 @@ export function PromptInputSubmit() {
       {isGenerating ? (
         <ActivityIndicator size="small" color="#fff" />
       ) : (
-        <SymbolView
+        <SymbolImage
           name="arrow.up"
           size={16}
           tintColor="#fff"
-          weight="semibold"
         />
       )}
     </Pressable>

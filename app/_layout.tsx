@@ -104,7 +104,7 @@ function DrawerChatItem({
 
 function DrawerContent({ onNavigate }: { onNavigate: (path: string) => void }) {
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={["top", "bottom", "left"]}>
+    <SafeAreaView className="flex-1 bg-background" edges={["top", "bottom", "left"]}>
       {/* Header */}
       <View style={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 12 }}>
         <Text style={{ fontSize: 28, fontWeight: "700" }}>Chat</Text>
@@ -190,7 +190,9 @@ function DrawerContent({ onNavigate }: { onNavigate: (path: string) => void }) {
             justifyContent: "center",
           })}
         >
-          <Text style={{ fontSize: 22, fontWeight: "300", marginTop: -1 }}>+</Text>
+          <Text style={{ fontSize: 22, fontWeight: "300", marginTop: -1 }}>
+            +
+          </Text>
         </Pressable>
       </View>
     </SafeAreaView>
@@ -221,7 +223,7 @@ export default function RootLayout() {
           drawerContent={
             <DrawerContent
               onNavigate={(path) => {
-                router.replace(path as any);
+                router.replace(path as any, { withAnchor: true });
               }}
             />
           }

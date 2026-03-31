@@ -247,7 +247,7 @@ export function DrawerLayout({
   });
 
   return (
-    <GestureHandlerRootView style={styles.container}>
+    <GestureHandlerRootView style={styles.container} className="bg-background">
       <GestureDetector gesture={pan}>
         <Animated.View style={styles.main}>
           <Animated.View

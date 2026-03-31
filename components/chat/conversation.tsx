@@ -1,12 +1,11 @@
 import { LegendList, LegendListRef } from "@legendapp/list";
-import { SymbolView } from "expo-symbols";
+import { SymbolImage } from "@/components/symbol-image";
 import {
   createContext,
   use,
   useCallback,
   useRef,
   useState,
-  type ComponentProps,
   type ReactElement,
   type ReactNode,
 } from "react";
@@ -278,11 +277,10 @@ export function ConversationScrollButton() {
           opacity: pressed ? 0.7 : 1,
         })}
       >
-        <SymbolView
+        <SymbolImage
           name="chevron.down"
           size={16}
           className="tint-sf-text"
-          weight="semibold"
         />
       </Pressable>
     </Animated.View>
@@ -296,11 +294,11 @@ export function ConversationEmptyState({
 }: {
   title?: string;
   description?: string;
-  icon?: ComponentProps<typeof SymbolView>["name"];
+  icon?: string;
 }) {
   return (
     <View className="flex-1 justify-center items-center pt-24">
-      <SymbolView
+      <SymbolImage
         name={icon}
         size={48}
         className="tint-sf-text-3 mb-4"
