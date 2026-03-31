@@ -74,7 +74,7 @@ function TouchableGlassFallback({
   // TODO: Add iOS 18 bounce effect on blur.
   return (
     <TouchableWithoutFeedback
-      style={{ display: "contents" }}
+      className="contents"
       onPress={onTouchEndSuccess}
       onPressIn={onTouchBegin}
       onPressOut={onTouchEnd}

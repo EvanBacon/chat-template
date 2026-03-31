@@ -7,7 +7,7 @@ export function StreamingMessage({ store }: { store: StreamingStore }) {
   return (
     <Text className="text-[13px] leading-[1.65] text-foreground">
       {text || "..."}
-      <Text style={{ opacity: 0.4 }}>{"\u258C"}</Text>
+      <Text className="opacity-40">{"\u258C"}</Text>
     </Text>
   );
 }

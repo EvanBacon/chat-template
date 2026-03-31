@@ -105,7 +105,7 @@ function DrawerContent({ onNavigate }: { onNavigate: (path: string) => void }) {
         className="flex-1"
         contentContainerStyle={{ paddingBottom: 8 }}
       >
-        <DrawerNavItem label="Chats" onPress={() => onNavigate("/")} />
+        <DrawerNavItem label="Chats" onPress={() => onNavigate("/chats")} />
         <DrawerNavItem
           label="Settings"
           onPress={() => onNavigate("/settings")}

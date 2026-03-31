@@ -14,8 +14,7 @@ export function LoadingScreen({
       {error && (
         <Text
           selectable
-          className="text-sm text-center px-5"
-          style={{ color: "#ff3b30" }}
+          className="text-sm text-center px-5 text-[#ff3b30]"
         >
           {error}
         </Text>

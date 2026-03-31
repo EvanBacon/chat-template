@@ -144,7 +144,7 @@ export function Conversation({
             paddingTop: 24,
             gap: 20,
           }}
-          style={{ flex: 1 }}
+          className="flex-1"
           estimatedItemSize={80}
           onLayout={onScrollViewLayout}
           onScroll={onScroll}

@@ -26,7 +26,7 @@ export function Message({
         {typeof children === "string" ? (
           <Text
             selectable
-            style={{ fontSize: 16, lineHeight: 22, color: "#fff" }}
+            className="text-base leading-[22px] text-white"
           >
             {children}
           </Text>
@@ -41,7 +41,7 @@ export function Message({
     <Animated.View
       entering={FadeIn.duration(200)}
       exiting={FadeOut.duration(150)}
-      style={{ marginBottom: 8 }}
+      className="mb-2"
     >
       {children}
     </Animated.View>

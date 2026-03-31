@@ -37,6 +37,12 @@ export default function Layout() {
   return (
     <Stack>
       <Stack.Screen
+        name="chats"
+        options={{
+          title: "Chats",
+        }}
+      />
+      <Stack.Screen
         name="index"
         options={{
           title: "Chat",

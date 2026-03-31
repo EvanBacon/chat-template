@@ -229,7 +229,7 @@ export function Conversation({
           interpolator="ios"
           showOnSwipeUp
           offset={composerOffsetHeight}
-          style={{ flex: 1 }}
+          className="flex-1"
         >
           <AnimatedLegendList
             ref={listRef}

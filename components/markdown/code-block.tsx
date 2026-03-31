@@ -166,7 +166,7 @@ export const CodeBlock = memo(function CodeBlock({
         renderer={renderer}
         CodeTag={View as any}
         PreTag={View as any}
-        style={{}}
+        style={undefined}
         customStyle={{ backgroundColor: "transparent" }}
         language={language || "typescript"}
       >
