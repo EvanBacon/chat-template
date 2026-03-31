@@ -246,6 +246,8 @@ function StackLayout() {
           animation: "none",
         }}
       >
+        <Stack.Header transparent></Stack.Header>
+
         <Stack.Toolbar placement="left">
           <Stack.Toolbar.Button
             icon={"line.horizontal.3"}

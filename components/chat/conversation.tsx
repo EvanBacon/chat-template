@@ -234,7 +234,12 @@ export function Conversation({
             data={messages}
             renderItem={renderMessage as any}
             keyExtractor={(item) => (item as ChatMessage).id}
-            contentContainerStyle={{ padding: 16, paddingBottom: 8 }}
+            contentContainerStyle={{
+              padding: 16,
+              // transparent header spacing.
+              paddingTop: 128,
+              paddingBottom: 8,
+            }}
             keyboardDismissMode="interactive"
             automaticallyAdjustsScrollIndicatorInsets={false}
             maintainVisibleContentPosition
