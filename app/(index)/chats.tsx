@@ -105,16 +105,15 @@ function ChatRow({
   return (
     <Link href="/" asChild>
       <Link.Trigger>
-        <Pressable
-          style={({ pressed }) => ({
-            flexDirection: "row",
-            alignItems: "center",
-            paddingHorizontal: 20,
-            paddingVertical: 14,
-            backgroundColor: pressed ? "rgba(128,128,128,0.1)" : "transparent",
-          })}
-        >
-          <View style={{ flex: 1, gap: 2 }}>
+        <Pressable className="flex-row items-center px-5 py-4 active:bg-card">
+          <View
+            style={{
+              flex: 1,
+
+              gap: 3,
+              marginRight: 12,
+            }}
+          >
             <Text
               numberOfLines={1}
               style={{ fontSize: 17, color: "white" }}
@@ -126,19 +125,16 @@ function ChatRow({
               {formatTimeAgo(item.daysAgo)}
             </Text>
           </View>
-          <Text
+          <Image
+            source="sf:chevron.right"
             style={{
-              fontSize: 22,
-              color: "rgba(255,255,255,0.2)",
-              marginLeft: 8,
-              marginTop: -2,
+              width: 10,
+              height: 16,
+              tintColor: "rgba(255,255,255,0.25)",
             }}
-          >
-            ›
-          </Text>
+          />
         </Pressable>
       </Link.Trigger>
-      <Link.Preview />
       <Link.Menu>
         <Link.MenuAction
           title={item.starred ? "Unstar" : "Star"}
@@ -204,9 +200,11 @@ export default function ChatsScreen() {
     return results;
   }, [search, chats, filter]);
 
-  const handleRename = useCallback(
-    (chat: Chat) => {
-      Alert.prompt("Rename Chat", undefined, [
+  const handleRename = useCallback((chat: Chat) => {
+    Alert.prompt(
+      "Rename Chat",
+      undefined,
+      [
         { text: "Cancel", style: "cancel" },
         {
           text: "OK",
@@ -214,16 +212,17 @@ export default function ChatsScreen() {
             if (newTitle?.trim()) {
               setChats((prev) =>
                 prev.map((c) =>
-                  c.id === chat.id ? { ...c, title: newTitle.trim() } : c
-                )
+                  c.id === chat.id ? { ...c, title: newTitle.trim() } : c,
+                ),
               );
             }
           },
         },
-      ], "plain-text", chat.title);
-    },
-    []
-  );
+      ],
+      "plain-text",
+      chat.title,
+    );
+  }, []);
 
   const handleDelete = useCallback((chat: Chat) => {
     Alert.alert("Delete Chat", `Delete "${chat.title}"?`, [
@@ -240,9 +239,7 @@ export default function ChatsScreen() {
 
   const handleStar = useCallback((chat: Chat) => {
     setChats((prev) =>
-      prev.map((c) =>
-        c.id === chat.id ? { ...c, starred: !c.starred } : c
-      )
+      prev.map((c) => (c.id === chat.id ? { ...c, starred: !c.starred } : c)),
     );
   }, []);
 
