@@ -52,7 +52,6 @@ export function PromptInputAction({
 }) {
   return (
     <TouchableGlass
-      glassEffectStyle="regular"
       style={{
         width: 44,
         height: 44,
@@ -137,14 +136,19 @@ export function PromptInputSubmit() {
         opacity: pressed ? 0.7 : 1,
         margin: 5,
       })}
-      className={disabled ? "bg-secondary" : "bg-blue-500"}
+      className={disabled ? "bg-secondary" : "bg-white"}
       onPress={onSend}
       disabled={disabled}
     >
       {isGenerating ? (
         <ActivityIndicator size="small" color="#fff" />
       ) : (
-        <SymbolImage name="arrow.up" size={16} tintColor="#fff" />
+        <SymbolImage
+          name="arrow.up"
+          size={16}
+          className="font-semibold"
+          tintColor={disabled ? "#fff" : "#000"}
+        />
       )}
     </Pressable>
   );

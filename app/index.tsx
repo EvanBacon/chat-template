@@ -14,9 +14,9 @@ import {
   createStreamingStore,
   type ChatMessage,
 } from "@/components/chat";
+import { Image } from "@/components/tw";
 import * as Haptics from "expo-haptics";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { Text } from "react-native";
 // Throttle interval for streaming UI updates (~30fps)
 const STREAMING_THROTTLE_MS = 32;
 
@@ -157,7 +157,10 @@ export default function ChatScreen() {
         <ConversationScrollButton />
         <PromptInput>
           <PromptInputAction>
-            <Text className="text-2xl text-foreground">+</Text>
+            <Image
+              source="sf:plus"
+              className="w-5 h-5 text-muted-foreground font-semibold"
+            />
           </PromptInputAction>
           <PromptInputBody>
             <PromptInputTextarea />
