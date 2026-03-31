@@ -180,6 +180,8 @@ import {
   Message,
   MessageResponse,
   PromptInput,
+  PromptInputAction,
+  PromptInputBody,
   PromptInputSubmit,
   PromptInputTextarea,
   StreamingMessage,
@@ -329,8 +331,11 @@ export default function SwiftUIChatScreen() {
         }
       >
         <PromptInput>
-          <PromptInputTextarea />
-          <PromptInputSubmit />
+          <PromptInputAction />
+          <PromptInputBody>
+            <PromptInputTextarea />
+            <PromptInputSubmit />
+          </PromptInputBody>
         </PromptInput>
       </Conversation>
     </ChatProvider>

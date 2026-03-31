@@ -36,7 +36,7 @@ export function Conversation({
             axes="vertical"
             modifiers={[
               scrollDismissesKeyboard("interactively"),
-              defaultScrollAnchor("center"),
+              defaultScrollAnchor(messages.length === 0 ? "center" : "top"),
             ]}
           >
             <VStack

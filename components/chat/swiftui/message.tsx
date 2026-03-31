@@ -1,9 +1,4 @@
-import {
-  HStack,
-  Spacer,
-  Text,
-  VStack,
-} from "@expo/ui/swift-ui";
+import { Text, VStack } from "@expo/ui/swift-ui";
 import {
   background,
   cornerRadius,
@@ -22,15 +17,17 @@ export function Message({
 }) {
   if (from === "user") {
     return (
-      <HStack>
-        <Spacer />
+      <VStack
+        alignment="trailing"
+        modifiers={[frame({ alignment: "trailing", maxWidth: Infinity })]}
+      >
         <VStack
           alignment="trailing"
           modifiers={[
             padding({ all: 12 }),
             background("#2C2C2E"),
             cornerRadius(16),
-            frame({ maxWidth: 280 }),
+            frame({ alignment: "trailing", maxWidth: 280 }),
           ]}
         >
           {typeof children === "string" ? (
@@ -39,7 +36,7 @@ export function Message({
             children
           )}
         </VStack>
-      </HStack>
+      </VStack>
     );
   }
 
@@ -54,9 +51,7 @@ export function MessageResponse({ children }: { children: string }) {
   return (
     <Text
       markdownEnabled
-      modifiers={[
-        foregroundStyle({ type: "hierarchical", style: "primary" }),
-      ]}
+      modifiers={[foregroundStyle({ type: "hierarchical", style: "primary" })]}
     >
       {children || "..."}
     </Text>
