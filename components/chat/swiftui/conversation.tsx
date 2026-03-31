@@ -7,6 +7,7 @@ import {
 } from "@expo/ui/swift-ui";
 import {
   defaultScrollAnchor,
+  defaultScrollAnchorForRole,
   font,
   foregroundStyle,
   padding,
@@ -37,6 +38,7 @@ export function Conversation({
             modifiers={[
               scrollDismissesKeyboard("interactively"),
               defaultScrollAnchor(messages.length === 0 ? "center" : "top"),
+              defaultScrollAnchorForRole("bottom", "sizeChanges"),
             ]}
           >
             <VStack

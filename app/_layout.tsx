@@ -303,12 +303,7 @@ function StackLayout() {
       >
         <Stack.Header transparent></Stack.Header>
       </Stack.Screen>
-      <Stack.Screen
-        name="swiftui-chat"
-        options={{
-          title: "SwiftUI Chat",
-        }}
-      />
+
       <Stack.Screen
         name="(settings)"
         options={{
