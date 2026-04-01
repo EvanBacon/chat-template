@@ -16,6 +16,7 @@ import {
 } from "@/components/chat";
 import { Image } from "@/components/tw";
 import * as Haptics from "expo-haptics";
+import { useRouter } from "expo-router";
 import { useCallback, useMemo, useRef, useState } from "react";
 // Throttle interval for streaming UI updates (~30fps)
 const STREAMING_THROTTLE_MS = 32;
@@ -41,6 +42,7 @@ async function mockStreamResponse(
 }
 
 export default function ChatScreen() {
+  const router = useRouter();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -156,7 +158,7 @@ export default function ChatScreen() {
       >
         <ConversationScrollButton />
         <PromptInput>
-          <PromptInputAction>
+          <PromptInputAction onPress={() => router.navigate("/add-to-chat")}>
             <Image
               source="sf:plus"
               className="w-5 h-5 text-muted-foreground font-semibold"

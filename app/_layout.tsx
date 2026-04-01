@@ -31,22 +31,15 @@ import {
   DefaultTheme,
   ThemeProvider as RNTheme,
 } from "@react-navigation/native";
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView as XSafeAreaView } from "react-native-safe-area-context";
 import { withUniwind } from "uniwind";
 const SafeAreaView = withUniwind(XSafeAreaView);
 
 function ThemeProvider(props: { children: React.ReactNode }) {
   // TODO: Enable other modes
-  const colorScheme = useColorScheme();
-  // const colorScheme = "dark"; // useColorScheme();
+  // const colorScheme = useColorScheme();
+  const colorScheme = "dark"; // useColorScheme();
   return (
     <RNTheme value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       {props.children}
@@ -405,6 +398,23 @@ function StackLayout() {
         }}
       >
         <Stack.Header transparent></Stack.Header>
+      </Stack.Screen>
+
+      <Stack.Screen
+        name="add-to-chat"
+        options={{
+          presentation: "formSheet",
+          title: "Add to Chat",
+          sheetAllowedDetents: [0.55, 0.85],
+          sheetGrabberVisible: true,
+          contentStyle: { backgroundColor: "transparent" },
+        }}
+      >
+        <Stack.Header style={{ backgroundColor: "transparent" }}>
+          <Stack.Header.Left>
+            <Stack.Header.CloseButton />
+          </Stack.Header.Left>
+        </Stack.Header>
       </Stack.Screen>
 
       <Stack.Screen
