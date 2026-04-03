@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useState } from "react";
+import React, { createContext, use, useCallback, useState } from "react";
 
 type DrawerContextValue = {
   isOpen: boolean;
@@ -15,14 +15,14 @@ export function DrawerProvider({ children }: { children: React.ReactNode }) {
   const closeDrawer = useCallback(() => setIsOpen(false), []);
 
   return (
-    <DrawerContext.Provider value={{ isOpen, openDrawer, closeDrawer }}>
+    <DrawerContext value={{ isOpen, openDrawer, closeDrawer }}>
       {children}
-    </DrawerContext.Provider>
+    </DrawerContext>
   );
 }
 
 export function useDrawer() {
-  const context = useContext(DrawerContext);
+  const context = use(DrawerContext);
   if (!context) {
     throw new Error("useDrawer must be used within a DrawerProvider");
   }

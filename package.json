@@ -29,7 +29,7 @@
     "expo-splash-screen": "~55.0.12",
     "expo-status-bar": "~55.0.4",
     "expo-symbols": "~55.0.5",
-    "expo-system-ui": "~55.0.10",
+    "expo-system-ui": "~55.0.13",
     "expo-web-browser": "~55.0.10",
     "mdast-util-from-markdown": "^2.0.3",
     "mdast-util-gfm-table": "^2.0.0",

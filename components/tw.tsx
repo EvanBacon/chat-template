@@ -9,6 +9,9 @@ import { withUniwind } from "uniwind";
 
 import { KeyboardGestureArea as XKeyboardGestureArea } from "react-native-keyboard-controller";
 import Animated from "react-native-reanimated";
+import { SafeAreaView as XSafeAreaView } from "react-native-safe-area-context";
+
+export const SafeAreaView = withUniwind(XSafeAreaView);
 
 export const Image = withUniwind(XImage);
 export const KeyboardGestureArea = withUniwind(XKeyboardGestureArea);

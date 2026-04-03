@@ -9,23 +9,24 @@
 /* ─── Design Tokens ─── */
 
 :root {
-  --app-background: oklch(0.985 0 0);
-  --app-foreground: oklch(0.12 0 0);
-  --app-card: oklch(1 0 0);
-  --app-muted: oklch(0.955 0 0);
-  --app-muted-foreground: oklch(0.55 0 0);
-  --app-border: oklch(0.88 0 0);
-  --app-secondary: oklch(0.96 0 0);
-  --app-accent: oklch(0.94 0 0);
-  --app-sidebar: oklch(0.97 0 0);
-  --app-shadow-card: 0 1px 3px oklch(0 0 0 / 0.06), 0 1px 2px oklch(0 0 0 / 0.04);
-  --app-shadow-float: 0 4px 16px oklch(0 0 0 / 0.08), 0 1px 4px oklch(0 0 0 / 0.04);
-  --app-shadow-composer: 0 2px 8px oklch(0 0 0 / 0.06), 0 0 0 1px oklch(0 0 0 / 0.03);
-  --app-shadow-composer-focus: 0 4px 16px oklch(0 0 0 / 0.1), 0 0 0 1px oklch(0 0 0 / 0.06);
-}
+  
+  @variant light {
+    --app-background: oklch(0.985 0 0);
+    --app-foreground: oklch(0.12 0 0);
+    --app-card: oklch(1 0 0);
+    --app-muted: oklch(0.955 0 0);
+    --app-muted-foreground: oklch(0.55 0 0);
+    --app-border: oklch(0.88 0 0);
+    --app-secondary: oklch(0.96 0 0);
+    --app-accent: oklch(0.94 0 0);
+    --app-sidebar: oklch(0.97 0 0);
+    --app-shadow-card: 0 1px 3px oklch(0 0 0 / 0.06), 0 1px 2px oklch(0 0 0 / 0.04);
+    --app-shadow-float: 0 4px 16px oklch(0 0 0 / 0.08), 0 1px 4px oklch(0 0 0 / 0.04);
+    --app-shadow-composer: 0 2px 8px oklch(0 0 0 / 0.06), 0 0 0 1px oklch(0 0 0 / 0.03);
+    --app-shadow-composer-focus: 0 4px 16px oklch(0 0 0 / 0.1), 0 0 0 1px oklch(0 0 0 / 0.06);
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
+  @variant dark {
     --app-background: oklch(0.195 0 0);
     --app-foreground: oklch(0.94 0 0);
     --app-card: oklch(0.225 0 0);
@@ -41,6 +42,7 @@
     --app-shadow-composer-focus: 0 4px 16px oklch(0 0 0 / 0.3), 0 0 0 1px oklch(0 0 0 / 0.15);
   }
 }
+
 
 @theme {
   --color-background: var(--app-background);

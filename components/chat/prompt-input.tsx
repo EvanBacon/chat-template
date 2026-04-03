@@ -130,7 +130,7 @@ export function PromptInputTextarea({
       nativeID="composer"
       cursorColorClassName="tint-foreground"
       selectionColorClassName="tint-foreground"
-      className="flex-1 pl-4 pr-2 py-2.5 text-base text-foreground max-h-25"
+      className="flex-1 pl-4 pr-2 py-2.5 text-base text-foreground dark:text-foreground max-h-25"
       value={input}
       onChangeText={setInput}
       placeholder={placeholder}
@@ -160,7 +160,7 @@ export function PromptInputSubmit() {
         opacity: pressed ? 0.7 : 1,
         margin: 5,
       })}
-      className={disabled ? "bg-secondary" : "bg-white"}
+      className={disabled ? "bg-secondary" : "bg-foreground"}
       onPress={onSend}
       disabled={disabled}
     >
@@ -172,7 +172,9 @@ export function PromptInputSubmit() {
           size={16}
           className={cn(
             "font-semibold",
-            disabled ? "text-muted-foreground" : "text-background",
+            disabled
+              ? "text-muted-foreground"
+              : "text-background dark:text-background",
           )}
         />
       )}
