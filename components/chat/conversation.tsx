@@ -20,6 +20,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { isLiquidGlassAvailable } from "expo-glass-effect";
 import { KeyboardGestureArea } from "../tw";
 import { useChatContext } from "./chat-context";
 import type { ChatMessage } from "./types";
@@ -237,7 +238,7 @@ export function Conversation({
             contentContainerStyle={{
               padding: 16,
               // transparent header spacing.
-              paddingTop: 128,
+              paddingTop: isLiquidGlassAvailable() ? 128 : 16,
               paddingBottom: 8,
             }}
             keyboardDismissMode="interactive"
@@ -280,7 +281,10 @@ export function ConversationScrollButton() {
           opacity: pressed ? 0.7 : 1,
         })}
       >
-        <SymbolImage name="chevron.down" className="text-white text-base" />
+        <SymbolImage
+          name="chevron.down"
+          className="text-foreground text-base"
+        />
       </Pressable>
     </Animated.View>
   );

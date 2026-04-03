@@ -1,10 +1,16 @@
 import { SymbolImage } from "@/components/symbol-image";
 import { TouchableGlass } from "@/components/touchable-glass";
-import { GlassContainer, GlassView } from "expo-glass-effect";
+import {
+  GlassContainer,
+  GlassView,
+  isLiquidGlassAvailable,
+} from "expo-glass-effect";
 import type { ReactNode } from "react";
 import { ActivityIndicator, Pressable, TextInput } from "react-native";
 import Animated from "react-native-reanimated";
 
+import { cn } from "@/utils/tailwind";
+import { BlurView } from "expo-blur";
 import { useChatContext } from "./chat-context";
 import { useConversationContext } from "./conversation";
 
@@ -70,20 +76,39 @@ export function PromptInputAction({
  * Glass-wrapped container for the textarea and submit button.
  */
 export function PromptInputBody({ children }: { children: ReactNode }) {
+  if (isLiquidGlassAvailable()) {
+    return (
+      <GlassView
+        isInteractive
+        glassEffectStyle="regular"
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          alignItems: "flex-end",
+          borderRadius: 22,
+          borderCurve: "continuous",
+        }}
+      >
+        {children}
+      </GlassView>
+    );
+  }
+
+  // TODO: Android version...
   return (
-    <GlassView
-      isInteractive
-      glassEffectStyle="regular"
+    <BlurView
+      tint="systemChromeMaterial"
       style={{
         flex: 1,
         flexDirection: "row",
         alignItems: "flex-end",
+        overflow: "hidden",
         borderRadius: 22,
         borderCurve: "continuous",
       }}
     >
       {children}
-    </GlassView>
+    </BlurView>
   );
 }
 
@@ -103,8 +128,8 @@ export function PromptInputTextarea({
   return (
     <TextInput
       nativeID="composer"
-      cursorColor={"white"}
-      selectionColor={"white"}
+      cursorColorClassName="tint-foreground"
+      selectionColorClassName="tint-foreground"
       className="flex-1 pl-4 pr-2 py-2.5 text-base text-foreground max-h-25"
       value={input}
       onChangeText={setInput}
@@ -140,13 +165,15 @@ export function PromptInputSubmit() {
       disabled={disabled}
     >
       {isGenerating ? (
-        <ActivityIndicator size="small" color="#fff" />
+        <ActivityIndicator size="small" colorClassName="tint-foreground" />
       ) : (
         <SymbolImage
           name="arrow.up"
           size={16}
-          className="font-semibold"
-          tintColor={disabled ? "#fff" : "#000"}
+          className={cn(
+            "font-semibold",
+            disabled ? "text-muted-foreground" : "text-background",
+          )}
         />
       )}
     </Pressable>

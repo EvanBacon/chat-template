@@ -150,7 +150,7 @@ function EmptySearch({ query }: { query: string }) {
       <Image
         source="sf:magnifyingglass"
         className="w-10 h-10"
-        tintColor="rgba(255,255,255,0.3)"
+        tintColorClassName="tint-muted-foreground"
       />
       <Text className="text-[17px] text-muted-foreground text-center px-10">
         No results found for &ldquo;{query}&rdquo;
@@ -242,7 +242,6 @@ export default function ChatsScreen() {
       <Stack.Screen
         options={{
           title: "Chats",
-          contentStyle: { backgroundColor: "rgb(30,30,30)" },
         }}
       />
       <Stack.SearchBar
@@ -252,10 +251,7 @@ export default function ChatsScreen() {
       />
 
       <Stack.Toolbar placement="left">
-        <Stack.Toolbar.Button
-          icon="line.horizontal.3"
-          onPress={openDrawer}
-        />
+        <Stack.Toolbar.Button icon="line.horizontal.3" onPress={openDrawer} />
       </Stack.Toolbar>
       <Stack.Toolbar placement="right">
         <Stack.Toolbar.Menu icon="line.horizontal.3.decrease">

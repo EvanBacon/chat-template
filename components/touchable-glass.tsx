@@ -5,9 +5,9 @@ import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
 import { BlurViewRawBackdrop } from "./blur-raw";
-import { GlassView } from "./tw";
+import { AppleGlassView } from "./tw";
 
-type GlassViewProps = React.ComponentProps<typeof GlassView>;
+type GlassViewProps = React.ComponentProps<typeof AppleGlassView>;
 
 interface TouchableGlassProps extends GlassViewProps {
   onPress?: () => void;
@@ -39,7 +39,7 @@ function TouchableGlassNative({
   // TODO: Add iOS 18 bounce effect on blur.
   return (
     <GestureDetector gesture={tap}>
-      <GlassView
+      <AppleGlassView
         ref={ref}
         collapsable={false}
         isInteractive={!disabled}
@@ -91,7 +91,7 @@ function TouchableGlassFallback({
             transitionProperty: ["transform", "opacity"],
             transitionTimingFunction: "ease-in-out",
           },
-          pressed && { transform: [{ scale: 0.85 }] },
+          pressed && { transform: [{ scale: 1.1 }] },
           disabled && { opacity: 0.5 },
           rest.style,
         ]}

@@ -176,11 +176,13 @@ function DrawerContent({
         </TouchableGlass>
         <View className="flex-1" />
         <TouchableGlass
-          tintColor="#FFF"
           onPress={() => onNavigate("/")}
-          className="w-10 h-10 rounded-full bg-accent active:bg-muted items-center justify-center"
+          className="w-10 h-10 rounded-full bg-foreground active:bg-muted items-center justify-center"
         >
-          <Image source="sf:plus.message" className="text-2xl text-black" />
+          <Image
+            source="sf:plus.message"
+            className="text-2xl text-background"
+          />
         </TouchableGlass>
       </View>
     </SafeAreaView>
@@ -212,6 +214,7 @@ function RootDrawer() {
       drawerContent={
         <DrawerContent
           onNavigate={(path) => {
+            closeDrawer();
             router.replace(path as any, { withAnchor: true });
           }}
           onOpenModal={(path) => {
@@ -225,6 +228,7 @@ function RootDrawer() {
   );
 }
 
+import { isLiquidGlassAvailable } from "expo-glass-effect";
 import { useState } from "react";
 
 const MODELS = [
@@ -256,6 +260,10 @@ function StackLayout() {
   const { openDrawer } = useDrawer();
   const [selectedModel, setSelectedModel] = useState("sonnet-4.6");
   const [extendedThinking, setExtendedThinking] = useState(true);
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === "dark";
+  const headerFg = isDark ? "#fff" : "#000";
+  const headerFgMuted = isDark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.5)";
 
   const selectedLabel =
     [...MODELS, ...MORE_MODELS].find((m) => m.id === selectedModel)?.label ??
@@ -269,6 +277,12 @@ function StackLayout() {
           title: "Chat",
           animation: "none",
           gestureEnabled: false,
+          headerTransparent: isLiquidGlassAvailable(),
+          // headerLargeTitleShadowVisible: false,
+          headerBackButtonDisplayMode: isLiquidGlassAvailable()
+            ? "minimal"
+            : "default",
+
           headerTitle:
             process.env.EXPO_OS !== "ios"
               ? undefined
@@ -290,7 +304,7 @@ function StackLayout() {
                             <HStack spacing={4} alignment="center">
                               <SUIText
                                 modifiers={[
-                                  foregroundStyle("#fff"),
+                                  foregroundStyle(headerFg),
                                   font({ weight: "semibold", size: 17 }),
                                 ]}
                               >
@@ -299,13 +313,13 @@ function StackLayout() {
                               <SUIImage
                                 systemName="chevron.down"
                                 size={10}
-                                color="#fff"
+                                color={headerFg}
                               />
                             </HStack>
                             {subtitle && (
                               <SUIText
                                 modifiers={[
-                                  foregroundStyle("rgba(255, 255, 255, 0.7)"),
+                                  foregroundStyle(headerFgMuted),
                                   font({ size: 12 }),
                                 ]}
                               >
@@ -352,13 +366,19 @@ function StackLayout() {
                 },
         }}
       >
-        <Stack.Header transparent></Stack.Header>
-
         <Stack.Toolbar placement="left">
-          <Stack.Toolbar.Button icon={"list.bullet"} onPress={openDrawer} />
+          <Stack.Toolbar.Button
+            icon={"list.bullet"}
+            tintColor={isDark ? "white" : "black"}
+            onPress={openDrawer}
+          />
         </Stack.Toolbar>
         <Stack.Toolbar placement="right">
-          <Stack.Toolbar.Button icon={"eyeglasses"} onPress={() => {}} />
+          <Stack.Toolbar.Button
+            icon={"eyeglasses"}
+            tintColor={isDark ? "white" : "black"}
+            onPress={() => {}}
+          />
           {/* <Stack.Toolbar.Menu>
             <Stack.Toolbar.Label>{selectedLabel}</Stack.Toolbar.Label>
             <Stack.Toolbar.Menu inline>
@@ -411,18 +431,15 @@ function StackLayout() {
         name="add-to-chat"
         options={{
           presentation: "formSheet",
-          title: "Add to Chat",
+          title: "Add to chat",
+
           sheetAllowedDetents: [0.55, 0.85],
           sheetGrabberVisible: true,
+          headerTransparent: isLiquidGlassAvailable(),
+          headerLargeTitleShadowVisible: false,
           contentStyle: { backgroundColor: "transparent" },
         }}
-      >
-        <Stack.Header style={{ backgroundColor: "transparent" }}>
-          <Stack.Header.Left>
-            <Stack.Header.CloseButton />
-          </Stack.Header.Left>
-        </Stack.Header>
-      </Stack.Screen>
+      />
 
       <Stack.Screen
         name="(settings)"

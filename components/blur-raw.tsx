@@ -1,14 +1,16 @@
 "use client";
-import { requireNativeViewManager } from "expo-modules-core";
+// import { requireNativeViewManager } from "expo-modules-core";
 import React from "react";
 import { StyleSheet } from "react-native";
-let _NativeBlurView: any = null;
-function getNativeBlurView() {
-  if (!_NativeBlurView) {
-    _NativeBlurView = requireNativeViewManager("ExpoBlurView");
-  }
-  return _NativeBlurView;
-}
+// let _NativeBlurView: any = null;
+// function getNativeBlurView() {
+//   if (!_NativeBlurView) {
+//     _NativeBlurView = requireNativeViewManager("ExpoBlurView");
+//   }
+//   return _NativeBlurView;
+// }
+
+import { NativeBlurView } from "expo-blur/build/NativeBlurModule";
 
 export function BlurViewRawBackdrop({
   tint = "default",
@@ -19,7 +21,7 @@ export function BlurViewRawBackdrop({
   children,
   ...props
 }) {
-  const NativeBlurView = getNativeBlurView();
+  // const NativeBlurView = getNativeBlurView();
   return (
     <NativeBlurView
       tint={tint}

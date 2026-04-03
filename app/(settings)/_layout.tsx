@@ -1,14 +1,21 @@
 import * as Application from "expo-application";
+import { isLiquidGlassAvailable } from "expo-glass-effect";
 import { Stack, useRouter } from "expo-router";
+import { useCSSVariable } from "uniwind";
 
 export default function SettingsLayout() {
   const router = useRouter();
 
+  const appForeground = useCSSVariable("--app-foreground");
   return (
     <Stack
       screenOptions={{
-        headerTransparent: true,
-        headerBackButtonDisplayMode: "minimal",
+        headerTransparent: isLiquidGlassAvailable(),
+        headerLargeTitleShadowVisible: false,
+        headerBackButtonDisplayMode: isLiquidGlassAvailable()
+          ? "minimal"
+          : "default",
+        headerTintColor: appForeground,
       }}
     >
       <Stack.Screen

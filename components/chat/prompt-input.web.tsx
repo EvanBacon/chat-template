@@ -125,7 +125,7 @@ export function PromptInputTextarea({
       value={input}
       onChangeText={setInput}
       placeholder={placeholder}
-      placeholderTextColor="var(--app-muted-foreground)"
+      placeholderTextColorClassName="tint-muted-foreground"
       multiline
       maxLength={maxLength}
       onKeyPress={(e) => {
@@ -159,7 +159,7 @@ export function PromptInputSubmit() {
       }`}
     >
       {isGenerating ? (
-        <ActivityIndicator size="small" color="var(--app-background)" />
+        <ActivityIndicator size="small" colorClassName="tint-background" />
       ) : (
         <Text
           className={`text-sm font-bold ${

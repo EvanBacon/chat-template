@@ -18,6 +18,7 @@
     "expo": "~55.0.5",
     "expo-application": "~55.0.10",
     "expo-asset": "~55.0.10",
+    "expo-blur": "~55.0.12",
     "expo-constants": "~55.0.9",
     "expo-font": "~55.0.4",
     "expo-glass-effect": "~55.0.8",
