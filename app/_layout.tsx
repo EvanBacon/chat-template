@@ -283,7 +283,7 @@ function StackLayout() {
           presentation: "formSheet",
           title: "Add to chat",
 
-          sheetAllowedDetents: [0.55, 0.85],
+          sheetAllowedDetents: [0.55],
           sheetGrabberVisible: true,
           headerTransparent: isLiquidGlassAvailable(),
           headerLargeTitleShadowVisible: false,

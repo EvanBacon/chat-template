@@ -84,7 +84,7 @@ export function PromptInputBody({ children }: { children: ReactNode }) {
         style={{
           flex: 1,
           flexDirection: "row",
-          alignItems: "flex-end",
+
           borderRadius: 22,
           borderCurve: "continuous",
         }}
@@ -101,7 +101,7 @@ export function PromptInputBody({ children }: { children: ReactNode }) {
       style={{
         flex: 1,
         flexDirection: "row",
-        alignItems: "flex-end",
+
         overflow: "hidden",
         borderRadius: 22,
         borderCurve: "continuous",
@@ -130,7 +130,8 @@ export function PromptInputTextarea({
       nativeID="composer"
       cursorColorClassName="tint-foreground"
       selectionColorClassName="tint-foreground"
-      className="flex-1 pl-4 pr-2 py-2.5 text-base text-foreground dark:text-foreground max-h-25"
+      style={{ fontSize: 16 }}
+      className="flex-1 pl-4 pr-2 py-3 text-foreground dark:text-foreground max-h-25"
       value={input}
       onChangeText={setInput}
       placeholder={placeholder}

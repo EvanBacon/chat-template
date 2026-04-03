@@ -5,13 +5,14 @@ import { useCSSVariable } from "uniwind";
 import { Markdown } from "./index";
 
 const VAR_NAMES = [
-  "--sf-text",
-  "--sf-text-2",
-  "--sf-border",
-  "--sf-bg-2",
-  "--sf-bg-3",
-  "--sf-fill-3",
-  "--sf-link",
+  "--app-foreground",
+  "--app-foreground-muted",
+  "--app-border",
+  "--app-bg-2",
+  "--app-bg-3",
+  "--app-fill-3",
+  // Tailwind blue
+  "--color-blue-400",
 ] as const;
 
 /**
@@ -19,15 +20,15 @@ const VAR_NAMES = [
  * the same way they appear during streaming. Skips fenced code blocks.
  */
 function preserveNewlines(md: string): string {
-  return md.replace(
-    /(```[\s\S]*?```)|(\n)/g,
-    (match, codeBlock) => (codeBlock ? match : "  \n")
+  return md.replace(/(```[\s\S]*?```)|(\n)/g, (match, codeBlock) =>
+    codeBlock ? match : "  \n",
   );
 }
 
 export function ChatMarkdown({ children }: { children: string }) {
-  const [text, text2, border, bg2, bg3, fill3, link] =
-    useCSSVariable(VAR_NAMES as unknown as string[]) as string[];
+  const [text, text2, border, bg2, bg3, fill3, link] = useCSSVariable(
+    VAR_NAMES as unknown as string[],
+  ) as string[];
 
   const isWeb = process.env.EXPO_OS === "web";
   const baseFontSize = isWeb ? 13 : 16;
@@ -200,8 +201,7 @@ export function ChatMarkdown({ children }: { children: string }) {
           Linking.openURL(url);
         } else {
           WebBrowser.openBrowserAsync(url, {
-            presentationStyle:
-              WebBrowser.WebBrowserPresentationStyle.AUTOMATIC,
+            presentationStyle: WebBrowser.WebBrowserPresentationStyle.AUTOMATIC,
           });
         }
       }}

@@ -20,13 +20,13 @@ export function Message({
       <Animated.View
         entering={FadeIn.duration(200)}
         exiting={FadeOut.duration(150)}
-        className="max-w-[80%] self-end rounded-2xl bg-card p-3 mb-2"
+        className="max-w-[80%] self-end rounded-2xl bg-card dark:bg-card p-3 mb-2"
         style={{ borderCurve: "continuous" }}
       >
         {typeof children === "string" ? (
           <Text
             selectable
-            className="text-base leading-[22px] text-foreground"
+            className="text-base leading-[22px] text-foreground dark:text-foreground"
           >
             {children}
           </Text>

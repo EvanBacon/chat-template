@@ -304,13 +304,15 @@ export function ConversationEmptyState({
       <SymbolImage
         name={icon}
         size={48}
-        className="text-muted-foreground mb-4"
+        className="text-muted-foreground dark:text-muted-foreground mb-4"
       />
-      <Text className="text-xl font-semibold text-foreground mb-2">
+      <Text className="text-xl font-semibold text-foreground dark:text-foreground mb-2">
         {title}
       </Text>
       {description && (
-        <Text className="text-sm text-muted-foreground">{description}</Text>
+        <Text className="text-sm text-muted-foreground dark:text-muted-foreground">
+          {description}
+        </Text>
       )}
     </View>
   );
