@@ -14,6 +14,7 @@
     --app-background: oklch(0.985 0 0);
     --app-foreground: oklch(0.12 0 0);
     --app-card: oklch(1 0 0);
+    --app-user-bubble: oklch(0.95 0.003 100);
     --app-muted: oklch(0.955 0 0);
     --app-muted-foreground: oklch(0.55 0 0);
     --app-border: oklch(0.88 0 0);
@@ -30,6 +31,7 @@
     --app-background: oklch(0.195 0 0);
     --app-foreground: oklch(0.94 0 0);
     --app-card: oklch(0.225 0 0);
+    --app-user-bubble: oklch(0.14 0 0);
     --app-muted: oklch(0.27 0 0);
     --app-muted-foreground: oklch(0.6 0 0);
     --app-border: oklch(0.32 0 0);
@@ -48,6 +50,7 @@
   --color-background: var(--app-background);
   --color-foreground: var(--app-foreground);
   --color-card: var(--app-card);
+  --color-user-bubble: var(--app-user-bubble);
   --color-muted: var(--app-muted);
   --color-muted-foreground: var(--app-muted-foreground);
   --color-border: var(--app-border);
