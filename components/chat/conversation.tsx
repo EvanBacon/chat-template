@@ -164,6 +164,8 @@ export function Conversation({
   }, []);
 
   // -- Animated styles -----------------------------------------------------
+  const IS_GLASS = isLiquidGlassAvailable();
+  const topPadding = IS_GLASS ? 128 : 16;
 
   const footerSpacerStyle = useAnimatedStyle(() => {
     const scrollHeight = scrollViewHeight.value;
@@ -172,7 +174,7 @@ export function Conversation({
     const keyboard = Math.abs(keyboardHeight.value);
     const bottom = composerHeight.value + Math.max(insets.bottom, keyboard);
     const blankSpace = scrollHeight - messagesOnlyHeight.value - bottom;
-    const footerHeight = Math.max(0, blankSpace);
+    const footerHeight = Math.max(0, blankSpace - topPadding);
 
     currentFooterHeight.value = footerHeight;
     return { height: footerHeight };
@@ -202,8 +204,9 @@ export function Conversation({
   const listAnimatedProps = useAnimatedProps(() => {
     const keyboard = Math.abs(keyboardHeight.value);
     const bottom = composerHeight.value + Math.max(insets.bottom, keyboard);
+    // paddingTop: isLiquidGlassAvailable() ? 128 : 16,
     return {
-      contentInset: { top: 0, left: 0, right: 0, bottom },
+      contentInset: { top: topPadding, left: 0, right: 0, bottom },
       scrollIndicatorInsets: { top: 0, left: 0, right: 0, bottom },
     };
   });
@@ -242,7 +245,6 @@ export function Conversation({
             contentContainerStyle={{
               padding: 16,
               // transparent header spacing.
-              paddingTop: isLiquidGlassAvailable() ? 128 : 16,
               paddingBottom: 8,
             }}
             keyboardDismissMode="interactive"
@@ -254,9 +256,18 @@ export function Conversation({
             onScroll={onScroll}
             scrollEventThrottle={16}
             onContentSizeChange={onContentSizeChange}
-            ListFooterComponent={<Animated.View style={footerSpacerStyle}>
-              {!messages.length && emptyState}
-            </Animated.View>}
+            ListFooterComponent={
+              <Animated.View
+                style={[
+                  footerSpacerStyle,
+                  {
+                    backgroundColor: "blue",
+                  },
+                ]}
+              >
+                {!messages.length && emptyState}
+              </Animated.View>
+            }
           />
         </KeyboardGestureArea>
 
