@@ -5,7 +5,7 @@ import {
   GlassView,
   isLiquidGlassAvailable,
 } from "expo-glass-effect";
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { ActivityIndicator, Pressable, TextInput } from "react-native";
 import Animated from "react-native-reanimated";
 
@@ -124,9 +124,17 @@ export function PromptInputTextarea({
   maxLength?: number;
 }) {
   const { input, setInput } = useChatContext();
+  const inputRef = useRef<TextInput>(null);
+
+  useEffect(() => {
+    if (input === "") {
+      inputRef.current?.clear();
+    }
+  }, [input]);
 
   return (
     <TextInput
+      ref={inputRef}
       nativeID="composer"
       cursorColorClassName="tint-foreground"
       selectionColorClassName="tint-foreground"
