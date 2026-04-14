@@ -90,7 +90,7 @@ export function Conversation({
       onEnd: (e) => {
         "worklet";
         keyboardHeight.value = e.height;
-        keyboardHeightForInset.value = e.height;
+        keyboardHeightForInset.value = withTiming(e.height, { duration: 250 });
       },
     },
     [],
