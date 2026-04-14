@@ -15,9 +15,12 @@ export function Message({
   if (from === "user") {
     return (
       <View className="flex flex-col items-end gap-2 animate-fade-up">
-        <View className="max-w-[min(80%,56ch)] overflow-hidden break-words rounded-2xl rounded-br-lg border border-border/30 bg-gradient-to-br from-secondary to-muted px-3.5 py-2 shadow-card">
+        <View className="max-w-[min(80%,56ch)] overflow-hidden wrap-break-word rounded-2xl rounded-br-lg border border-border/30 bg-linear-to-br from-secondary to-muted px-3.5 py-2 shadow-card">
           {typeof children === "string" ? (
-            <Text selectable className="text-[13px] leading-[1.65] text-foreground">
+            <Text
+              selectable
+              className="text-[13px] leading-[1.65] text-foreground"
+            >
               {children}
             </Text>
           ) : (
@@ -30,7 +33,7 @@ export function Message({
 
   return (
     <View className="flex flex-row items-start gap-3">
-      <View className="flex h-[21px] shrink-0 items-center">
+      <View className="flex h-5.25 shrink-0 items-center">
         <View className="flex h-7 w-7 items-center justify-center rounded-lg bg-muted/60 text-muted-foreground ring-1 ring-border/50">
           <Text className="text-[11px] text-muted-foreground">AI</Text>
         </View>

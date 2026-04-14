@@ -1,3 +1,4 @@
+import * as Tooltip from "@radix-ui/react-tooltip";
 import { Link, usePathname } from "expo-router";
 import {
   MessageSquarePlus,
@@ -6,7 +7,32 @@ import {
   SquarePen,
   Trash2,
 } from "lucide-react";
+import type { ReactNode } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
+
+function SidebarTooltip({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactNode;
+}) {
+  return (
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
+      <Tooltip.Portal>
+        <Tooltip.Content
+          side="right"
+          sideOffset={8}
+          className="z-[100] rounded-lg bg-foreground px-3 py-1.5 text-[13px] text-background shadow-float animate-fade-up"
+        >
+          {label}
+          <Tooltip.Arrow className="fill-foreground" />
+        </Tooltip.Content>
+      </Tooltip.Portal>
+    </Tooltip.Root>
+  );
+}
 
 const NAV_ITEMS = [
   { href: "/", label: "Chats" },
@@ -93,7 +119,7 @@ export function Sidebar({
                   onPress={onCollapse}
                   className="hidden md:flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground"
                 >
-                  <PanelLeftIcon />
+                  <PanelLeft size={18} strokeWidth={1.5} />
                 </Pressable>
               </View>
             </View>
@@ -165,37 +191,35 @@ export function Sidebar({
 
         {/* Collapsed icon rail */}
         {isCollapsed && (
-          <View className="flex flex-col items-center gap-1 pt-3 px-1.5">
-            <Pressable
-              onPress={onCollapse}
-              className="sidebar-toggle-btn flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground"
-              // @ts-expect-error web title attribute for tooltip
-              title="Open sidebar"
-            >
-              <View className="sidebar-toggle-default">
-                <PanelLeftIcon />
-              </View>
-              <View className="sidebar-toggle-hover">
-                <PanelLeftOpenIcon />
-              </View>
-            </Pressable>
-            <Link href="/" asChild>
-              <Pressable
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground"
-                // @ts-expect-error
-                title="New chat"
-              >
-                <EditIcon />
-              </Pressable>
-            </Link>
-            <Pressable
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground"
-              // @ts-expect-error
-              title="Delete chat"
-            >
-              <TrashIcon />
-            </Pressable>
-          </View>
+          <Tooltip.Provider delayDuration={200}>
+            <View className="flex flex-col items-center gap-1 pt-3 px-1.5">
+              <SidebarTooltip label="Open sidebar">
+                <Pressable
+                  onPress={onCollapse}
+                  className="sidebar-toggle-btn flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground"
+                >
+                  <View className="sidebar-toggle-default">
+                    <PanelLeft size={18} strokeWidth={1.5} />
+                  </View>
+                  <View className="sidebar-toggle-hover">
+                    <PanelLeftOpen size={18} strokeWidth={1.5} />
+                  </View>
+                </Pressable>
+              </SidebarTooltip>
+              <SidebarTooltip label="New chat">
+                <Link href="/" asChild>
+                  <Pressable className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground">
+                    <SquarePen size={18} strokeWidth={1.5} />
+                  </Pressable>
+                </Link>
+              </SidebarTooltip>
+              <SidebarTooltip label="Delete chat">
+                <Pressable className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground">
+                  <Trash2 size={18} strokeWidth={1.5} />
+                </Pressable>
+              </SidebarTooltip>
+            </View>
+          </Tooltip.Provider>
         )}
 
         {/* Spacer when collapsed */}
@@ -218,7 +242,7 @@ export function Sidebar({
               <Link href="/" asChild>
                 <Pressable className="w-10 h-10 rounded-full bg-foreground hover:bg-foreground/90 active:bg-foreground/80 items-center justify-center flex">
                   <View className="text-background">
-                    <PlusMessageIcon />
+                    <MessageSquarePlus size={18} strokeWidth={1.5} />
                   </View>
                 </Pressable>
               </Link>
@@ -236,7 +260,7 @@ export function SidebarToggle({ onPress }: { onPress: () => void }) {
       onPress={onPress}
       className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground"
     >
-      <PanelLeftIcon />
+      <PanelLeft size={18} strokeWidth={1.5} />
     </Pressable>
   );
 }

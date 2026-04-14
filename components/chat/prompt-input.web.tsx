@@ -6,6 +6,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { ArrowUp, Paperclip } from "lucide-react";
 
 import { useChatContext } from "./chat-context";
 import { useConversationContext } from "./conversation";
@@ -91,7 +92,7 @@ export function PromptInputBody({ children }: { children: ReactNode }) {
         <View className="flex flex-row items-center gap-1">
           {/* Attachments button */}
           <Pressable className="flex h-7 w-7 items-center justify-center rounded-lg border border-border/40 transition-colors hover:bg-accent">
-            <Text className="text-[13px] text-muted-foreground">📎</Text>
+            <Paperclip size={14} className="text-muted-foreground" />
           </Pressable>
           {/* Model selector mock */}
           <Pressable className="flex h-7 flex-row items-center gap-1.5 rounded-lg px-2 transition-colors hover:bg-accent">
@@ -161,13 +162,13 @@ export function PromptInputSubmit() {
       {isGenerating ? (
         <ActivityIndicator size="small" colorClassName="tint-background" />
       ) : (
-        <Text
-          className={`text-sm font-bold ${
+        <ArrowUp
+          size={16}
+          strokeWidth={2.5}
+          className={
             disabled ? "text-muted-foreground/25" : "text-background"
-          }`}
-        >
-          ↑
-        </Text>
+          }
+        />
       )}
     </Pressable>
   );

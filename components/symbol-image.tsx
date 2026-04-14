@@ -1,19 +1,25 @@
-import ExpoIonicons from "@expo/vector-icons/Ionicons";
 import { Image as ExpoImage, type ImageStyle } from "expo-image";
+import {
+  ArrowUp,
+  ChevronDown,
+  MessageSquare,
+  Plus,
+  HelpCircle,
+  type LucideIcon,
+} from "lucide-react-native";
 
 import { withUniwind } from "uniwind";
 
 const Image = withUniwind(ExpoImage);
-const Ionicons = withUniwind(ExpoIonicons);
 
 /**
- * Map of SF Symbol names to Ionicons names for Android/web fallback.
+ * Map of SF Symbol names to Lucide icons for Android/web fallback.
  */
-const IONICON_FALLBACKS: Record<string, keyof typeof ExpoIonicons.glyphMap> = {
-  "arrow.up": "arrow-up",
-  "chevron.down": "chevron-down",
-  "bubble.left.and.bubble.right": "chatbubbles-outline",
-  plus: "add",
+const LUCIDE_FALLBACKS: Record<string, LucideIcon> = {
+  "arrow.up": ArrowUp,
+  "chevron.down": ChevronDown,
+  "bubble.left.and.bubble.right": MessageSquare,
+  plus: Plus,
 };
 
 type SymbolImageProps = {
@@ -43,8 +49,6 @@ export function SymbolImage({
     );
   }
 
-  const iconName = IONICON_FALLBACKS[name] ?? "help-outline";
-  return (
-    <Ionicons name={iconName} size={size} color={tintColor} style={style} />
-  );
+  const Icon = LUCIDE_FALLBACKS[name] ?? HelpCircle;
+  return <Icon size={size} color={tintColor} style={style as any} />;
 }
