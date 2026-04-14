@@ -88,6 +88,17 @@
 }
 
 
+/* Sidebar toggle icon swap on hover */
+.sidebar-toggle-hover {
+  display: none;
+}
+.sidebar-toggle-btn:hover .sidebar-toggle-default {
+  display: none;
+}
+.sidebar-toggle-btn:hover .sidebar-toggle-hover {
+  display: flex;
+}
+
 @media android {
   :root {
     --font-mono: monospace;
