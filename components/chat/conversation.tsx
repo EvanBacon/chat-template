@@ -305,7 +305,7 @@ export function ConversationEmptyState({
   icon?: string;
 }) {
   return (
-    <View className="flex-1 justify-center items-center pt-24 gap-2">
+    <View className="flex-1 justify-center items-center gap-2">
       <SymbolImage
         name={icon}
         size={48}
