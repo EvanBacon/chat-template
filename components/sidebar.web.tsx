@@ -93,7 +93,7 @@ export function Sidebar({
       {/* Sidebar */}
       <View
         className={`
-          fixed left-0 top-0 z-50 flex h-dvh flex-col bg-sidebar border-r border-border/40
+          fixed left-0 top-0 z-50 flex h-dvh flex-col bg-sidebar
           md:relative md:z-auto
           ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
@@ -193,9 +193,7 @@ export function Sidebar({
                     <Text
                       numberOfLines={1}
                       className={`text-[15px] ${
-                        isActive
-                          ? "text-foreground"
-                          : "text-muted-foreground"
+                        isActive ? "text-foreground" : "text-muted-foreground"
                       }`}
                     >
                       {chat.title}
@@ -215,7 +213,9 @@ export function Sidebar({
           <View className="flex flex-row items-center">
             <Pressable
               className={`flex flex-row items-center gap-2.5 rounded-full ${
-                isCollapsed ? "justify-center" : "hover:opacity-70 active:opacity-60"
+                isCollapsed
+                  ? "justify-center"
+                  : "hover:opacity-70 active:opacity-60"
               }`}
             >
               <View
