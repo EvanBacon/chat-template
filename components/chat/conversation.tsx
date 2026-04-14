@@ -70,19 +70,27 @@ export function Conversation({
   // -- Keyboard tracking --------------------------------------------------
 
   const keyboardHeight = useSharedValue(0);
+  // Separate value for contentInset that freezes during interactive dismiss
+  // to prevent the scroll view from snapping when the user is overscrolled.
+  const keyboardHeightForInset = useSharedValue(0);
   useKeyboardHandler(
     {
       onMove: (e) => {
         "worklet";
         keyboardHeight.value = e.height;
+        keyboardHeightForInset.value = e.height;
       },
       onInteractive: (e) => {
         "worklet";
+        // Only update prompt input position, not contentInset.
+        // Changing contentInset during an active gesture causes a jump
+        // when the user has overscrolled past the bottom.
         keyboardHeight.value = e.height;
       },
       onEnd: (e) => {
         "worklet";
         keyboardHeight.value = e.height;
+        keyboardHeightForInset.value = e.height;
       },
     },
     [],
@@ -202,7 +210,7 @@ export function Conversation({
   }));
 
   const listAnimatedProps = useAnimatedProps(() => {
-    const keyboard = Math.abs(keyboardHeight.value);
+    const keyboard = Math.abs(keyboardHeightForInset.value);
     const bottom = composerHeight.value + Math.max(insets.bottom, keyboard);
     // paddingTop: isLiquidGlassAvailable() ? 128 : 16,
     return {
@@ -257,14 +265,7 @@ export function Conversation({
             scrollEventThrottle={16}
             onContentSizeChange={onContentSizeChange}
             ListFooterComponent={
-              <Animated.View
-                style={[
-                  footerSpacerStyle,
-                  {
-                    backgroundColor: "blue",
-                  },
-                ]}
-              >
+              <Animated.View style={footerSpacerStyle}>
                 {!messages.length && emptyState}
               </Animated.View>
             }
