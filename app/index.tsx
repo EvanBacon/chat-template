@@ -15,9 +15,9 @@ import {
   type ChatMessage,
 } from "@/components/chat";
 import { Icon } from "@/components/icon";
-import { Plus } from "lucide-react-native";
 import * as Haptics from "expo-haptics";
-import { useRouter } from "expo-router";
+import { Link } from "expo-router";
+import { Plus } from "lucide-react-native";
 import { useCallback, useMemo, useRef, useState } from "react";
 // Throttle interval for streaming UI updates (~30fps)
 const STREAMING_THROTTLE_MS = 32;
@@ -43,7 +43,6 @@ async function mockStreamResponse(
 }
 
 export default function ChatScreen() {
-  const router = useRouter();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -159,12 +158,11 @@ export default function ChatScreen() {
       >
         <ConversationScrollButton />
         <PromptInput>
-          <PromptInputAction onPress={() => router.navigate("/attachments")}>
-            <Icon
-              icon={Plus}
-              className="w-5 h-5 text-muted-foreground"
-            />
-          </PromptInputAction>
+          <Link href="/attachments" asChild>
+            <PromptInputAction>
+              <Icon icon={Plus} className="w-5 h-5 text-muted-foreground" />
+            </PromptInputAction>
+          </Link>
           <PromptInputBody>
             <PromptInputTextarea />
             <PromptInputSubmit />

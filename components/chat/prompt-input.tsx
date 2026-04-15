@@ -48,15 +48,14 @@ export function PromptInput({ children }: { children: ReactNode }) {
 /**
  * A circular glass button for actions (e.g. attachments, camera).
  */
-export function PromptInputAction({
-  children,
-  onPress,
-}: {
+export function PromptInputAction(props: {
   children: ReactNode;
   onPress?: () => void;
 }) {
   return (
     <TouchableGlass
+      hitSlop={4}
+      {...props}
       style={{
         width: 44,
         height: 44,
@@ -64,11 +63,7 @@ export function PromptInputAction({
         justifyContent: "center",
         alignItems: "center",
       }}
-      hitSlop={4}
-      onPress={onPress}
-    >
-      {children}
-    </TouchableGlass>
+    />
   );
 }
 
