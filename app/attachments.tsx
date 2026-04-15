@@ -90,14 +90,9 @@ function DisclosureRow({
 export default function AddToChatSheet() {
   const [research, setResearch] = useState(false);
   const [webSearch, setWebSearch] = useState(true);
-  const [health, setHealth] = useState(false);
 
   return (
-    <ScrollView
-      className="flex-1 bg-background dark:bg-background"
-      contentInsetAdjustmentBehavior="automatic"
-      contentContainerStyle={{ paddingBottom: 40 }}
-    >
+    <ScrollView className="flex-1 " contentInsetAdjustmentBehavior="automatic">
       {/* Attachment buttons */}
       <View className="flex-row gap-3 px-5 pt-2 pb-4">
         <AttachmentButton icon="camera" label="Camera" />
@@ -115,15 +110,9 @@ export default function AddToChatSheet() {
       <ToggleRow
         icon="globe"
         label="Web search"
+        badge="Beta"
         value={webSearch}
         onValueChange={setWebSearch}
-      />
-      <ToggleRow
-        icon="heart.fill"
-        label="Health"
-        badge="Beta"
-        value={health}
-        onValueChange={setHealth}
       />
 
       {/* Divider */}

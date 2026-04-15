@@ -158,7 +158,7 @@ export default function ChatScreen() {
       >
         <ConversationScrollButton />
         <PromptInput>
-          <PromptInputAction onPress={() => router.navigate("/add-to-chat")}>
+          <PromptInputAction onPress={() => router.navigate("/attachments")}>
             <Image
               source="sf:plus"
               className="w-5 h-5 text-muted-foreground font-semibold"

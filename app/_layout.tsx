@@ -22,6 +22,7 @@ import {
 import { useColorScheme } from "react-native";
 import { useCSSVariable } from "uniwind";
 
+const GLASS = isLiquidGlassAvailable();
 function ThemeProvider(props: { children: React.ReactNode }) {
   const colorScheme = useColorScheme();
   return (
@@ -99,15 +100,13 @@ const MORE_MODELS = [
 function StackLayout() {
   const { openDrawer } = useDrawer();
   const [extendedThinking, setExtendedThinking] = useState(true);
-  const appForeground = useCSSVariable("--app-foreground");
+  const appForeground = useCSSVariable("--app-foreground") as string;
 
   return (
     <Stack
       screenOptions={{
-        headerTransparent: isLiquidGlassAvailable(),
-        headerBackButtonDisplayMode: isLiquidGlassAvailable()
-          ? "minimal"
-          : "default",
+        headerTransparent: GLASS,
+        headerBackButtonDisplayMode: GLASS ? "minimal" : "default",
         headerTintColor: appForeground,
       }}
     >
@@ -129,10 +128,10 @@ function StackLayout() {
         }}
       >
         <Stack.Toolbar placement="left">
-          <Stack.Toolbar.Button icon={"list.bullet"} onPress={openDrawer} />
+          <Stack.Toolbar.Button icon="list.bullet" onPress={openDrawer} />
         </Stack.Toolbar>
         <Stack.Toolbar placement="right">
-          <Stack.Toolbar.Button icon={"eyeglasses"} onPress={() => {}} />
+          <Stack.Toolbar.Button icon="eyeglasses" />
         </Stack.Toolbar>
       </Stack.Screen>
 
@@ -147,16 +146,14 @@ function StackLayout() {
       />
 
       <Stack.Screen
-        name="add-to-chat"
+        name="attachments"
         options={{
-          presentation: "formSheet",
           title: "Add to chat",
-
+          presentation: "formSheet",
           sheetAllowedDetents: [0.55],
           sheetGrabberVisible: true,
-          headerTransparent: isLiquidGlassAvailable(),
+          headerTransparent: GLASS,
           headerLargeTitleShadowVisible: false,
-          contentStyle: { backgroundColor: "transparent" },
         }}
       />
 
