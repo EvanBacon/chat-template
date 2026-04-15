@@ -1,6 +1,6 @@
+import { Image } from "@/components/tw";
 import { useState } from "react";
 import { ScrollView, Switch, Text, View } from "react-native";
-import { Image } from "@/components/tw";
 
 function CapabilityToggle({
   icon,
@@ -62,14 +62,14 @@ export default function CapabilitiesScreen() {
       <CapabilityToggle
         icon="doc.badge.gearshape"
         label="Code execution and file creation"
-        description="Allow Claude to execute code and create and edit docs, spreadsheets, presentations, PDFs, and data reports."
+        description="Allow Agent to execute code and create and edit docs, spreadsheets, presentations, PDFs, and data reports."
         value={codeExecution}
         onValueChange={setCodeExecution}
       />
       <CapabilityToggle
         icon="globe"
         label="Web search"
-        description="Claude will automatically search the web when it determines it needs current information"
+        description="Agent will automatically search the web when it determines it needs current information"
         value={webSearch}
         onValueChange={setWebSearch}
       />
@@ -81,14 +81,14 @@ export default function CapabilitiesScreen() {
       <CapabilityToggle
         icon="magnifyingglass"
         label="Search and reference chats"
-        description="Allow Claude to search for relevant details in past chats. Learn more."
+        description="Allow Agent to search for relevant details in past chats. Learn more."
         value={searchChats}
         onValueChange={setSearchChats}
       />
       <CapabilityToggle
         icon="brain.head.profile"
         label="Generate memory from chat history"
-        description="Allow Claude to remember relevant context from your chats. This setting controls memory for both chats and projects. Learn more."
+        description="Allow Agent to remember relevant context from your chats. This setting controls memory for both chats and projects. Learn more."
         value={generateMemory}
         onValueChange={setGenerateMemory}
       />
@@ -116,8 +116,15 @@ export default function CapabilitiesScreen() {
 
       <SectionHeader title="Tool access" />
 
-      <ToolAccessOption label="Auto" description="Claude chooses for you" selected />
-      <ToolAccessOption label="On demand" description="Load when needed. More messages, lower accuracy" />
+      <ToolAccessOption
+        label="Auto"
+        description="Agent chooses for you"
+        selected
+      />
+      <ToolAccessOption
+        label="On demand"
+        description="Load when needed. More messages, lower accuracy"
+      />
       <ToolAccessOption label="Always available" />
     </ScrollView>
   );

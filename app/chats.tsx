@@ -40,12 +40,6 @@ const MOCK_CHATS = [
     starred: false,
   },
   {
-    id: "9",
-    title: "Reworking rejection note for direct approach",
-    daysAgo: 14,
-    starred: false,
-  },
-  {
     id: "10",
     title: "Optimizing parallel git config queries",
     daysAgo: 14,
@@ -71,13 +65,13 @@ const MOCK_CHATS = [
   },
   {
     id: "14",
-    title: "React Native navigation patterns",
+    title: "Expo navigation patterns",
     daysAgo: 30,
     starred: false,
   },
   {
     id: "15",
-    title: "Debugging metro bundler crashes",
+    title: "Debugging Expo CLI",
     daysAgo: 35,
     starred: false,
   },

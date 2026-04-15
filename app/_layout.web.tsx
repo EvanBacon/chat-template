@@ -24,9 +24,7 @@ export default function RootLayout() {
         <View className="flex h-14 shrink-0 flex-row items-center gap-2 bg-sidebar px-3">
           {/* Mobile sidebar toggle only — desktop uses the collapsed rail */}
           <View className="md:hidden">
-            <SidebarToggle
-              onPress={() => setSidebarOpen(true)}
-            />
+            <SidebarToggle onPress={() => setSidebarOpen(true)} />
           </View>
 
           {/* Visibility / title area - right side */}

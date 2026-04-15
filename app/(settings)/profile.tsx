@@ -65,7 +65,7 @@ export default function ProfileScreen() {
         placeholderTextColor="#999"
       />
       <Text className="text-[13px] text-muted-foreground mt-2 leading-relaxed">
-        Your preferences will apply to all conversations, within Anthropic's
+        Your preferences will apply to all conversations, within Agent's
         guidelines.
       </Text>
 
