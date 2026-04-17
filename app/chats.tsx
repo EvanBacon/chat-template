@@ -115,7 +115,7 @@ export default function ChatsScreen() {
         { text: "Cancel", style: "cancel" },
         {
           text: "OK",
-          onPress: (newTitle) => {
+          onPress: (newTitle?: string) => {
             if (newTitle?.trim()) {
               setChats((prev) =>
                 prev.map((c) =>

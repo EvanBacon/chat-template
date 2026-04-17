@@ -20,6 +20,14 @@ export function BlurViewRawBackdrop({
   style,
   children,
   ...props
+}: {
+  [key: string]: any;
+  tint?: string;
+  intensity?: number;
+  blurReductionFactor?: number;
+  experimentalBlurMethod?: string;
+  style?: any;
+  children?: any;
 }) {
   // const NativeBlurView = getNativeBlurView();
   return (

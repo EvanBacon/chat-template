@@ -9,12 +9,12 @@ import { AppleGlassView } from "./tw";
 
 type GlassViewProps = React.ComponentProps<typeof AppleGlassView>;
 
-interface TouchableGlassProps extends GlassViewProps {
+type TouchableGlassProps = GlassViewProps & {
   onPress?: () => void;
   onPressIn?: () => void;
   onPressOut?: () => void;
   disabled?: boolean;
-}
+};
 
 function TouchableGlassNative({
   onPress,
@@ -83,7 +83,7 @@ function TouchableGlassFallback({
     >
       <Animated.View
         ref={ref}
-        {...rest}
+        {...(rest as any)}
         style={[
           {
             overflow: "hidden",
@@ -97,7 +97,7 @@ function TouchableGlassFallback({
         ]}
       >
         <BlurViewRawBackdrop />
-        {rest.children}
+        {rest.children as React.ReactNode}
       </Animated.View>
     </TouchableWithoutFeedback>
   );

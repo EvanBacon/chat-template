@@ -34,7 +34,7 @@ const FallbackAppleGlassView = ({
 }) => {
   return (
     <BlurView
-      {...props}
+      {...(props as any)}
       style={[{ overflow: "hidden" }, props.style]}
       tint={fallbackTint}
       intensity={fallbackIntensity}
@@ -64,11 +64,11 @@ function convertStylesToProps(style: any, move: Record<string, string>) {
   }
   const flatStyle = StyleSheet.flatten(style) || {};
 
-  const props = {};
+  const props: Record<string, any> = {};
 
   for (const [styleKey, propKey] of Object.entries(move)) {
     if (styleKey in flatStyle) {
-      props[propKey] = flatStyle[styleKey];
+      (props as any)[propKey] = (flatStyle as any)[styleKey];
       delete flatStyle[styleKey];
     }
   }

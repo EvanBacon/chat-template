@@ -100,11 +100,13 @@ export function Sidebar({
           md:relative md:z-auto
           ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
-        style={{
-          width: isCollapsed ? 48 : 280,
-          transition: "width 0.3s cubic-bezier(0.32, 0.72, 0, 1)",
-          overflow: "hidden",
-        }}
+        style={
+          {
+            width: isCollapsed ? 48 : 280,
+            transition: "width 0.3s cubic-bezier(0.32, 0.72, 0, 1)",
+            overflow: "hidden",
+          } as any
+        }
       >
         {/* Header */}
         {!isCollapsed && (
@@ -137,7 +139,6 @@ export function Sidebar({
         {!isCollapsed && (
           <ScrollView
             className="flex-1"
-            // @ts-expect-error
             contentContainerStyle={{ paddingBottom: 8 }}
           >
             {/* Nav items */}
