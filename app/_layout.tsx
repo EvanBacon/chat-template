@@ -8,12 +8,12 @@ import { useSystemBackgroundColor } from "@/utils/use-system-background-color";
 import { isLiquidGlassAvailable } from "expo-glass-effect";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import "../global.css";
 import "../utils/css-variables";
 
 import { HeaderTitleMenu } from "@/components/header-title-menu";
+import { ModelProvider } from "@/components/model-context";
 import {
   DarkTheme,
   DefaultTheme,
@@ -48,6 +48,11 @@ const MORE_MODELS = [
   { id: "sonnet-4.5", label: "Sonnet 4.5" },
 ] as const;
 
+const ALL_MODELS = [
+  ...MODELS,
+  ...MORE_MODELS
+]
+
 function ThemeProvider(props: { children: React.ReactNode }) {
   const colorScheme = useColorScheme();
   return (
@@ -65,9 +70,11 @@ export default function RootLayout() {
   return (
     <ThemeProvider>
       <KeyboardProvider>
-        <DrawerProvider>
-          <RootDrawer />
-        </DrawerProvider>
+        <ModelProvider models={ALL_MODELS}>
+          <DrawerProvider>
+            <RootDrawer />
+          </DrawerProvider>
+        </ModelProvider>
         <StatusBar style="auto" />
       </KeyboardProvider>
     </ThemeProvider>
@@ -104,7 +111,6 @@ function RootDrawer() {
 
 function StackLayout() {
   const { openDrawer } = useDrawer();
-  const [extendedThinking, setExtendedThinking] = useState(true);
   const appForeground = useCSSVariable("--app-foreground") as string;
 
   return (
@@ -123,14 +129,7 @@ function StackLayout() {
           animation: "none",
           gestureEnabled: false,
 
-          headerTitle: () => (
-            <HeaderTitleMenu
-              models={[...MODELS, ...MORE_MODELS]}
-              selectedModel={"sonnet-4.6"}
-              extendedThinking={extendedThinking}
-              setExtendedThinking={setExtendedThinking}
-            />
-          ),
+          headerTitle: () => <HeaderTitleMenu />,
         }}
       >
         <Stack.Toolbar placement="left">
@@ -158,6 +157,19 @@ function StackLayout() {
           presentation: "formSheet",
           sheetAllowedDetents: [0.55],
           // following https://m3.material.io/components/bottom-sheets/specs
+          sheetCornerRadius: IS_ANDROID ? 28 : undefined,
+          sheetGrabberVisible: true,
+          headerTransparent: GLASS,
+          headerLargeTitleShadowVisible: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="model-picker"
+        options={{
+          title: "Model",
+          presentation: "formSheet",
+          sheetAllowedDetents: 'fitToContents',
           sheetCornerRadius: IS_ANDROID ? 28 : undefined,
           sheetGrabberVisible: true,
           headerTransparent: GLASS,

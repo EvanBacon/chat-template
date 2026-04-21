@@ -1,3 +1,4 @@
+import { useModel } from "@/components/model-context";
 import {
   Button,
   Host,
@@ -17,17 +18,9 @@ import {
 } from "@expo/ui/swift-ui/modifiers";
 import { useColorScheme } from "react-native";
 
-export function HeaderTitleMenu({
-  models,
-  selectedModel,
-  extendedThinking,
-  setExtendedThinking,
-}: {
-  models: { id: string; label: string }[];
-  selectedModel: string;
-  extendedThinking: boolean;
-  setExtendedThinking: (value: boolean) => void;
-}) {
+export function HeaderTitleMenu() {
+  const { models, selectedModel, extendedThinking, setExtendedThinking } =
+    useModel();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
   const headerFg = isDark ? "#fff" : "#000";
