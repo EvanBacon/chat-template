@@ -1,4 +1,6 @@
 import { Icon } from "@/components/icon";
+import { Link } from "expo-router";
+import type { LucideIcon } from "lucide-react-native";
 import {
   Bell,
   ChevronRight,
@@ -15,18 +17,22 @@ import {
   Users,
   Vibrate,
 } from "lucide-react-native";
-import type { LucideIcon } from "lucide-react-native";
-import { Link } from "expo-router";
 import { useState } from "react";
 import { Pressable, ScrollView, Switch, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function SettingsScreen() {
   const [hapticFeedback, setHapticFeedback] = useState(true);
+  const insets = useSafeAreaInsets();
 
   return (
     <ScrollView
       className="flex-1 bg-background dark:bg-background"
       contentInsetAdjustmentBehavior="automatic"
+      contentContainerStyle={{
+        paddingBottom:
+          process.env.EXPO_OS === "android" ? insets.bottom : undefined,
+      }}
     >
       {/* Email */}
       <View
@@ -47,11 +53,7 @@ export default function SettingsScreen() {
         label="Profile"
         href="/(settings)/profile"
       />
-      <SettingsRow
-        icon={CircleDollarSign}
-        label="Billing"
-        detail="Max plan"
-      />
+      <SettingsRow icon={CircleDollarSign} label="Billing" detail="Max plan" />
       <SettingsRow icon={TrendingUp} label="Usage" />
 
       <SectionDivider />

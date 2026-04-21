@@ -7,6 +7,7 @@ import { Color, Link, Stack, useRouter } from "expo-router";
 import { ChevronRight, Menu, Search } from "lucide-react-native";
 import { useCallback, useMemo, useState } from "react";
 import { Alert, FlatList, Pressable, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type Filter = "all" | "starred";
 
@@ -92,6 +93,7 @@ export default function ChatsScreen() {
   const [search, setSearch] = useState("");
   const [chats, setChats] = useState(MOCK_CHATS);
   const [filter, setFilter] = useState<Filter>("all");
+  const insets = useSafeAreaInsets();
 
   const filtered = useMemo(() => {
     let results = chats;
@@ -157,6 +159,9 @@ export default function ChatsScreen() {
         automaticallyAdjustContentInsets
         automaticallyAdjustsScrollIndicatorInsets
         automaticallyAdjustKeyboardInsets
+        contentContainerStyle={{
+          paddingBottom: process.env.EXPO_OS === "android" ? insets.bottom : 0,
+        }}
         renderItem={({ item }) => (
           <ChatRow
             item={item}

@@ -107,13 +107,20 @@ function RootDrawer() {
 
 function StackLayout() {
   const appForeground = useCSSVariable("--app-foreground") as string;
+  const appBackground = useCSSVariable("--app-background") as string;
 
   return (
     <Stack
       screenOptions={{
-        headerTransparent: GLASS || IS_ANDROID,
+        headerTransparent: GLASS,
         headerBackButtonDisplayMode: GLASS ? "minimal" : "default",
         headerTintColor: appForeground,
+        headerShadowVisible: IS_ANDROID ? false : undefined,
+        headerStyle: IS_ANDROID
+          ? {
+              backgroundColor: appBackground,
+            }
+          : undefined,
       }}
     >
       <Stack.Screen
