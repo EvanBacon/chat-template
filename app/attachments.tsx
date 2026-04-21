@@ -1,3 +1,4 @@
+import { AndroidGrabber } from "@/components/grabber";
 import { Icon } from "@/components/icon";
 import type { LucideIcon } from "lucide-react-native";
 import {
@@ -7,7 +8,6 @@ import {
   File,
   Globe,
   Image as ImageIcon,
-  Minus,
   Paintbrush,
   Sparkles,
   Wrench,
@@ -112,15 +112,7 @@ export default function AddToChatSheet() {
 
   return (
     <ScrollView className="flex-1 " contentInsetAdjustmentBehavior="automatic">
-      {process.env.EXPO_OS === "android" && (
-        <View className="items-center pt-2 pb-1">
-          <Icon
-            icon={Minus}
-            strokeWidth={4}
-            className="w-8 h-8 text-muted-foreground"
-          />
-        </View>
-      )}
+      <AndroidGrabber />
       {/* Attachment buttons */}
       <View className="flex-row gap-3 px-5 pt-2 pb-4">
         <AttachmentButton icon={Camera} label="Camera" />
