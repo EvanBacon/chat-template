@@ -12,7 +12,6 @@ import { KeyboardProvider } from "react-native-keyboard-controller";
 import "../global.css";
 import "../utils/css-variables";
 
-import { HeaderTitleMenu } from "@/components/header-title-menu";
 import { ModelProvider } from "@/components/model-context";
 import {
   DarkTheme,
@@ -48,10 +47,7 @@ const MORE_MODELS = [
   { id: "sonnet-4.5", label: "Sonnet 4.5" },
 ] as const;
 
-const ALL_MODELS = [
-  ...MODELS,
-  ...MORE_MODELS
-]
+const ALL_MODELS = [...MODELS, ...MORE_MODELS];
 
 function ThemeProvider(props: { children: React.ReactNode }) {
   const colorScheme = useColorScheme();
@@ -110,7 +106,6 @@ function RootDrawer() {
 }
 
 function StackLayout() {
-  const { openDrawer } = useDrawer();
   const appForeground = useCSSVariable("--app-foreground") as string;
 
   return (
@@ -128,17 +123,8 @@ function StackLayout() {
           title: "Chat",
           animation: "none",
           gestureEnabled: false,
-
-          headerTitle: () => <HeaderTitleMenu />,
         }}
-      >
-        <Stack.Toolbar placement="left">
-          <Stack.Toolbar.Button icon="list.bullet" onPress={openDrawer} />
-        </Stack.Toolbar>
-        <Stack.Toolbar placement="right">
-          <Stack.Toolbar.Button icon="eyeglasses" />
-        </Stack.Toolbar>
-      </Stack.Screen>
+      />
 
       <Stack.Screen
         name="chats"
@@ -169,7 +155,7 @@ function StackLayout() {
         options={{
           title: "Model",
           presentation: "formSheet",
-          sheetAllowedDetents: 'fitToContents',
+          sheetAllowedDetents: "fitToContents",
           sheetCornerRadius: IS_ANDROID ? 28 : undefined,
           sheetGrabberVisible: true,
           headerTransparent: GLASS,

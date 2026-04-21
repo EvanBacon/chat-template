@@ -15,6 +15,7 @@ import {
   type ChatMessage,
 } from "@/components/chat";
 import { Icon } from "@/components/icon";
+import { MainHeader } from "@/components/main-header";
 import * as Haptics from "expo-haptics";
 import { Link } from "expo-router";
 import { Plus } from "lucide-react-native";
@@ -137,38 +138,41 @@ export default function ChatScreen() {
   );
 
   return (
-    <ChatProvider
-      value={{
-        messages,
-        input,
-        setInput,
-        isGenerating,
-        onSend: handleSend,
-        streamingStore,
-      }}
-    >
-      <Conversation
-        renderMessage={renderMessage}
-        emptyState={
-          <ConversationEmptyState
-            title="Chat"
-            description="Send a message to get started"
-          />
-        }
+    <>
+      <ChatProvider
+        value={{
+          messages,
+          input,
+          setInput,
+          isGenerating,
+          onSend: handleSend,
+          streamingStore,
+        }}
       >
-        <ConversationScrollButton />
-        <PromptInput>
-          <Link href="/attachments" asChild>
-            <PromptInputAction>
-              <Icon icon={Plus} className="w-5 h-5 text-muted-foreground" />
-            </PromptInputAction>
-          </Link>
-          <PromptInputBody>
-            <PromptInputTextarea />
-            <PromptInputSubmit />
-          </PromptInputBody>
-        </PromptInput>
-      </Conversation>
-    </ChatProvider>
+        <Conversation
+          renderMessage={renderMessage}
+          emptyState={
+            <ConversationEmptyState
+              title="Chat"
+              description="Send a message to get started"
+            />
+          }
+        >
+          <ConversationScrollButton />
+          <PromptInput>
+            <Link href="/attachments" asChild>
+              <PromptInputAction>
+                <Icon icon={Plus} className="w-5 h-5 text-muted-foreground" />
+              </PromptInputAction>
+            </Link>
+            <PromptInputBody>
+              <PromptInputTextarea />
+              <PromptInputSubmit />
+            </PromptInputBody>
+          </PromptInput>
+        </Conversation>
+      </ChatProvider>
+      <MainHeader />
+    </>
   );
 }

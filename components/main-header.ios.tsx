@@ -10,15 +10,16 @@ import {
   Toggle,
   VStack,
 } from "@expo/ui/swift-ui";
-
 import {
   controlSize,
   font,
   foregroundStyle,
 } from "@expo/ui/swift-ui/modifiers";
+import { Stack } from "expo-router";
 import { useColorScheme } from "react-native";
+import { useDrawer } from "./drawer-content";
 
-export function HeaderTitleMenu() {
+function HeaderTitleMenu() {
   const { models, selectedModel, extendedThinking, setExtendedThinking } =
     useModel();
   const colorScheme = useColorScheme();
@@ -81,5 +82,22 @@ export function HeaderTitleMenu() {
         </Toggle>
       </Menu>
     </Host>
+  );
+}
+
+export function MainHeader() {
+  const { openDrawer } = useDrawer();
+  return (
+    <>
+      <Stack.Screen.Title asChild>
+        <HeaderTitleMenu />
+      </Stack.Screen.Title>
+      <Stack.Toolbar placement="left">
+        <Stack.Toolbar.Button icon="list.bullet" onPress={openDrawer} />
+      </Stack.Toolbar>
+      <Stack.Toolbar placement="right">
+        <Stack.Toolbar.Button icon="eyeglasses" />
+      </Stack.Toolbar>
+    </>
   );
 }
