@@ -4,7 +4,7 @@ import { Image } from "@/components/tw";
 import { MOCK_CHATS, type MockChat } from "@/utils/mock-chats";
 import { isLiquidGlassAvailable } from "expo-glass-effect";
 import { Color, Link, Stack, useRouter } from "expo-router";
-import { ChevronRight, Search } from "lucide-react-native";
+import { ChevronRight, Menu, Search } from "lucide-react-native";
 import { useCallback, useMemo, useState } from "react";
 import { Alert, FlatList, Pressable, Text, View } from "react-native";
 
@@ -89,8 +89,6 @@ function EmptySearch({ query }: { query: string }) {
 }
 
 export default function ChatsScreen() {
-  const router = useRouter();
-  const { openDrawer } = useDrawer();
   const [search, setSearch] = useState("");
   const [chats, setChats] = useState(MOCK_CHATS);
   const [filter, setFilter] = useState<Filter>("all");
@@ -177,41 +175,82 @@ export default function ChatsScreen() {
         onCancelButtonPress={() => setSearch("")}
       />
 
-      <Stack.Toolbar placement="left">
-        <Stack.Toolbar.Button icon="list.bullet" onPress={openDrawer} />
-      </Stack.Toolbar>
-      <Stack.Toolbar placement="right">
-        <Stack.Toolbar.Menu icon="line.horizontal.3.decrease">
-          <Stack.Toolbar.Menu inline>
-            <Stack.Toolbar.MenuAction
-              icon="bubble.left.and.bubble.right"
-              isOn={filter === "all"}
-              onPress={() => setFilter("all")}
-            >
-              All chats
-            </Stack.Toolbar.MenuAction>
-            <Stack.Toolbar.MenuAction
-              icon="star"
-              isOn={filter === "starred"}
-              onPress={() => setFilter("starred")}
-            >
-              Starred
-            </Stack.Toolbar.MenuAction>
-          </Stack.Toolbar.Menu>
-        </Stack.Toolbar.Menu>
-      </Stack.Toolbar>
-
-      <Stack.Toolbar placement="bottom">
-        {isLiquidGlassAvailable() && (
-          <Stack.Toolbar.SearchBarSlot separateBackground />
-        )}
-        <Stack.Toolbar.Button
-          tintColor={Color.ios.label}
-          icon="square.and.pencil"
-          onPress={() => router.navigate("/")}
-          separateBackground
-        />
-      </Stack.Toolbar>
+      <LeftToolbar />
+      <RightToolbar filter={filter} setFilter={setFilter} />
+      <BottomToolbar />
     </>
+  );
+}
+
+function LeftToolbar() {
+  const { openDrawer } = useDrawer();
+
+  if (process.env.EXPO_OS === "android") {
+    return (
+      <Stack.Toolbar placement="left" asChild>
+        <Pressable
+          onPress={openDrawer}
+          accessibilityLabel="Open drawer"
+          accessibilityRole="button"
+          className="p-2 -ml-1 active:opacity-60"
+        >
+          <Icon icon={Menu} className="w-6 h-6 text-foreground" />
+        </Pressable>
+      </Stack.Toolbar>
+    );
+  }
+  return (
+    <Stack.Toolbar placement="left">
+      <Stack.Toolbar.Button icon="list.bullet" onPress={openDrawer} />
+    </Stack.Toolbar>
+  );
+}
+
+function RightToolbar({
+  filter,
+  setFilter,
+}: {
+  filter: Filter;
+  setFilter: (filter: Filter) => void;
+}) {
+  return (
+    <Stack.Toolbar placement="right">
+      <Stack.Toolbar.Menu icon="line.horizontal.3.decrease">
+        <Stack.Toolbar.Menu inline>
+          <Stack.Toolbar.MenuAction
+            icon="bubble.left.and.bubble.right"
+            isOn={filter === "all"}
+            onPress={() => setFilter("all")}
+          >
+            All chats
+          </Stack.Toolbar.MenuAction>
+          <Stack.Toolbar.MenuAction
+            icon="star"
+            isOn={filter === "starred"}
+            onPress={() => setFilter("starred")}
+          >
+            Starred
+          </Stack.Toolbar.MenuAction>
+        </Stack.Toolbar.Menu>
+      </Stack.Toolbar.Menu>
+    </Stack.Toolbar>
+  );
+}
+
+function BottomToolbar() {
+  const router = useRouter();
+
+  return (
+    <Stack.Toolbar placement="bottom">
+      {isLiquidGlassAvailable() && (
+        <Stack.Toolbar.SearchBarSlot separateBackground />
+      )}
+      <Stack.Toolbar.Button
+        tintColor={Color.ios.label}
+        icon="square.and.pencil"
+        onPress={() => router.navigate("/")}
+        separateBackground
+      />
+    </Stack.Toolbar>
   );
 }
