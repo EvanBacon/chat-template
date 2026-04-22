@@ -1,0 +1,129 @@
+diff --git a/node_modules/react-native-keyboard-controller/.bun-tag-4491811288e0a91c b/.bun-tag-4491811288e0a91c
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/react-native-keyboard-controller/.bun-tag-4d4afa4c11e93066 b/.bun-tag-4d4afa4c11e93066
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/android/src/fabric/java/com/reactnativekeyboardcontroller/KeyboardControllerViewManager.kt b/android/src/fabric/java/com/reactnativekeyboardcontroller/KeyboardControllerViewManager.kt
+index 2122d35b73072b1ee0e11d4f76e2766e61c2bf5b..6c31862c3f08754324d3739ba06806ed711d79c6 100644
+--- a/android/src/fabric/java/com/reactnativekeyboardcontroller/KeyboardControllerViewManager.kt
++++ b/android/src/fabric/java/com/reactnativekeyboardcontroller/KeyboardControllerViewManager.kt
+@@ -55,6 +55,14 @@ class KeyboardControllerViewManager :
+     view: ReactViewGroup,
+     value: Boolean,
+   ) = manager.setEnabled(view as EdgeToEdgeReactViewGroup, value)
++
++  @ReactProp(name = "keyboardDismissPadding")
++  override fun setKeyboardDismissPadding(
++    view: ReactViewGroup,
++    value: Double,
++  ) {
++    // iOS-only (UIKeyboardLayoutGuide.keyboardDismissPadding), no-op on Android
++  }
+   // endregion
+ 
+   // region Commands
+diff --git a/ios/observers/movement/KeyboardTrackingView.swift b/ios/observers/movement/KeyboardTrackingView.swift
+index a88fcbd26e12768a378f833cfc560c6ea2b47283..6f6f6be382afa701babcf52ba9790d09827028dc 100644
+--- a/ios/observers/movement/KeyboardTrackingView.swift
++++ b/ios/observers/movement/KeyboardTrackingView.swift
+@@ -20,6 +20,14 @@ public final class KeyboardTrackingView: UIView {
+   private weak var currentAttachedView: UIView?
+   private var isAttaching = false
+ 
++  @objc public var keyboardDismissPadding: CGFloat = 0 {
++    didSet {
++      if #available(iOS 17.0, *) {
++        currentAttachedView?.keyboardLayoutGuide.keyboardDismissPadding = keyboardDismissPadding
++      }
++    }
++  }
++
+   static let invalidPosition: CGFloat = -.greatestFiniteMagnitude
+ 
+   override init(frame: CGRect) {
+@@ -91,6 +99,7 @@ public final class KeyboardTrackingView: UIView {
+     if #available(iOS 15.0, *) {
+       if #available(iOS 17.0, *) {
+         topView.keyboardLayoutGuide.usesBottomSafeArea = false
++        topView.keyboardLayoutGuide.keyboardDismissPadding = keyboardDismissPadding
+       }
+ 
+       NSLayoutConstraint.activate([
+diff --git a/ios/views/KeyboardControllerView.mm b/ios/views/KeyboardControllerView.mm
+index 51b3e32acabf2eac105d8417c47045c2dab8297a..93c80d388940d6bae788b3dff080cc0913f648b5 100644
+--- a/ios/views/KeyboardControllerView.mm
++++ b/ios/views/KeyboardControllerView.mm
+@@ -258,6 +258,11 @@ using namespace facebook::react;
+     }
+   }
+ 
++  if (newViewProps.keyboardDismissPadding != oldViewProps.keyboardDismissPadding) {
++    keyboardObserver.keyboardTrackingView.keyboardDismissPadding =
++        newViewProps.keyboardDismissPadding;
++  }
++
+   [super updateProps:props oldProps:oldProps];
+ }
+ 
+diff --git a/src/animated.tsx b/src/animated.tsx
+index 39d5494c87a934d8c63c663144a05337cce55d27..ab3dcaaba276b82fd47adb01c0d983058adce962 100644
+--- a/src/animated.tsx
++++ b/src/animated.tsx
+@@ -82,6 +82,7 @@ export const KeyboardProvider = (props: KeyboardProviderProps) => {
+     preserveEdgeToEdge,
+     enabled: initiallyEnabled = true,
+     preload = true,
++    keyboardDismissPadding,
+   } = props;
+   // ref
+   const viewRef = useRef<React.Component<KeyboardControllerProps>>(null);
+@@ -220,6 +221,7 @@ export const KeyboardProvider = (props: KeyboardProviderProps) => {
+         navigationBarTranslucent={IS_EDGE_TO_EDGE || navigationBarTranslucent}
+         statusBarTranslucent={IS_EDGE_TO_EDGE || statusBarTranslucent}
+         preserveEdgeToEdge={IS_EDGE_TO_EDGE || preserveEdgeToEdge}
++        keyboardDismissPadding={keyboardDismissPadding}
+         style={styles.container}
+         // on*Reanimated prop must precede animated handlers to work correctly
+         onKeyboardMoveReanimated={keyboardHandler}
+diff --git a/src/specs/KeyboardControllerViewNativeComponent.ts b/src/specs/KeyboardControllerViewNativeComponent.ts
+index 443caa53eb849e43bf92cfeeab0a18adba8bca3e..94cca1af6de5823473af87bc4985f0b8ca964312 100644
+--- a/src/specs/KeyboardControllerViewNativeComponent.ts
++++ b/src/specs/KeyboardControllerViewNativeComponent.ts
+@@ -55,6 +55,7 @@ export interface NativeProps extends ViewProps {
+   statusBarTranslucent?: boolean;
+   navigationBarTranslucent?: boolean;
+   preserveEdgeToEdge?: boolean;
++  keyboardDismissPadding?: Double;
+   // callbacks
+   /// keyboard
+   onKeyboardMoveStart?: DirectEventHandler<KeyboardMoveEvent>;
+diff --git a/src/types/hooks.ts b/src/types/hooks.ts
+index 850b9b25b15f1280abeab97572367ce19e4a2f96..d44111fdc0365f8c31689ca8552e43da3c3ffb46 100644
+--- a/src/types/hooks.ts
++++ b/src/types/hooks.ts
+@@ -107,6 +107,7 @@ export type KeyboardControllerProps = {
+   navigationBarTranslucent?: boolean;
+   preserveEdgeToEdge?: boolean;
+   enabled?: boolean;
++  keyboardDismissPadding?: number;
+ } & ViewProps;
+ 
+ // reanimated hook declaration
+diff --git a/src/types/provider.ts b/src/types/provider.ts
+index c798ff641c009d7537c8aee3caddb7d43ddc2f09..e5b3e5fc7669255b16102df3b604f822d6e94f3d 100644
+--- a/src/types/provider.ts
++++ b/src/types/provider.ts
+@@ -40,4 +40,12 @@ export type KeyboardProviderProps = {
+    * @platform ios
+    */
+   preload?: boolean;
++  /**
++   * Extra padding (in points) above the keyboard that participates in the scroll-to-dismiss gesture.
++   * Only applied on iOS 17+ via `UIKeyboardLayoutGuide.keyboardDismissPadding`.
++   * Defaults to `0`.
++   *
++   * @platform ios
++   */
++  keyboardDismissPadding?: number;
+ };
