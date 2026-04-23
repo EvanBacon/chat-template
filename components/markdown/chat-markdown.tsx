@@ -42,7 +42,7 @@ export function ChatMarkdown({ children }: { children: string }) {
     heading4: { fontSize: 16, color: text },
     heading5: { fontSize: 14, color: text },
     heading6: { fontSize: 12, color: text },
-    paragraph: { fontSize: baseFontSize, marginVertical: 4 },
+    paragraph: { fontSize: baseFontSize, lineHeight: baseLineHeight, marginVertical: 8 },
     text: { color: text, fontSize: baseFontSize, lineHeight: baseLineHeight },
     thematicBreak: { backgroundColor: border },
     blockquote: { backgroundColor: bg3, borderColor: border, paddingHorizontal: 8 },

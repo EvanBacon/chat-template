@@ -7,7 +7,7 @@ import {
 } from "expo-glass-effect";
 import { useEffect, useRef, type ReactNode } from "react";
 import { ActivityIndicator, Pressable, TextInput } from "react-native";
-import Animated from "react-native-reanimated";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 import { cn } from "@/utils/tailwind";
 import { BlurView } from "expo-blur";
@@ -169,18 +169,21 @@ export function PromptInputSubmit() {
       disabled={disabled}
     >
       {isGenerating ? (
-        <ActivityIndicator size="small" colorClassName="tint-foreground" />
+        <Animated.View entering={FadeIn} exiting={FadeOut}>
+          <ActivityIndicator size="small" colorClassName="tint-foreground" className="text-foreground" />
+        </Animated.View>
       ) : (
-        <SymbolImage
-          name="arrow.up"
-          size={16}
-          className={cn(
-            "font-semibold",
-            disabled
-              ? "text-muted-foreground"
-              : "text-background dark:text-background",
-          )}
-        />
+          <SymbolImage
+            name="arrow.up"
+            size={16}
+            sfEffect="scale/up"
+            className={cn(
+              "font-semibold",
+              disabled
+                ? "text-muted-foreground"
+                : "text-background dark:text-background",
+            )}
+          />
       )}
     </Pressable>
   );

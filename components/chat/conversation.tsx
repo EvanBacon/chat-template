@@ -9,7 +9,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
-import { LayoutChangeEvent, Pressable, Text, View } from "react-native";
+import { LayoutChangeEvent, Text, View } from "react-native";
 import { useKeyboardHandler } from "react-native-keyboard-controller";
 import Animated, {
   runOnJS,
@@ -22,6 +22,7 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { isLiquidGlassAvailable } from "expo-glass-effect";
+import { TouchableGlass } from "../touchable-glass";
 import { KeyboardGestureArea } from "../tw";
 import { useChatContext } from "./chat-context";
 import type { ChatMessage } from "./types";
@@ -305,23 +306,17 @@ export function ConversationScrollButton() {
       pointerEvents="box-none"
       style={[{ position: "absolute", right: 16 }, scrollButtonStyle]}
     >
-      <Pressable
+      <TouchableGlass
         onPress={scrollToBottom}
         hitSlop={8}
-        className="w-10 h-10 rounded-full bg-card justify-center items-center"
-        style={({ pressed }) => ({
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.15,
-          shadowRadius: 4,
-          opacity: pressed ? 0.7 : 1,
-        })}
+        className="w-10 h-10 rounded-full justify-center items-center"
       >
         <SymbolImage
           name="chevron.down"
-          className="text-foreground text-base"
+          sfEffect={{effect: "wiggle", repeat: -1, }}
+          className="text-muted-foreground dark:text-muted-foreground text-xs mt-1"
         />
-      </Pressable>
+      </TouchableGlass>
     </Animated.View>
   );
 }
