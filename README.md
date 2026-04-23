@@ -1,5 +1,7 @@
 # Chat Template
 
+https://github.com/user-attachments/assets/864ca10c-be94-4c45-8e98-a71bff7a0042
+
 A high-performance AI chatbot template built with [Expo](https://expo.dev) and [Expo Router](https://docs.expo.dev/router/introduction/). Ships with iOS 26 Liquid Glass support, a responsive web UI, and runs on iOS, Android, and web from a single codebase.
 
 ## Features
