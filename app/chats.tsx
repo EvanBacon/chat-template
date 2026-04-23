@@ -37,24 +37,24 @@ function ChatRow({
           <View className="flex-1 gap-0.5 mr-3">
             <Text
               numberOfLines={1}
-              className="text-[17px] text-foreground"
+              className="text-[17px] text-foreground dark:text-foreground"
               selectable
             >
               {item.title}
             </Text>
-            <Text className="text-[13px] text-muted-foreground">
+            <Text className="text-[13px] text-muted-foreground dark:text-muted-foreground">
               {formatTimeAgo(item.daysAgo)}
             </Text>
           </View>
           {process.env.EXPO_OS === "ios" ? (
             <Image
               source="sf:chevron.right"
-              className="w-2.5 h-4 font-medium text-muted-foreground"
+              className="w-2.5 h-4 font-medium text-muted-foreground dark:text-muted-foreground"
             />
           ) : (
             <Icon
               icon={ChevronRight}
-              className="w-2.5 h-4 text-muted-foreground"
+              className="w-2.5 h-4 text-muted-foreground dark:text-muted-foreground"
             />
           )}
         </Pressable>

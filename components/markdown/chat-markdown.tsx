@@ -6,11 +6,11 @@ import { Markdown } from "./index";
 
 const VAR_NAMES = [
   "--app-foreground",
-  "--app-foreground-muted",
+  "--app-muted-foreground",
   "--app-border",
-  "--app-bg-2",
-  "--app-bg-3",
-  "--app-fill-3",
+  "--app-secondary",
+  "--app-muted",
+  "--app-accent",
   // Tailwind blue
   "--color-blue-400",
 ] as const;
