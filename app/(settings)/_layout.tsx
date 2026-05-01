@@ -19,12 +19,10 @@ export default function SettingsLayout() {
         headerLargeTitleShadowVisible: false,
         headerBackButtonDisplayMode: GLASS ? "minimal" : "default",
         headerTintColor: appForeground,
-        headerShadowVisible: IS_ANDROID ? false : undefined,
-        headerStyle: IS_ANDROID
-          ? {
-              backgroundColor: appBackground,
-            }
-          : undefined,
+        headerShadowVisible: false,
+        headerStyle: {
+          backgroundColor: appBackground,
+        },
       }}
     >
       <Stack.Screen

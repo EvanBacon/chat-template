@@ -27,7 +27,7 @@ export default function SettingsScreen() {
 
   return (
     <ScrollView
-      className="flex-1 bg-background dark:bg-background"
+      className="flex-1 bg-background text-foreground"
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={{
         paddingBottom:

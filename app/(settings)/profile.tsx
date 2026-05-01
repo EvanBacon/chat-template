@@ -10,7 +10,7 @@ export default function ProfileScreen() {
 
   return (
     <ScrollView
-      className="flex-1 bg-background"
+      className="flex-1 bg-background text-foreground"
       contentInsetAdjustmentBehavior="automatic"
       contentContainerClassName="px-5 pb-10"
       keyboardDismissMode="interactive"
