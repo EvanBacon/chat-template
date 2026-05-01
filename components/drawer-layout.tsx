@@ -226,7 +226,7 @@ export function DrawerLayout({
     minmax(translationX.value, -drawerWidth, 0),
   );
 
-  const CORNERS = 53;
+  const CORNERS = process.env.EXPO_OS === "ios" ? 53 : undefined;
   const contentAnimatedStyle = useAnimatedStyle(
     () => ({
       zIndex: translateX.value === -drawerWidth ? 0 : 2,

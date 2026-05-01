@@ -1,10 +1,10 @@
-import { Image as ExpoImage, type ImageStyle } from "expo-image";
+import { Image as ExpoImage, ImageProps, type ImageStyle } from "expo-image";
 import {
   ArrowUp,
   ChevronDown,
+  HelpCircle,
   MessageSquare,
   Plus,
-  HelpCircle,
   type LucideIcon,
 } from "lucide-react-native";
 
@@ -29,6 +29,8 @@ type SymbolImageProps = {
   tintColor?: string;
   style?: ImageStyle;
   className?: string;
+  sfEffect?: ImageProps["sfEffect"];
+  transition?: ImageProps["transition"];
 };
 
 export function SymbolImage({
@@ -37,10 +39,14 @@ export function SymbolImage({
   tintColor,
   style,
   className,
+  sfEffect,
+  transition,
 }: SymbolImageProps) {
   if (process.env.EXPO_OS === "ios") {
     return (
       <Image
+        sfEffect={sfEffect}
+        transition={transition}
         source={`sf:${name}`}
         style={[{ width: size, height: size }, style]}
         tintColor={tintColor}

@@ -6,11 +6,11 @@ import { Markdown } from "./index";
 
 const VAR_NAMES = [
   "--app-foreground",
-  "--app-foreground-muted",
+  "--app-muted-foreground",
   "--app-border",
-  "--app-bg-2",
-  "--app-bg-3",
-  "--app-fill-3",
+  "--app-secondary",
+  "--app-muted",
+  "--app-accent",
   // Tailwind blue
   "--color-blue-400",
 ] as const;
@@ -42,7 +42,7 @@ export function ChatMarkdown({ children }: { children: string }) {
     heading4: { fontSize: 16, color: text },
     heading5: { fontSize: 14, color: text },
     heading6: { fontSize: 12, color: text },
-    paragraph: { fontSize: baseFontSize, marginVertical: 4 },
+    paragraph: { fontSize: baseFontSize, lineHeight: baseLineHeight, marginVertical: 8 },
     text: { color: text, fontSize: baseFontSize, lineHeight: baseLineHeight },
     thematicBreak: { backgroundColor: border },
     blockquote: { backgroundColor: bg3, borderColor: border, paddingHorizontal: 8 },

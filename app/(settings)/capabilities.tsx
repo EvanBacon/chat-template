@@ -21,7 +21,7 @@ export default function CapabilitiesScreen() {
 
   return (
     <ScrollView
-      className="flex-1 bg-background"
+      className="flex-1 bg-background text-foreground"
       contentInsetAdjustmentBehavior="automatic"
       contentContainerClassName="pb-10"
     >

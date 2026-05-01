@@ -15,10 +15,15 @@ import {
   type ChatMessage,
 } from "@/components/chat";
 import { Icon } from "@/components/icon";
+import { MainHeader } from "@/components/main-header";
+import { useChat } from "@ai-sdk/react";
 import * as Haptics from "expo-haptics";
 import { Link } from "expo-router";
 import { Plus } from "lucide-react-native";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+const USE_MOCK = process.env.EXPO_PUBLIC_MOCK_AI === "1";
+
 // Throttle interval for streaming UI updates (~30fps)
 const STREAMING_THROTTLE_MS = 32;
 
@@ -42,7 +47,82 @@ async function mockStreamResponse(
   }
 }
 
-export default function ChatScreen() {
+/** Extract text content from a UIMessage's parts array. */
+function getTextFromParts(
+  parts: Array<{ type: string; text?: string }>,
+): string {
+  return parts
+    .filter((p) => p.type === "text" && p.text)
+    .map((p) => p.text)
+    .join("");
+}
+
+function useAIChat() {
+  const [input, setInput] = useState("");
+  const streamingStore = useMemo(() => createStreamingStore(), []);
+  const prevStreamingTextRef = useRef("");
+
+  const {
+    messages: uiMessages,
+    sendMessage,
+    status,
+  } = useChat();
+
+  const isStreaming = status === "streaming";
+
+  // Map UIMessages to ChatMessages
+  const messages: ChatMessage[] = useMemo(() => {
+    return uiMessages.map((m) => ({
+      id: m.id,
+      role: m.role as "user" | "assistant",
+      content:
+        isStreaming &&
+        m.role === "assistant" &&
+        m === uiMessages[uiMessages.length - 1]
+          ? "" // Signal streaming — content comes from store
+          : getTextFromParts(m.parts as Array<{ type: string; text?: string }>),
+    }));
+  }, [uiMessages, isStreaming]);
+
+  // Sync streaming text to the store
+  useEffect(() => {
+    if (!isStreaming) {
+      if (prevStreamingTextRef.current) {
+        prevStreamingTextRef.current = "";
+        streamingStore.set("");
+      }
+      return;
+    }
+    const lastMessage = uiMessages[uiMessages.length - 1];
+    if (lastMessage?.role === "assistant") {
+      const text = getTextFromParts(
+        lastMessage.parts as Array<{ type: string; text?: string }>,
+      );
+      if (text !== prevStreamingTextRef.current) {
+        prevStreamingTextRef.current = text;
+        streamingStore.set(text);
+      }
+    }
+  }, [uiMessages, isStreaming, streamingStore]);
+
+  const onSend = useCallback(() => {
+    if (!input.trim() || isStreaming) return;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    sendMessage({ text: input });
+    setInput("");
+  }, [input, isStreaming, sendMessage]);
+
+  return {
+    messages,
+    input,
+    setInput,
+    isGenerating: isStreaming,
+    onSend,
+    streamingStore,
+  };
+}
+
+function useMockChat() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -51,7 +131,7 @@ export default function ChatScreen() {
   const throttleRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const mockIndexRef = useRef(0);
 
-  const handleSend = async () => {
+  const handleSend = useCallback(async () => {
     if (!input.trim() || isGenerating) return;
 
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -114,7 +194,21 @@ export default function ChatScreen() {
 
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     }
+  }, [input, isGenerating, messages, streamingStore]);
+
+  return {
+    messages,
+    input,
+    setInput,
+    isGenerating,
+    onSend: handleSend,
+    streamingStore,
   };
+}
+
+export default function ChatScreen() {
+  const chat = USE_MOCK ? useMockChat() : useAIChat();
+  const { messages, isGenerating, streamingStore } = chat;
 
   const renderMessage = useCallback(
     ({ item }: { item: ChatMessage }) => {
@@ -137,38 +231,32 @@ export default function ChatScreen() {
   );
 
   return (
-    <ChatProvider
-      value={{
-        messages,
-        input,
-        setInput,
-        isGenerating,
-        onSend: handleSend,
-        streamingStore,
-      }}
-    >
-      <Conversation
-        renderMessage={renderMessage}
-        emptyState={
-          <ConversationEmptyState
-            title="Chat"
-            description="Send a message to get started"
-          />
-        }
-      >
-        <ConversationScrollButton />
-        <PromptInput>
-          <Link href="/attachments" asChild>
-            <PromptInputAction>
-              <Icon icon={Plus} className="w-5 h-5 text-muted-foreground" />
-            </PromptInputAction>
-          </Link>
-          <PromptInputBody>
-            <PromptInputTextarea />
-            <PromptInputSubmit />
-          </PromptInputBody>
-        </PromptInput>
-      </Conversation>
-    </ChatProvider>
+    <>
+      <ChatProvider value={chat}>
+        <Conversation
+          renderMessage={renderMessage}
+          emptyState={
+            <ConversationEmptyState
+              title="Chat"
+              description="Send a message to get started"
+            />
+          }
+        >
+          <ConversationScrollButton />
+          <PromptInput>
+            <Link href="/attachments" asChild>
+              <PromptInputAction>
+                <Icon icon={Plus} className="w-5 h-5 text-muted-foreground" />
+              </PromptInputAction>
+            </Link>
+            <PromptInputBody>
+              <PromptInputTextarea />
+              <PromptInputSubmit />
+            </PromptInputBody>
+          </PromptInput>
+        </Conversation>
+      </ChatProvider>
+      <MainHeader />
+    </>
   );
 }

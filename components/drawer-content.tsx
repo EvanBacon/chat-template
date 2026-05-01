@@ -6,6 +6,7 @@ import { TouchableGlass } from "@/components/touchable-glass";
 import { SafeAreaView } from "@/components/tw";
 import { MOCK_CHATS } from "@/utils/mock-chats";
 import { cn } from "@/utils/tailwind";
+import type { Href } from "expo-router";
 import { Plus } from "lucide-react-native";
 
 import React, { createContext, use, useCallback, useState } from "react";
@@ -95,8 +96,8 @@ export function DrawerContent({
   onNavigate,
   onOpenModal,
 }: {
-  onNavigate: (path: string) => void;
-  onOpenModal: (path: string) => void;
+  onNavigate: (path: Href) => void;
+  onOpenModal: (path: Href) => void;
 }) {
   return (
     <SafeAreaView
@@ -119,7 +120,12 @@ export function DrawerContent({
         <DrawerNavItem label="Chats" onPress={() => onNavigate("/chats")} />
         <DrawerNavItem
           label="Settings"
-          onPress={() => onOpenModal("/(settings)/settings")}
+          onPress={() => {
+            if (process.env.EXPO_OS === "android") {
+              onNavigate("/(settings)/settings");
+            }
+            onOpenModal("/(settings)/settings");
+          }}
         />
 
         {/* Recents */}

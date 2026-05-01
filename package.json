@@ -11,11 +11,14 @@
     "lint": "expo lint"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^3.0.58",
+    "@ai-sdk/react": "^3.0.176",
     "@expo/ui": "~55.0.6",
     "@legendapp/list": "^2.0.19",
     "@radix-ui/react-context-menu": "^2.2.16",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-tooltip": "^1.2.8",
+    "ai": "^6.0.174",
     "clsx": "^2.1.1",
     "css-to-react-native": "^3.2.0",
     "expo": "~55.0.5",
@@ -53,7 +56,8 @@
     "react-syntax-highlighter": "^16.1.1",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4",
-    "uniwind": "^1.6.1"
+    "uniwind": "^1.6.1",
+    "zod": "^4.4.1"
   },
   "devDependencies": {
     "@types/react": "~19.2.10",

@@ -23,11 +23,20 @@ const renderRules: RenderRules = {
       {children}
     </View>
   ),
-  paragraph: ({ node, styles, children }) => (
-    <Text key={node.key} style={getTextStyle(styles, 'paragraph')}>
-      {children}
-    </Text>
-  ),
+  paragraph: ({ node, styles, children, parentStack }) => {
+    const inListItem = parentStack.some((p) => p.type === 'listItem');
+    return (
+      <Text
+        key={node.key}
+        style={[
+          getTextStyle(styles, 'paragraph'),
+          inListItem && { marginVertical: 0 },
+        ]}
+      >
+        {children}
+      </Text>
+    );
+  },
   strong: ({ node, styles, children }) => (
     <Text key={node.key} style={getTextStyle(styles, 'strong')}>
       {children}
@@ -54,7 +63,7 @@ const renderRules: RenderRules = {
     </View>
   ),
   break: ({ node, styles }) => (
-    <Text key={node.key} style={getTextStyle(styles, `_VIEW_SAFE_${node.type}`)}>
+    <Text key={node.key} style={getTextStyle(styles, 'text')}>
       {'\n'}
     </Text>
   ),

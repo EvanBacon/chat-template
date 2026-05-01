@@ -8,12 +8,11 @@ import { useSystemBackgroundColor } from "@/utils/use-system-background-color";
 import { isLiquidGlassAvailable } from "expo-glass-effect";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import "../global.css";
 import "../utils/css-variables";
 
-import { HeaderTitleMenu } from "@/components/header-title-menu";
+import { ModelProvider } from "@/components/model-context";
 import {
   DarkTheme,
   DefaultTheme,
@@ -23,6 +22,7 @@ import { useColorScheme } from "react-native";
 import { useCSSVariable } from "uniwind";
 
 const GLASS = isLiquidGlassAvailable();
+const IS_ANDROID = process.env.EXPO_OS === "android";
 const MODELS = [
   {
     id: "opus-4.6",
@@ -47,6 +47,8 @@ const MORE_MODELS = [
   { id: "sonnet-4.5", label: "Sonnet 4.5" },
 ] as const;
 
+const ALL_MODELS = [...MODELS, ...MORE_MODELS];
+
 function ThemeProvider(props: { children: React.ReactNode }) {
   const colorScheme = useColorScheme();
   return (
@@ -64,9 +66,11 @@ export default function RootLayout() {
   return (
     <ThemeProvider>
       <KeyboardProvider keyboardDismissPadding={128}>
-        <DrawerProvider>
-          <RootDrawer />
-        </DrawerProvider>
+        <ModelProvider models={ALL_MODELS}>
+          <DrawerProvider>
+            <RootDrawer />
+          </DrawerProvider>
+        </ModelProvider>
         <StatusBar style="auto" />
       </KeyboardProvider>
     </ThemeProvider>
@@ -88,10 +92,10 @@ function RootDrawer() {
         <DrawerContent
           onNavigate={(path) => {
             closeDrawer();
-            router.replace(path as any, { withAnchor: true });
+            router.replace(path, { withAnchor: true });
           }}
           onOpenModal={(path) => {
-            router.navigate(path as any);
+            router.navigate(path);
           }}
         />
       }
@@ -102,9 +106,8 @@ function RootDrawer() {
 }
 
 function StackLayout() {
-  const { openDrawer } = useDrawer();
-  const [extendedThinking, setExtendedThinking] = useState(true);
   const appForeground = useCSSVariable("--app-foreground") as string;
+  const appBackground = useCSSVariable("--app-background") as string;
 
   return (
     <Stack
@@ -112,6 +115,12 @@ function StackLayout() {
         headerTransparent: GLASS,
         headerBackButtonDisplayMode: GLASS ? "minimal" : "default",
         headerTintColor: appForeground,
+        headerShadowVisible: IS_ANDROID ? false : undefined,
+        headerStyle: IS_ANDROID
+          ? {
+              backgroundColor: appBackground,
+            }
+          : undefined,
       }}
     >
       <Stack.Screen
@@ -121,24 +130,8 @@ function StackLayout() {
           title: "Chat",
           animation: "none",
           gestureEnabled: false,
-
-          headerTitle: () => (
-            <HeaderTitleMenu
-              models={[...MODELS, ...MORE_MODELS]}
-              selectedModel={"sonnet-4.6"}
-              extendedThinking={extendedThinking}
-              setExtendedThinking={setExtendedThinking}
-            />
-          ),
         }}
-      >
-        <Stack.Toolbar placement="left">
-          <Stack.Toolbar.Button icon="list.bullet" onPress={openDrawer} />
-        </Stack.Toolbar>
-        <Stack.Toolbar placement="right">
-          <Stack.Toolbar.Button icon="eyeglasses" />
-        </Stack.Toolbar>
-      </Stack.Screen>
+      />
 
       <Stack.Screen
         name="chats"
@@ -156,6 +149,21 @@ function StackLayout() {
           title: "Add to chat",
           presentation: "formSheet",
           sheetAllowedDetents: [0.55],
+          // following https://m3.material.io/components/bottom-sheets/specs
+          sheetCornerRadius: IS_ANDROID ? 28 : undefined,
+          sheetGrabberVisible: true,
+          headerTransparent: GLASS,
+          headerLargeTitleShadowVisible: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="model-picker"
+        options={{
+          title: "Model",
+          presentation: "formSheet",
+          sheetAllowedDetents: "fitToContents",
+          sheetCornerRadius: IS_ANDROID ? 28 : undefined,
           sheetGrabberVisible: true,
           headerTransparent: GLASS,
           headerLargeTitleShadowVisible: false,
@@ -165,7 +173,7 @@ function StackLayout() {
       <Stack.Screen
         name="(settings)"
         options={{
-          presentation: "modal",
+          presentation: IS_ANDROID ? undefined : "modal",
           headerShown: false,
         }}
       />

@@ -1,1 +1,3 @@
-{ "plugins": ["expo"] }
+{ 
+  "enabledPlugins": { "expo@claude-plugins-official": true }
+}

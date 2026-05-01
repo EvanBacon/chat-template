@@ -16,7 +16,7 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "output": "static"
+      "output": "server"
     },
     "plugins": [
       "expo-router",
