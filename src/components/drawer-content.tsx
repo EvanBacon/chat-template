@@ -1,5 +1,4 @@
-import "../global.css";
-import "../utils/css-variables";
+import "@/global.css";
 
 import { Icon } from "@/components/icon";
 import { TouchableGlass } from "@/components/touchable-glass";

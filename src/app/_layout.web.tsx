@@ -1,9 +1,9 @@
 import { Sidebar, SidebarToggle } from "@/components/sidebar";
+import "@/global.css";
 import { Slot } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
-import "../global.css";
 
 export default function RootLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
