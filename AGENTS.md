@@ -16,7 +16,3 @@ This app requires a custom Expo development build and will not work in Expo Go. 
 
 - Use `npx serve-sim` to verify iOS and Apple platforms.
 - Use `npx agent-browser` to verify on web.
-
-## User Preview
-
-The user can preview the iOS results at `/.sim` when the Expo dev server is running.
