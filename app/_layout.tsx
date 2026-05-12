@@ -65,7 +65,7 @@ export const unstable_settings = {
 export default function RootLayout() {
   return (
     <ThemeProvider>
-      <KeyboardProvider>
+      <KeyboardProvider keyboardDismissPadding={128}>
         <ModelProvider models={ALL_MODELS}>
           <DrawerProvider>
             <RootDrawer />
