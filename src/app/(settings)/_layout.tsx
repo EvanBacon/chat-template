@@ -4,7 +4,6 @@ import { Stack, useRouter } from "expo-router";
 import { useCSSVariable } from "uniwind";
 
 const GLASS = isLiquidGlassAvailable();
-const IS_ANDROID = process.env.EXPO_OS === "android";
 
 export default function SettingsLayout() {
   const router = useRouter();

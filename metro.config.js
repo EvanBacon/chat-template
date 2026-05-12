@@ -28,6 +28,6 @@ config.server.enhanceMiddleware = (metroMiddleware, server) => {
 };
 
 module.exports = withUniwindConfig(config, {
-  cssEntryFile: "./global.css",
+  cssEntryFile: "./src/global.css",
   debug: true,
 });

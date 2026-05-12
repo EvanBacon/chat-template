@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "scheme": "chat",
+    "srcDir": "src",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
