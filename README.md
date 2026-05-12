@@ -17,15 +17,15 @@ A high-performance AI chatbot template built with [Expo](https://expo.dev) and [
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | Expo SDK 55, React Native 0.83, React 19 |
+| Layer      | Technology                                                                                                              |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Framework  | Expo SDK 55, React Native 0.83, React 19                                                                                |
 | Navigation | Expo Router (file-based) with typed routes, [Legend List](https://legendapp.com/open-source/list/) for virtualized chat |
-| Styling | Tailwind CSS v4 via [Uniwind](https://uniwind.dev/) + `tailwind-merge` |
-| Native UI | `@expo/ui` (SwiftUI), `expo-symbols`, `expo-haptics`, `expo-glass-effect` |
-| Web UI | Radix UI (context menu, dropdown menu, tooltips), Lucide icons |
-| Markdown | Custom AST renderer with `mdast-util-from-markdown` + `react-syntax-highlighter` |
-| Animations | `react-native-reanimated`, `react-native-gesture-handler` |
+| Styling    | Tailwind CSS v4 via [Uniwind](https://uniwind.dev/) + `tailwind-merge`                                                  |
+| Native UI  | `@expo/ui` (SwiftUI), `expo-symbols`, `expo-haptics`, `expo-glass-effect`                                               |
+| Web UI     | Radix UI (context menu, dropdown menu, tooltips), Lucide icons                                                          |
+| Markdown   | Custom AST renderer with `mdast-util-from-markdown` + `react-syntax-highlighter`                                        |
+| Animations | `react-native-reanimated`, `react-native-gesture-handler`                                                               |
 
 ## Getting Started
 
@@ -64,4 +64,4 @@ The template ships with mock streaming responses in `app/index.tsx`. Replace `mo
 
 ## License
 
-MIT
+This template was made for https://agent.expo.dev and is made freely available under the MIT license.
