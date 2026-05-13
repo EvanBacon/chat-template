@@ -285,6 +285,7 @@ export function DrawerLayout({
             <Overlay progress={progress} onPress={() => toggleDrawer(false)} />
           </Animated.View>
           <Animated.View
+            aria-hidden={!open}
             className="absolute top-0 bottom-0 max-w-full"
             style={[
               { width: drawerWidth, transformOrigin: "left top" },
