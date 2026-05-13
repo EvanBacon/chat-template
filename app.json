@@ -7,6 +7,12 @@
     "scheme": "chat",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "ios": {
+      "infoPlist": {
+        "UIViewControllerBasedStatusBarAppearance": true,
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
     "android": {
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
