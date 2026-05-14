@@ -51,8 +51,7 @@ function PromptInputError({ message }: { message?: string }) {
   return (
     <Animated.View entering={FadeIn.duration(200)} className="px-3 pb-2">
       <View
-        className="flex-row items-center gap-2 rounded-xl bg-card px-3 py-2.5"
-        style={{ borderCurve: "continuous" }}
+        className="flex-row items-center gap-2 rounded-xl bg-card px-3 py-2.5 border-continuous"
       >
         <View
           className="w-2 h-2 rounded-full"
@@ -100,12 +99,12 @@ export function PromptInputBody({ children }: { children: ReactNode }) {
       <GlassView
         isInteractive
         glassEffectStyle="regular"
+        className="border-continuous"
         style={{
           flex: 1,
           flexDirection: "row",
 
           borderRadius: 22,
-          borderCurve: "continuous",
         }}
       >
         {children}
@@ -117,13 +116,13 @@ export function PromptInputBody({ children }: { children: ReactNode }) {
   return (
     <BlurView
       tint="systemChromeMaterial"
+      className="border-continuous"
       style={{
         flex: 1,
         flexDirection: "row",
 
         overflow: "hidden",
         borderRadius: 22,
-        borderCurve: "continuous",
       }}
     >
       {children}
@@ -158,7 +157,7 @@ export function PromptInputTextarea({
       cursorColorClassName="tint-foreground"
       selectionColorClassName="tint-foreground"
       style={{ fontSize: 16 }}
-      className="flex-1 pl-4 pr-2 py-3 text-foreground dark:text-foreground max-h-25"
+      className="flex-1 pl-4 pr-2 py-3 text-foreground max-h-25"
       value={input}
       onChangeText={setInput}
       placeholder={placeholder}
@@ -205,7 +204,7 @@ export function PromptInputSubmit() {
               "font-semibold",
               disabled
                 ? "text-muted-foreground"
-                : "text-background dark:text-background",
+                : "text-background",
             )}
           />
       )}

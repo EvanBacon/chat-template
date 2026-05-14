@@ -315,7 +315,7 @@ export function ConversationScrollButton() {
         <SymbolImage
           name="chevron.down"
           sfEffect={{effect: "wiggle", repeat: -1, }}
-          className="text-muted-foreground dark:text-muted-foreground text-xs mt-1"
+          className="text-muted-foreground text-xs mt-1"
         />
       </TouchableGlass>
     </Animated.View>
@@ -336,13 +336,13 @@ export function ConversationEmptyState({
       <SymbolImage
         name={icon}
         size={48}
-        className="text-muted-foreground dark:text-muted-foreground"
+        className="text-muted-foreground"
       />
-      <Text className="text-xl font-semibold text-foreground dark:text-foreground">
+      <Text className="text-xl font-semibold text-foreground">
         {title}
       </Text>
       {description && (
-        <Text className="text-sm text-muted-foreground dark:text-muted-foreground">
+        <Text className="text-sm text-muted-foreground">
           {description}
         </Text>
       )}

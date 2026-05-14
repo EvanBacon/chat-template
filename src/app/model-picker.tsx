@@ -5,7 +5,6 @@ import { cn } from "@/utils/tailwind";
 import type { LucideIcon } from "lucide-react-native";
 import { Archive, Pencil, Sparkles, Star, Trash2 } from "lucide-react-native";
 import { Pressable, ScrollView, Switch, Text, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function ActionRow({
   icon,
@@ -44,16 +43,12 @@ function ActionRow({
 
 export default function ModelPickerSheet() {
   const { extendedThinking, setExtendedThinking } = useModel();
-  const insets = useSafeAreaInsets();
 
   return (
     <ScrollView
       className="flex-1"
       contentInsetAdjustmentBehavior="automatic"
-      contentContainerStyle={{
-        paddingBottom:
-          process.env.EXPO_OS === "android" ? insets.bottom : undefined,
-      }}
+      contentContainerClassName="android:pb-safe"
     >
       <AndroidGrabber />
       <View className="pt-2">

@@ -24,14 +24,13 @@ function AttachmentButton({
 }) {
   return (
     <Pressable
-      className="flex-1 items-center gap-2 py-3 rounded-xl bg-secondary dark:bg-secondary active:bg-muted"
-      style={{ borderCurve: "continuous" }}
+      className="flex-1 items-center gap-2 py-3 rounded-xl bg-secondary active:bg-muted border-continuous"
     >
       <Icon
         icon={icon}
-        className="w-6 h-6 text-foreground dark:text-foreground"
+        className="w-6 h-6 text-foreground"
       />
-      <Text className="text-[13px] text-foreground dark:text-foreground">
+      <Text className="text-[13px] text-foreground">
         {label}
       </Text>
     </Pressable>
@@ -55,14 +54,14 @@ function ToggleRow({
     <View className="flex-row items-center px-5 py-3 gap-3.5">
       <Icon
         icon={icon}
-        className="w-5 h-5 text-foreground dark:text-foreground"
+        className="w-5 h-5 text-foreground"
       />
-      <Text className="flex-1 text-[17px] text-foreground dark:text-foreground">
+      <Text className="flex-1 text-[17px] text-foreground">
         {label}
       </Text>
       {badge && (
-        <View className="px-1.5 py-0.5 rounded bg-muted dark:bg-muted">
-          <Text className="text-[11px] font-medium text-muted-foreground dark:text-muted-foreground">
+        <View className="px-1.5 py-0.5 rounded bg-muted">
+          <Text className="text-[11px] font-medium text-muted-foreground">
             {badge}
           </Text>
         </View>
@@ -90,17 +89,17 @@ function DisclosureRow({
     >
       <Icon
         icon={icon}
-        className="w-5 h-5 text-foreground dark:text-foreground"
+        className="w-5 h-5 text-foreground"
       />
-      <Text className="flex-1 text-[17px] text-foreground dark:text-foreground">
+      <Text className="flex-1 text-[17px] text-foreground">
         {label}
       </Text>
-      <Text className="text-[15px] text-muted-foreground dark:text-muted-foreground">
+      <Text className="text-[15px] text-muted-foreground">
         {detail}
       </Text>
       <Icon
         icon={ChevronRight}
-        className="w-3 h-3 text-muted-foreground dark:text-muted-foreground"
+        className="w-3 h-3 text-muted-foreground"
       />
     </Pressable>
   );
@@ -136,7 +135,7 @@ export default function AddToChatSheet() {
       />
 
       {/* Divider */}
-      <View className="h-px bg-border dark:bg-border mx-5 my-1" />
+      <View className="h-px bg-border mx-5 my-1" />
 
       {/* Disclosure rows */}
       <DisclosureRow icon={Archive} label="Add to project" detail="None" />

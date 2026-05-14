@@ -19,29 +19,21 @@ import {
 } from "lucide-react-native";
 import { useState } from "react";
 import { Pressable, ScrollView, Switch, Text, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function SettingsScreen() {
   const [hapticFeedback, setHapticFeedback] = useState(true);
-  const insets = useSafeAreaInsets();
 
   return (
     <ScrollView
       className="flex-1 bg-background text-foreground"
       contentInsetAdjustmentBehavior="automatic"
-      contentContainerStyle={{
-        paddingBottom:
-          process.env.EXPO_OS === "android" ? insets.bottom : undefined,
-      }}
+      contentContainerClassName="android:pb-safe"
     >
       {/* Email */}
-      <View
-        className="mx-5 mt-4 mb-5 bg-muted dark:bg-muted rounded-xl px-4 py-3"
-        style={{ borderCurve: "continuous" }}
-      >
+      <View className="mx-5 mt-4 mb-5 bg-muted rounded-xl px-4 py-3 border-continuous">
         <Text
           selectable
-          className="text-[15px] text-foreground dark:text-foreground"
+          className="text-[15px] text-foreground"
         >
           developer@expo.dev
         </Text>
@@ -92,9 +84,9 @@ export default function SettingsScreen() {
       <Pressable className="flex-row items-center px-5 py-3.5 gap-4 active:bg-muted">
         <Icon
           icon={LogOut}
-          className="w-5 h-5 text-foreground dark:text-foreground"
+          className="w-5 h-5 text-foreground"
         />
-        <Text className="text-[17px] text-foreground dark:text-foreground">
+        <Text className="text-[17px] text-foreground">
           Log out
         </Text>
       </Pressable>
@@ -103,7 +95,7 @@ export default function SettingsScreen() {
 }
 
 function SectionDivider() {
-  return <View className="h-px bg-border dark:bg-border mx-5" />;
+  return <View className="h-px bg-border mx-5" />;
 }
 
 function SettingsRow({
@@ -121,19 +113,19 @@ function SettingsRow({
     <View className="flex-row items-center px-5 py-3.5 gap-4 active:bg-muted">
       <Icon
         icon={icon}
-        className="w-5 h-5 text-foreground dark:text-foreground"
+        className="w-5 h-5 text-foreground"
       />
-      <Text className="flex-1 text-[17px] text-foreground dark:text-foreground">
+      <Text className="flex-1 text-[17px] text-foreground">
         {label}
       </Text>
       {detail && (
-        <Text className="text-[15px] text-muted-foreground dark:text-muted-foreground">
+        <Text className="text-[15px] text-muted-foreground">
           {detail}
         </Text>
       )}
       <Icon
         icon={ChevronRight}
-        className="w-3.5 h-3.5 text-muted-foreground dark:text-muted-foreground"
+        className="w-3.5 h-3.5 text-muted-foreground"
       />
     </View>
   );
@@ -164,9 +156,9 @@ function SettingsToggleRow({
     <View className="flex-row items-center px-5 py-3 gap-4">
       <Icon
         icon={icon}
-        className="w-5 h-5 text-foreground dark:text-foreground"
+        className="w-5 h-5 text-foreground"
       />
-      <Text className="flex-1 text-[17px] text-foreground dark:text-foreground">
+      <Text className="flex-1 text-[17px] text-foreground">
         {label}
       </Text>
       <Switch value={value} onValueChange={onValueChange} />

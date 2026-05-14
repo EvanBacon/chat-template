@@ -7,7 +7,6 @@ import { Color, Link, Stack, useRouter } from "expo-router";
 import { ChevronRight, Menu, Search } from "lucide-react-native";
 import { useCallback, useMemo, useState } from "react";
 import { Alert, FlatList, Pressable, Text, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type Filter = "all" | "starred";
 
@@ -37,24 +36,24 @@ function ChatRow({
           <View className="flex-1 gap-0.5 mr-3">
             <Text
               numberOfLines={1}
-              className="text-[17px] text-foreground dark:text-foreground"
+              className="text-[17px] text-foreground"
               selectable
             >
               {item.title}
             </Text>
-            <Text className="text-[13px] text-muted-foreground dark:text-muted-foreground">
+            <Text className="text-[13px] text-muted-foreground">
               {formatTimeAgo(item.daysAgo)}
             </Text>
           </View>
           {process.env.EXPO_OS === "ios" ? (
             <Image
               source="sf:chevron.right"
-              className="w-2.5 h-4 font-medium text-muted-foreground dark:text-muted-foreground"
+              className="w-2.5 h-4 font-medium text-muted-foreground"
             />
           ) : (
             <Icon
               icon={ChevronRight}
-              className="w-2.5 h-4 text-muted-foreground dark:text-muted-foreground"
+              className="w-2.5 h-4 text-muted-foreground"
             />
           )}
         </Pressable>
@@ -93,7 +92,6 @@ export default function ChatsScreen() {
   const [search, setSearch] = useState("");
   const [chats, setChats] = useState(MOCK_CHATS);
   const [filter, setFilter] = useState<Filter>("all");
-  const insets = useSafeAreaInsets();
 
   const filtered = useMemo(() => {
     let results = chats;
@@ -159,9 +157,7 @@ export default function ChatsScreen() {
         automaticallyAdjustContentInsets
         automaticallyAdjustsScrollIndicatorInsets
         automaticallyAdjustKeyboardInsets
-        contentContainerStyle={{
-          paddingBottom: process.env.EXPO_OS === "android" ? insets.bottom : 0,
-        }}
+        contentContainerClassName="android:pb-safe pb-0"
         renderItem={({ item }) => (
           <ChatRow
             item={item}

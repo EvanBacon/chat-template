@@ -22,8 +22,7 @@ export default function ProfileScreen() {
       <TextInput
         value={fullName}
         onChangeText={setFullName}
-        className="bg-muted rounded-xl px-4 py-3 text-[17px] text-foreground"
-        style={{ borderCurve: "continuous" }}
+        className="bg-muted rounded-xl px-4 py-3 text-[17px] text-foreground border-continuous"
         placeholderTextColor="#999"
       />
 
@@ -34,15 +33,13 @@ export default function ProfileScreen() {
       <TextInput
         value={nickname}
         onChangeText={setNickname}
-        className="bg-muted rounded-xl px-4 py-3 text-[17px] text-foreground"
-        style={{ borderCurve: "continuous" }}
+        className="bg-muted rounded-xl px-4 py-3 text-[17px] text-foreground border-continuous"
         placeholderTextColor="#999"
       />
 
       {/* Update Profile Button */}
       <Pressable
-        className="bg-foreground rounded-xl mt-6 py-3.5 items-center active:opacity-80"
-        style={{ borderCurve: "continuous" }}
+        className="bg-foreground rounded-xl mt-6 py-3.5 items-center active:opacity-80 border-continuous"
       >
         <Text className="text-[17px] font-semibold text-background">
           Update Profile
@@ -60,8 +57,8 @@ export default function ProfileScreen() {
         value={preferences}
         onChangeText={setPreferences}
         multiline
-        className="bg-muted rounded-xl px-4 py-3 text-[15px] text-foreground leading-relaxed min-h-[140px]"
-        style={{ borderCurve: "continuous", textAlignVertical: "top" }}
+        className="bg-muted rounded-xl px-4 py-3 text-[15px] text-foreground leading-relaxed min-h-[140px] border-continuous"
+        style={{ textAlignVertical: "top" }}
         placeholderTextColor="#999"
       />
       <Text className="text-[13px] text-muted-foreground mt-2 leading-relaxed">
@@ -71,8 +68,7 @@ export default function ProfileScreen() {
 
       {/* Save Preferences Button */}
       <Pressable
-        className="bg-muted rounded-xl mt-4 py-3.5 items-center active:opacity-80"
-        style={{ borderCurve: "continuous" }}
+        className="bg-muted rounded-xl mt-4 py-3.5 items-center active:opacity-80 border-continuous"
       >
         <Text className="text-[17px] font-semibold text-muted-foreground">
           Save Preferences

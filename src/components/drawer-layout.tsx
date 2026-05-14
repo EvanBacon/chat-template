@@ -269,10 +269,9 @@ export function DrawerLayout({
       <GestureDetector gesture={pan}>
         <Animated.View className="flex-1 overflow-hidden">
           <Animated.View
-            className="flex-1 overflow-hidden"
+            className="flex-1 overflow-hidden border-continuous"
             style={[
               {
-                borderCurve: "continuous" as const,
                 borderRadius: CORNERS,
                 boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.15)",
               },
@@ -326,7 +325,7 @@ function Overlay({
   return (
     <Animated.View
       style={animatedStyle}
-      className={"absolute inset-0 bg-card/80 dark:bg-card/80"}
+      className={"absolute inset-0 bg-card/80"}
       animatedProps={animatedProps}
     >
       <Pressable

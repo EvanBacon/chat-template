@@ -52,7 +52,7 @@ function DrawerNavItem({
       onPress={onPress}
       className="px-4 py-3 mx-2 rounded-[10px] active:bg-muted"
     >
-      <Text className="text-base text-foreground dark:text-foreground">
+      <Text className="text-base text-foreground">
         {label}
       </Text>
     </Pressable>
@@ -73,7 +73,7 @@ function DrawerChatItem({
       onPress={onPress}
       className={cn(
         `px-4 py-2.5 mx-2 rounded-[10px] active:bg-accent`,
-        active && "bg-muted dark:bg-muted",
+        active && "bg-muted",
       )}
     >
       <Text
@@ -81,8 +81,8 @@ function DrawerChatItem({
         className={cn(
           `text-[15px]`,
           active
-            ? "text-foreground dark:text-foreground"
-            : "text-muted-foreground dark:text-muted-foreground",
+            ? "text-foreground"
+            : "text-muted-foreground",
         )}
       >
         {title}
@@ -106,7 +106,7 @@ export function DrawerContent({
     >
       {/* Header */}
       <View className="px-4 pt-2 pb-3">
-        <Text className="text-[28px] font-bold text-foreground dark:text-foreground">
+        <Text className="text-[28px] font-bold text-foreground">
           Chat
         </Text>
       </View>
@@ -128,7 +128,7 @@ export function DrawerContent({
         />
 
         {/* Recents */}
-        <Text className="text-[13px] font-semibold text-muted-foreground dark:text-muted-foreground px-6 pt-5 pb-1.5">
+        <Text className="text-[13px] font-semibold text-muted-foreground px-6 pt-5 pb-1.5">
           Recents
         </Text>
         {MOCK_CHATS.map((chat) => (
@@ -143,30 +143,30 @@ export function DrawerContent({
 
       {/* Footer */}
       <View
-        className="flex-row items-center px-4 py-3 border-t border-border dark:border-border"
+        className="flex-row items-center px-4 py-3 border-t border-border"
         style={{ borderTopWidth: StyleSheet.hairlineWidth }}
       >
         <TouchableGlass
           onPress={() => onOpenModal("/(settings)/settings")}
           className="rounded-full p-2 flex-row items-center gap-2.5 active:opacity-60"
         >
-          <View className="w-8 h-8 rounded-full bg-muted dark:bg-muted items-center justify-center">
-            <Text className="text-[13px] font-semibold text-foreground dark:text-foreground">
+          <View className="w-8 h-8 rounded-full bg-muted items-center justify-center">
+            <Text className="text-[13px] font-semibold text-foreground">
               EB
             </Text>
           </View>
-          <Text className="text-sm text-foreground dark:text-foreground">
+          <Text className="text-sm text-foreground">
             Evan Bacon
           </Text>
         </TouchableGlass>
         <View className="flex-1" />
         <TouchableGlass
           onPress={() => onNavigate("/")}
-          className="w-10 h-10 rounded-full bg-foreground dark:bg-foreground active:bg-muted items-center justify-center"
+          className="w-10 h-10 rounded-full bg-foreground active:bg-muted items-center justify-center"
         >
           <Icon
             icon={Plus}
-            className="w-6 h-6 text-background dark:text-background"
+            className="w-6 h-6 text-background"
           />
         </TouchableGlass>
       </View>

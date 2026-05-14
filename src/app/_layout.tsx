@@ -19,7 +19,8 @@ import {
   ThemeProvider as RNTheme,
 } from "@react-navigation/native";
 import { useColorScheme } from "react-native";
-import { useCSSVariable } from "uniwind";
+import { Uniwind, useCSSVariable } from "uniwind";
+import { SafeAreaListener } from "react-native-safe-area-context";
 
 const GLASS = isLiquidGlassAvailable();
 const IS_ANDROID = process.env.EXPO_OS === "android";
@@ -53,7 +54,9 @@ function ThemeProvider(props: { children: React.ReactNode }) {
   const colorScheme = useColorScheme();
   return (
     <RNTheme value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      {props.children}
+      <SafeAreaListener onChange={({ insets }) => Uniwind.updateInsets(insets)}>
+        {props.children}
+      </SafeAreaListener>
     </RNTheme>
   );
 }

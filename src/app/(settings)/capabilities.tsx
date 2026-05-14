@@ -68,8 +68,7 @@ export default function CapabilitiesScreen() {
 
       {/* View your memory card */}
       <View
-        className="mx-5 mt-4 bg-muted rounded-xl px-4 py-3.5 flex-row items-center"
-        style={{ borderCurve: "continuous" }}
+        className="mx-5 mt-4 bg-muted rounded-xl px-4 py-3.5 flex-row items-center border-continuous"
       >
         <View className="flex-1">
           <Text className="text-[15px] font-medium text-foreground">
