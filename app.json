@@ -11,7 +11,8 @@
       "infoPlist": {
         "UIViewControllerBasedStatusBarAppearance": true,
         "ITSAppUsesNonExemptEncryption": false
-      }
+      },
+      "bundleIdentifier": "com.bacon.chat"
     },
     "android": {
       "edgeToEdgeEnabled": true,

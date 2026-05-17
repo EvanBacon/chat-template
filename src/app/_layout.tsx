@@ -19,8 +19,8 @@ import {
   ThemeProvider as RNTheme,
 } from "@react-navigation/native";
 import { useColorScheme } from "react-native";
-import { Uniwind, useCSSVariable } from "uniwind";
 import { SafeAreaListener } from "react-native-safe-area-context";
+import { Uniwind, useCSSVariable } from "uniwind";
 
 const GLASS = isLiquidGlassAvailable();
 const IS_ANDROID = process.env.EXPO_OS === "android";
@@ -74,7 +74,7 @@ export default function RootLayout() {
             <RootDrawer />
           </DrawerProvider>
         </ModelProvider>
-        <StatusBar style="auto" />
+        {process.env.EXPO_OS !== "ios" && <StatusBar style="auto" />}
       </KeyboardProvider>
     </ThemeProvider>
   );
