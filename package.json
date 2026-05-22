@@ -25,6 +25,7 @@
     "expo-application": "~55.0.10",
     "expo-asset": "~55.0.10",
     "expo-blur": "~55.0.12",
+    "expo-camera": "~55.0.18",
     "expo-constants": "~55.0.9",
     "expo-dev-client": "~55.0.32",
     "expo-font": "~55.0.4",

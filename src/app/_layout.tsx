@@ -161,6 +161,18 @@ function StackLayout() {
       />
 
       <Stack.Screen
+        name="camera"
+        options={{
+          headerShown: false,
+          presentation: "fullScreenModal",
+          animation: "fade",
+          gestureEnabled: false,
+          statusBarStyle: "light",
+          contentStyle: { backgroundColor: "#000" },
+        }}
+      />
+
+      <Stack.Screen
         name="model-picker"
         options={{
           title: "Model",

@@ -17,6 +17,8 @@ This app requires a custom Expo development build and will not work in Expo Go. 
 - Use `npx serve-sim` to verify iOS and Apple platforms.
 - Use `npx agent-browser` to verify on web.
 
+Use built-in browser MCP in Claude Desktop to interact with the "Apple" window on port 3200. You can touch and drag on the image to interact with the simulator.
+
 ## Metadata
 
 Manage Apple App Store metadata and screenshots with `npx eas-cli@latest metadata:pull` and `npx eas-cli@latest metadata:push`.

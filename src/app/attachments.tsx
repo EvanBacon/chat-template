@@ -1,6 +1,7 @@
 import { AndroidGrabber } from "@/components/grabber";
 import { Icon } from "@/components/icon";
 import * as ImagePicker from "expo-image-picker";
+import { useRouter } from "expo-router";
 import type { LucideIcon } from "lucide-react-native";
 import {
   Archive,
@@ -41,14 +42,6 @@ function AttachmentButton({
       </Text>
     </Pressable>
   );
-}
-
-async function openCamera() {
-  const perm = await ImagePicker.requestCameraPermissionsAsync();
-  if (!perm.granted) return;
-  await ImagePicker.launchCameraAsync({
-    mediaTypes: ["images"],
-  });
 }
 
 async function openPhotos() {
@@ -128,8 +121,15 @@ function DisclosureRow({
 }
 
 export default function AddToChatSheet() {
+  const router = useRouter();
   const [research, setResearch] = useState(false);
   const [webSearch, setWebSearch] = useState(true);
+
+  const openCamera = () => {
+    // Dismiss this sheet, then present the custom camera over the chat.
+    router.back();
+    router.navigate("/camera");
+  };
 
   return (
     <ScrollView className="flex-1 " contentInsetAdjustmentBehavior="automatic">
