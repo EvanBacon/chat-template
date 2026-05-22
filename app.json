@@ -6,7 +6,6 @@
     "orientation": "portrait",
     "scheme": "chat",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "ios": {
       "infoPlist": {
         "UIViewControllerBasedStatusBarAppearance": true,
@@ -14,7 +13,6 @@
       }
     },
     "android": {
-      "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
     "web": {
@@ -38,7 +36,8 @@
       "expo-font",
       "expo-image",
       "expo-web-browser",
-      "expo-system-ui"
+      "expo-system-ui",
+      "expo-status-bar"
     ],
     "experiments": {
       "typedRoutes": true,

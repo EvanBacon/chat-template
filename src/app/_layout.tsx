@@ -17,7 +17,7 @@ import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider as RNTheme,
-} from "@react-navigation/native";
+} from "expo-router/react-navigation";
 import { useColorScheme } from "react-native";
 import { SafeAreaListener } from "react-native-safe-area-context";
 import { Uniwind, useCSSVariable } from "uniwind";

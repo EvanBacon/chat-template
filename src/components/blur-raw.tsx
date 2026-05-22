@@ -21,7 +21,7 @@ export function BlurViewRawBackdrop({
       blurReductionFactor={blurReductionFactor}
       experimentalBlurMethod={experimentalBlurMethod}
       style={{
-        ...StyleSheet.absoluteFillObject,
+        ...StyleSheet.absoluteFill,
         overflow: "hidden",
       }}
       {...props}
